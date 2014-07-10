@@ -7,4 +7,4 @@ Graph theoretic analysis of the sinograms set. That project was first aimed at f
 Licence
 =======
 
-All this work and parts of it are under CC BY-NC 4.0. Files from others are under their copyright.
+All this work and parts of it are under CC BY-NC-SA 4.0. Files from other projets are not under that copyright but theirs.
