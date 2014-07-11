@@ -53,10 +53,11 @@
       <file>blx-dm.def</file>
       <file>blx-compat.def</file>
       <file>biblatex.def</file>
-      <file>authortitle.bbx</file>
+      <file>numeric.bbx</file>
       <file>standard.bbx</file>
-      <file>authortitle.cbx</file>
+      <file>numeric.cbx</file>
       <file>biblatex.cfg</file>
+      <file>french.lbx</file>
       <file>english.lbx</file>
     </requires>
   </internal>
@@ -79,7 +80,7 @@
       <file>Articles.bcf</file>
     </requires>
     <requires type="editable">
-      <file>entries.bib</file>
+      <file>../../ref/entries.bib</file>
     </requires>
   </external>
 </requests>
