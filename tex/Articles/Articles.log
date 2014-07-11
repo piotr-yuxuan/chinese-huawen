@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013/Arch Linux) (format=xelatex 2014.3.14)  11 JUL 2014 00:06
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013/Arch Linux) (format=xelatex 2014.3.14)  12 JUL 2014 01:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -26,8 +26,8 @@ File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
 (/usr/share/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2013/12/03 3.9h The Babel package
 
-(/usr/share/texmf-dist/tex/generic/babel-french/frenchb.ldf
-Language: frenchb 2013/12/30 v2.6g French support from the babel system
+(/usr/share/texmf-dist/tex/generic/babel-english/english.ldf
+Language: english 2012/08/20 v3.3p English support from the babel system
 
 (/usr/share/texmf-dist/tex/generic/babel/babel.def
 File: babel.def 2013/12/03 3.9h Babel common definitions
@@ -35,6 +35,12 @@ File: babel.def 2013/12/03 3.9h Babel common definitions
 \U@D=\dimen103
 
 (/usr/share/texmf-dist/tex/generic/babel/xebabel.def))
+\l@canadian = a dialect from \language\l@american 
+\l@australian = a dialect from \language\l@british 
+\l@newzealand = a dialect from \language\l@british 
+)
+(/usr/share/texmf-dist/tex/generic/babel-french/frenchb.ldf
+Language: frenchb 2013/12/30 v2.6g French support from the babel system
 \FB@interchartokenstateORI=\count89
 Package frenchb.ldf Info: No need for active punctuation characters 
 (frenchb.ldf)             with this version of XeTeX! reported on input line 14
@@ -52,12 +58,6 @@ LaTeX Info: Redefining \degres on input line 506.
 \labelwidthFB=\skip44
 \leftmarginFB=\skip45
 \parindentFFN=\dimen105
-)
-(/usr/share/texmf-dist/tex/generic/babel-english/english.ldf
-Language: english 2012/08/20 v3.3p English support from the babel system
-\l@canadian = a dialect from \language\l@american 
-\l@australian = a dialect from \language\l@british 
-\l@newzealand = a dialect from \language\l@british 
 ))
 (/usr/share/texmf-dist/tex/latex/carlisle/scalefnt.sty)
 (/usr/share/texmf-dist/tex/latex/graphics/keyval.sty
@@ -727,11 +727,518 @@ mcp;"
 . Libertine/BI/ICU:script=latn;language=DFLT;+dlig;mapping=tex-text;+onum;+smcp
 ;"
 .................................................
+(/usr/share/texmf-dist/tex/xelatex/xecjk/xeCJK.sty
+Package: xeCJK 2013/12/08 v3.2.9 Typesetting CJK scripts with XeLaTeX
+
+(/usr/share/texmf-dist/tex/latex/l3packages/xtemplate/xtemplate.sty
+Package: xtemplate 2013/12/31 v4634 L3 Experimental prototype document function
+s
+\l__xtemplate_tmp_dim=\dimen146
+\l__xtemplate_tmp_int=\count140
+\l__xtemplate_tmp_muskip=\muskip17
+\l__xtemplate_tmp_skip=\skip53
+Variant \prop_get:NoNTF already defined; not changing it on line 106
+Variant \prop_get:NoNT already defined; not changing it on line 107
+Variant \prop_get:NoNF already defined; not changing it on line 108
+)
+(/usr/share/texmf-dist/tex/latex/l3packages/l3keys2e/l3keys2e.sty
+Package: l3keys2e 2013/12/31 v4634 LaTeX2e option processing using LaTeX3 keys
+)
+(/usr/share/texmf-dist/tex/latex/everypage/everypage.sty
+Package: everypage 2007/06/20 1.1 Hooks to run on every page
+)
+\l__xeCJK_tmp_int=\count141
+\l__xeCJK_tmp_box=\box42
+\l__xeCJK_tmp_dim=\dimen147
+\l__xeCJK_tmp_skip=\skip54
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKShipoutHook with arg. spec. '' on line 145.
+.................................................
+\g__xeCJK_spacefactor_int=\count142
+\l__xeCJK_begin_int=\count143
+\l__xeCJK_end_int=\count144
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \makexeCJKactive with arg. spec. '' on line 363.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \makexeCJKinactive with arg. spec. '' on line 364.
+.................................................
+\c__xeCJK_HalfLeft_class_int=\XeTeXintercharclass9
+\c__xeCJK_HalfRight_class_int=\XeTeXintercharclass10
+\c__xeCJK_NormalSpace_class_int=\XeTeXintercharclass11
+\c__xeCJK_IVS_class_int=\XeTeXintercharclass12
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKDeclareCharClass with arg. spec.
+. 's>{\TrimSpaces }mm' on line 518.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \__xeCJK_set_char_class_aux:Nnw with arg. spec.
+. 'm>{\SplitArgument {1}{->}}m' on line 535.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \normalspacedchars with arg. spec. 'm' on line
+. 577.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKResetPunctClass with arg. spec. '' on line
+. 584.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKResetCharClass with arg. spec. '' on line
+. 591.
+.................................................
+\c__xeCJK_CJK_node_dim=\dimen148
+\c__xeCJK_CJK-space_node_dim=\dimen149
+\c__xeCJK_default_node_dim=\dimen150
+\c__xeCJK_default-space_node_dim=\dimen151
+\c__xeCJK_CJK-nobreak_node_dim=\dimen152
+\c__xeCJK_normalspace_node_dim=\dimen153
+\l__xeCJK_ccglue_skip=\skip55
+\l__xeCJK_ecglue_skip=\skip56
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKnobreak with arg. spec. '' on line 1306.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKDeclareSubCJKBlock with arg. spec.
+. 's>{\TrimSpaces }m>{\TrimSpaces }m' on line 1495.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKCancelSubCJKBlock with arg. spec. 'sm' on
+. line 1506.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKRestoreSubCJKBlock with arg. spec. 'sm' on
+. line 1515.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKsetwidth with arg. spec. 'smm' on line 1613.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKsetkern with arg. spec. 'mmm' on line 1617.
+.................................................
+.................................................
+. xtemplate info: "declare-object-type"
+. 
+. Declaring object type 'xeCJK/punctuation' taking \c_zero  argument(s) on
+. line 1712.
+.................................................
+\l__xeCJK_fixed_punct_width_dim=\dimen154
+\l__xeCJK_mixed_punct_width_dim=\dimen155
+\l__xeCJK_middle_punct_width_dim=\dimen156
+\l__xeCJK_fixed_margin_width_dim=\dimen157
+\l__xeCJK_mixed_margin_width_dim=\dimen158
+\l__xeCJK_middle_margin_width_dim=\dimen159
+\l__xeCJK_bound_punct_width_dim=\dimen160
+\l__xeCJK_bound_margin_width_dim=\dimen161
+\l__xeCJK_margin_minimum_dim=\dimen162
+\l__xeCJK_kerning_total_width_dim=\dimen163
+\l__xeCJK_same_align_margin_dim=\dimen164
+\l__xeCJK_different_align_margin_dim=\dimen165
+\l__xeCJK_kerning_margin_width_dim=\dimen166
+\l__xeCJK_kerning_margin_minimum_dim=\dimen167
+\l__xeCJK_bound_dim=\dimen168
+\l__xeCJK_reverse_bound_dim=\dimen169
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKDeclarePunctStyle with arg. spec.
+. '>{\TrimSpaces }mm' on line 2197.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKEditPunctStyle with arg. spec.
+. '>{\TrimSpaces }mm' on line 2210.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \setCJKfallbackfamilyfont with arg. spec. 'mO{}m'
+. on line 2297.
+.................................................
+\g__xeCJK_family_int=\count145
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \CJKfamily with arg. spec. 't+t-m' on line 2724.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \__xeCJK_gobble_CJKfamily:wn with arg. spec.
+. 't+t-m' on line 2737.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \setCJKmainfont with arg. spec. 'O{}m' on line
+. 2787.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \setCJKsansfont with arg. spec. 'O{}m' on line
+. 2793.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \setCJKmonofont with arg. spec. 'O{}m' on line
+. 2798.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \setCJKfamilyfont with arg. spec. 'mO{}m' on line
+. 2805.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \newCJKfontfamily with arg. spec. 'omO{}m' on line
+. 2811.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \CJKfontspec with arg. spec. 'O{}m' on line 2816.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \defaultCJKfontfeatures with arg. spec. 'm' on
+. line 2839.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \addCJKfontfeatures with arg. spec. 'sO{}m' on
+. line 2845.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \setCJKmathfont with arg. spec. 'O{}m' on line
+. 2987.
+.................................................
+\l__xeCJK_verb_case_int=\count146
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKVerbAddon with arg. spec. '' on line 3142.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKOffVerbAddon with arg. spec. '' on line
+. 3146.
+.................................................
+\l__xeCJK_verb_exspace_skip=\skip57
+
+(/usr/share/texmf-dist/tex/xelatex/xecjk/xunicode-addon.sty
+Package: xunicode-addon 2013/12/08 v3.2.9 addon file for xunicode
+
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \ReloadXunicode with arg. spec. 'm' on line 89.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \DeclareUTFmathsymbols with arg. spec. 'm' on
+* line 124.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \UseMathAsText with arg. spec. '' on line 133.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \UndeclareUTFcharacter with arg. spec.
+* 'O{\UTFencname }mm' on line 168.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \UndeclareUTFcomposite with arg. spec.
+* 'O{\UTFencname }mmm' on line 175.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \DeclareUTFcharacter with arg. spec.
+* 'O{\UTFencname }mm' on line 202.
+*************************************************
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFSymbol with arg. spec. 'mO{\UTFencname
+. }m' on line 228.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFCommand with arg. spec. 'mO{\UTFencname
+. }m' on line 230.
+.................................................
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \DeclareUTFcomposite with arg. spec.
+* 'O{\UTFencname }mmm' on line 273.
+*************************************************
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFCompositeCommand with arg. spec.
+. 'mO{\UTFencname }mm' on line 286.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFCompositeSymbol with arg. spec.
+. 'mO{\UTFencname }mm' on line 291.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFComposite with arg. spec.
+. 'mO{\UTFencname }' on line 293.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFEncodedAccent with arg. spec.
+. 'mO{\UTFencname }mm' on line 295.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFEncodedAccents with arg. spec.
+. 'mO{\UTFencname }mm' on line 297.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFEncodedSymbol with arg. spec.
+. 'mO{\UTFencname }mm' on line 299.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \DeclareUTFEncodedCircle with arg. spec.
+. 'mO{\UTFencname }mm' on line 301.
+.................................................
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \DeclareEncodedCompositeCharacter with arg.
+* spec. 'mmmm' on line 303.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \DeclareEncodedCompositeAccents with arg. spec.
+* 'mmmm' on line 305.
+*************************************************
+\l__xunadd_circle_width_dim=\dimen170
+\l__xunadd_tmp_coffin=\box43
+\l__xunadd_circle_coffin=\box44
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \settextcircledratio with arg. spec. 'm' on line
+. 455.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \AtBeginUTFCommand with arg. spec. 'sO{}+m' on
+. line 467.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \AtEndUTFCommand with arg. spec. 'sO{}+m' on line
+. 477.
+.................................................
+) (/usr/share/texmf-dist/tex/xelatex/xunicode/xunicode.sty
+File: xunicode.sty 2011/09/09 v0.981 provides access to latin accents and many 
+other characters in Unicode lower plane
+
+*** Reloading Xunicode for encoding 'EU1' ***
+) (/usr/share/texmf-dist/tex/xelatex/xecjk/xunicode-extra.def
+File: xeCJK.def 2013/12/08 v3.2.9 extra definition for xunicode
+)
+(/usr/share/texmf-dist/tex/latex/tools/indentfirst.sty
+Package: indentfirst 1995/11/23 v1.03 Indent first paragraph (DPC)
+)
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKsetup with arg. spec. '+m' on line 3438.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKsetemboldenfactor with arg. spec. 'm' on
+. line 3440.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKsetslantfactor with arg. spec. 'm' on line
+. 3442.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \punctstyle with arg. spec. 'm' on line 3443.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKplainchr with arg. spec. '' on line 3444.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \CJKsetecglue with arg. spec. 'm' on line 3445.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \CJKspace with arg. spec. '' on line 3447.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \CJKnospace with arg. spec. '' on line 3448.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKallowbreakbetweenpuncts with arg. spec. ''
+. on line 3450.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKnobreakbetweenpuncts with arg. spec. '' on
+. line 3452.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKenablefallback with arg. spec. '' on line
+. 3454.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKdisablefallback with arg. spec. '' on line
+. 3456.
+.................................................
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKsetcharclass with arg. spec. 'mmm' on line
+. 3461.
+.................................................
+
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \nobreakspace with arg. spec. '' on line 3544.
+*************************************************
+*************************************************
+* LaTeX warning: "xparse/redefine-command"
+* 
+* Redefining document command \fontfamily with arg. spec. 'm' on line 3590.
+*************************************************
+.................................................
+. LaTeX info: "xparse/define-command"
+. 
+. Defining document command \xeCJKcaption with arg. spec. 'om' on line 3780.
+.................................................
+(/usr/share/texmf-dist/tex/xelatex/xecjk/config/xeCJK.cfg
+File: xeCJK.cfg 2013/12/08 v3.2.9 Configuration file for xeCJK package
+))
+*************************************************
+* fontspec warning: "icu-feature-not-exist-in-font"
+* 
+* OpenType feature 'Style=Historic' (+hist) not available for font
+* 'TW-MOE-Std-Kai' with script 'CJK' and language 'Default'.
+*************************************************
+\g_fontspec_family_TW-MOE-Std-Kai_int=\count147
+*************************************************
+* fontspec warning: "icu-feature-not-exist-in-font"
+* 
+* OpenType feature 'Style=Historic' (+hist) not available for font
+* 'TW-MOE-Std-Kai' with script 'CJK' and language 'Default'.
+*************************************************
+.................................................
+. fontspec info: "no-font-shape"
+. 
+. Could not resolve font TW-MOE-Std-Kai/B (it probably doesn't exist).
+.................................................
+.................................................
+. fontspec info: "no-font-shape"
+. 
+. Could not resolve font TW-MOE-Std-Kai/I (it probably doesn't exist).
+.................................................
+.................................................
+. fontspec info: "no-font-shape"
+. 
+. Could not resolve font TW-MOE-Std-Kai/BI (it probably doesn't exist).
+.................................................
+.................................................
+. fontspec info: "defining-font"
+. 
+. Font family 'TW-MOE-Std-Kai(0)' created for font 'TW-MOE-Std-Kai' with
+. options [Script={CJK},Style={Historic}].
+. 
+. This font family consists of the following shapes:
+. 
+. * 'normal' with NFSS spec.:
+. <->"TW-MOE-Std-Kai/ICU:script=hani;language=DFLT;"
+.................................................
 (/usr/share/texmf-dist/tex/latex/footmisc/footmisc.sty
 Package: footmisc 2011/06/06 v5.5b a miscellany of footnote facilities
 \FN@temptoken=\toks17
-\footnotemargin=\dimen146
-\c@pp@next@reset=\count140
+\footnotemargin=\dimen171
+\c@pp@next@reset=\count148
 Package footmisc Info: Declaring symbol style bringhurst on input line 855.
 Package footmisc Info: Declaring symbol style chicago on input line 863.
 Package footmisc Info: Declaring symbol style wiley on input line 872.
@@ -741,7 +1248,7 @@ Package footmisc Info: Declaring symbol style lamport* on input line 903.
 Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
 .
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 16.
+Package hyperref Info: Option `colorlinks' set `true' on input line 20.
 )
 (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
 Package: biblatex 2013/11/25 v2.8a programmable bibliographies (PK/JW/AB)
@@ -752,11 +1259,11 @@ AB)
 
 (/usr/share/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
-\etb@tempcnta=\count141
+\etb@tempcnta=\count149
 )
 (/usr/share/texmf-dist/tex/latex/logreq/logreq.sty
 Package: logreq 2010/08/04 v1.0 xml request logger
-\lrq@indent=\count142
+\lrq@indent=\count150
 
 (/usr/share/texmf-dist/tex/latex/logreq/logreq.def
 File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
@@ -764,133 +1271,133 @@ File: logreq.def 2010/08/04 v1.0 logreq spec v1.0
 (/usr/share/texmf-dist/tex/latex/base/ifthen.sty
 Package: ifthen 2001/05/26 v1.1c Standard LaTeX ifthen package (DPC)
 )
-\c@tabx@nest=\count143
-\c@listtotal=\count144
-\c@listcount=\count145
-\c@liststart=\count146
-\c@liststop=\count147
-\c@citecount=\count148
-\c@citetotal=\count149
-\c@multicitecount=\count150
-\c@multicitetotal=\count151
-\c@instcount=\count152
-\c@maxnames=\count153
-\c@minnames=\count154
-\c@maxitems=\count155
-\c@minitems=\count156
-\c@citecounter=\count157
-\c@savedcitecounter=\count158
-\c@uniquelist=\count159
-\c@uniquename=\count160
-\c@refsection=\count161
-\c@refsegment=\count162
-\c@maxextratitle=\count163
-\c@maxextratitleyear=\count164
-\c@maxextrayear=\count165
-\c@maxextraalpha=\count166
-\c@abbrvpenalty=\count167
-\c@highnamepenalty=\count168
-\c@lownamepenalty=\count169
-\c@maxparens=\count170
-\c@parenlevel=\count171
-\blx@tempcnta=\count172
-\blx@tempcntb=\count173
-\blx@tempcntc=\count174
-\blx@maxsection=\count175
-\blx@maxsegment@0=\count176
-\blx@notetype=\count177
-\blx@parenlevel@text=\count178
-\blx@parenlevel@foot=\count179
-\blx@sectionciteorder@0=\count180
-\labelnumberwidth=\skip53
-\labelalphawidth=\skip54
-\shorthandwidth=\skip55
-\biblabelsep=\skip56
-\bibitemsep=\skip57
-\bibnamesep=\skip58
-\bibinitsep=\skip59
-\bibparsep=\skip60
-\bibhang=\skip61
+\c@tabx@nest=\count151
+\c@listtotal=\count152
+\c@listcount=\count153
+\c@liststart=\count154
+\c@liststop=\count155
+\c@citecount=\count156
+\c@citetotal=\count157
+\c@multicitecount=\count158
+\c@multicitetotal=\count159
+\c@instcount=\count160
+\c@maxnames=\count161
+\c@minnames=\count162
+\c@maxitems=\count163
+\c@minitems=\count164
+\c@citecounter=\count165
+\c@savedcitecounter=\count166
+\c@uniquelist=\count167
+\c@uniquename=\count168
+\c@refsection=\count169
+\c@refsegment=\count170
+\c@maxextratitle=\count171
+\c@maxextratitleyear=\count172
+\c@maxextrayear=\count173
+\c@maxextraalpha=\count174
+\c@abbrvpenalty=\count175
+\c@highnamepenalty=\count176
+\c@lownamepenalty=\count177
+\c@maxparens=\count178
+\c@parenlevel=\count179
+\blx@tempcnta=\count180
+\blx@tempcntb=\count181
+\blx@tempcntc=\count182
+\blx@maxsection=\count183
+\blx@maxsegment@0=\count184
+\blx@notetype=\count185
+\blx@parenlevel@text=\count186
+\blx@parenlevel@foot=\count187
+\blx@sectionciteorder@0=\count188
+\labelnumberwidth=\skip58
+\labelalphawidth=\skip59
+\shorthandwidth=\skip60
+\biblabelsep=\skip61
+\bibitemsep=\skip62
+\bibnamesep=\skip63
+\bibinitsep=\skip64
+\bibparsep=\skip65
+\bibhang=\skip66
 \blx@bcfin=\read2
 \blx@bcfout=\write3
-\c@mincomprange=\count181
-\c@maxcomprange=\count182
-\c@mincompwidth=\count183
+\c@mincomprange=\count189
+\c@maxcomprange=\count190
+\c@mincompwidth=\count191
 Package biblatex Info: Trying to load biblatex default data model...
 Package biblatex Info: ... file 'blx-dm.def' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/blx-dm.def)
 Package biblatex Info: Trying to load biblatex style data model...
-Package biblatex Info: ... file 'authortitle.dbx' not found.
+Package biblatex Info: ... file 'numeric.dbx' not found.
 Package biblatex Info: Trying to load biblatex custom data model...
 Package biblatex Info: ... file 'biblatex-dm.cfg' not found.
-\c@afterword=\count184
-\c@savedafterword=\count185
-\c@annotator=\count186
-\c@savedannotator=\count187
-\c@author=\count188
-\c@savedauthor=\count189
-\c@bookauthor=\count190
-\c@savedbookauthor=\count191
-\c@commentator=\count192
-\c@savedcommentator=\count193
-\c@editor=\count194
-\c@savededitor=\count195
-\c@editora=\count196
-\c@savededitora=\count197
-\c@editorb=\count198
-\c@savededitorb=\count199
-\c@editorc=\count200
-\c@savededitorc=\count201
+\c@afterword=\count192
+\c@savedafterword=\count193
+\c@annotator=\count194
+\c@savedannotator=\count195
+\c@author=\count196
+\c@savedauthor=\count197
+\c@bookauthor=\count198
+\c@savedbookauthor=\count199
+\c@commentator=\count200
+\c@savedcommentator=\count201
 Normal \count register pool exhausted, switching to extended pool.
-\c@foreword=\count277
-\c@savedforeword=\count278
-\c@holder=\count279
-\c@savedholder=\count280
-\c@introduction=\count281
-\c@savedintroduction=\count282
-\c@namea=\count283
-\c@savednamea=\count284
-\c@nameb=\count285
-\c@savednameb=\count286
-\c@namec=\count287
-\c@savednamec=\count288
-\c@shortauthor=\count289
-\c@savedshortauthor=\count290
-\c@shorteditor=\count291
-\c@savedshorteditor=\count292
-\c@translator=\count293
-\c@savedtranslator=\count294
-\c@labelname=\count295
-\c@savedlabelname=\count296
-\c@institution=\count297
-\c@savedinstitution=\count298
-\c@lista=\count299
-\c@savedlista=\count300
-\c@listb=\count301
-\c@savedlistb=\count302
-\c@listc=\count303
-\c@savedlistc=\count304
-\c@listd=\count305
-\c@savedlistd=\count306
-\c@liste=\count307
-\c@savedliste=\count308
-\c@listf=\count309
-\c@savedlistf=\count310
-\c@location=\count311
-\c@savedlocation=\count312
-\c@organization=\count313
-\c@savedorganization=\count314
-\c@origlocation=\count315
-\c@savedoriglocation=\count316
-\c@origpublisher=\count317
-\c@savedorigpublisher=\count318
-\c@publisher=\count319
-\c@savedpublisher=\count320
-\c@language=\count321
-\c@savedlanguage=\count322
-\c@pageref=\count323
-\c@savedpageref=\count324
+\c@editor=\count277
+\c@savededitor=\count278
+\c@editora=\count279
+\c@savededitora=\count280
+\c@editorb=\count281
+\c@savededitorb=\count282
+\c@editorc=\count283
+\c@savededitorc=\count284
+\c@foreword=\count285
+\c@savedforeword=\count286
+\c@holder=\count287
+\c@savedholder=\count288
+\c@introduction=\count289
+\c@savedintroduction=\count290
+\c@namea=\count291
+\c@savednamea=\count292
+\c@nameb=\count293
+\c@savednameb=\count294
+\c@namec=\count295
+\c@savednamec=\count296
+\c@shortauthor=\count297
+\c@savedshortauthor=\count298
+\c@shorteditor=\count299
+\c@savedshorteditor=\count300
+\c@translator=\count301
+\c@savedtranslator=\count302
+\c@labelname=\count303
+\c@savedlabelname=\count304
+\c@institution=\count305
+\c@savedinstitution=\count306
+\c@lista=\count307
+\c@savedlista=\count308
+\c@listb=\count309
+\c@savedlistb=\count310
+\c@listc=\count311
+\c@savedlistc=\count312
+\c@listd=\count313
+\c@savedlistd=\count314
+\c@liste=\count315
+\c@savedliste=\count316
+\c@listf=\count317
+\c@savedlistf=\count318
+\c@location=\count319
+\c@savedlocation=\count320
+\c@organization=\count321
+\c@savedorganization=\count322
+\c@origlocation=\count323
+\c@savedoriglocation=\count324
+\c@origpublisher=\count325
+\c@savedorigpublisher=\count326
+\c@publisher=\count327
+\c@savedpublisher=\count328
+\c@language=\count329
+\c@savedlanguage=\count330
+\c@pageref=\count331
+\c@savedpageref=\count332
 Package biblatex Info: Trying to load compatibility code...
 Package biblatex Info: ... file 'blx-compat.def' found.
 
@@ -902,39 +1409,43 @@ Package biblatex Info: ... file 'biblatex.def' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.def
 File: biblatex.def 
-\c@textcitecount=\count325
-\c@textcitetotal=\count326
-\c@textcitemaxnames=\count327
-\c@biburlnumpenalty=\count328
-\c@biburlucpenalty=\count329
-\c@biburllcpenalty=\count330
-\c@smartand=\count331
+\c@textcitecount=\count333
+\c@textcitetotal=\count334
+\c@textcitemaxnames=\count335
+\c@biburlnumpenalty=\count336
+\c@biburlucpenalty=\count337
+\c@biburllcpenalty=\count338
+\c@smartand=\count339
 )
-Package biblatex Info: Trying to load bibliography style 'authortitle'...
-Package biblatex Info: ... file 'authortitle.bbx' found.
+Package biblatex Info: Trying to load bibliography style 'numeric'...
+Package biblatex Info: ... file 'numeric.bbx' found.
 
-(/usr/share/texmf-dist/tex/latex/biblatex/bbx/authortitle.bbx
-File: authortitle.bbx 2013/11/25 v2.8a biblatex bibliography style (PK/JW/AB)
+(/usr/share/texmf-dist/tex/latex/biblatex/bbx/numeric.bbx
+File: numeric.bbx 2013/11/25 v2.8a biblatex bibliography style (PK/JW/AB)
 Package biblatex Info: Trying to load bibliography style 'standard'...
 Package biblatex Info: ... file 'standard.bbx' found.
 
 (/usr/share/texmf-dist/tex/latex/biblatex/bbx/standard.bbx
 File: standard.bbx 2013/11/25 v2.8a biblatex bibliography style (PK/JW/AB)
-\c@bbx:relatedcount=\count332
-\c@bbx:relatedtotal=\count333
+\c@bbx:relatedcount=\count340
+\c@bbx:relatedtotal=\count341
 ))
-Package biblatex Info: Trying to load citation style 'authortitle'...
-Package biblatex Info: ... file 'authortitle.cbx' found.
+Package biblatex Info: Trying to load citation style 'numeric'...
+Package biblatex Info: ... file 'numeric.cbx' found.
 
-(/usr/share/texmf-dist/tex/latex/biblatex/cbx/authortitle.cbx
-File: authortitle.cbx 2013/11/25 v2.8a biblatex citation style (PK/JW/AB)
+(/usr/share/texmf-dist/tex/latex/biblatex/cbx/numeric.cbx
+File: numeric.cbx 2013/11/25 v2.8a biblatex citation style (PK/JW/AB)
 Package biblatex Info: Redefining '\cite'.
 Package biblatex Info: Redefining '\parencite'.
 Package biblatex Info: Redefining '\footcite'.
 Package biblatex Info: Redefining '\footcitetext'.
 Package biblatex Info: Redefining '\smartcite'.
+Package biblatex Info: Redefining '\supercite'.
 Package biblatex Info: Redefining '\textcite'.
 Package biblatex Info: Redefining '\textcites'.
+Package biblatex Info: Redefining '\cites'.
+Package biblatex Info: Redefining '\parencites'.
+Package biblatex Info: Redefining '\smartcites'.
 )
 Package biblatex Info: Trying to load configuration file...
 Package biblatex Info: ... file 'biblatex.cfg' found.
@@ -947,47 +1458,60 @@ Package biblatex Warning: 'babel' option is deprecated, use 'autolang' instead.
 
 
 ))
-Package biblatex Info: Trying to load language 'english'...
-Package biblatex Info: ... file 'english.lbx' found.
- (/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
-File: english.lbx 2013/11/25 v2.8a biblatex localization (PK/JW/AB)
+Package biblatex Info: Trying to load language 'french'...
+Package biblatex Info: ... file 'french.lbx' found.
+ (/usr/share/texmf-dist/tex/latex/biblatex/lbx/french.lbx
+File: french.lbx 2013/11/25 v2.8a biblatex localization (PK/JW/AB)
 )
 
 Package biblatex Warning: 'babel/polyglossia' detected but 'csquotes' missing.
 (biblatex)                Loading 'csquotes' recommended.
 
-\@quotelevel=\count334
-\@quotereset=\count335
-(./Articles.aux)
+\@quotelevel=\count342
+\@quotereset=\count343
+(./Articles.aux
+Package biblatex Info: Trying to load language 'francais'...
+Package biblatex Info: ... file 'francais.lbx' not found.
+
+
+Package biblatex Warning: Language 'francais' not supported.
+(biblatex)                Using fallback language 'french' on input line 22.
+
+Package biblatex Info: Trying to load language 'english'...
+Package biblatex Info: ... file 'english.lbx' found.
+(/usr/share/texmf-dist/tex/latex/biblatex/lbx/english.lbx
+File: english.lbx 2013/11/25 v2.8a biblatex localization (PK/JW/AB)
+))
 \openout1 = `Articles.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for EU1/lmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 10.
-LaTeX Font Info:    Try loading font information for T3+cmr on input line 10.
- (/usr/share/texmf-dist/tex/latex/tipa/t3cmr.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for EU1/lmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T3/cmr/m/n on input line 27.
+LaTeX Font Info:    Try loading font information for T3+cmr on input line 27.
+
+(/usr/share/texmf-dist/tex/latex/tipa/t3cmr.fd
 File: t3cmr.fd 2001/12/31 TIPA font definitions
 )
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Info: Redefining \dots on input line 10.
-LaTeX Info: Redefining \up on input line 10.
-\AtBeginShipoutBox=\box42
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Info: Redefining \dots on input line 27.
+LaTeX Info: Redefining \up on input line 27.
+\AtBeginShipoutBox=\box45
 
 (/usr/share/texmf-dist/tex/latex/graphics/color.sty
 Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
@@ -997,7 +1521,7 @@ File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
 )
 Package color Info: Driver file: xetex.def on input line 130.
 )
-Package hyperref Info: Link coloring ON on input line 10.
+Package hyperref Info: Link coloring ON on input line 27.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1005,11 +1529,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count336
+\c@section@level=\count344
 )
-LaTeX Info: Redefining \ref on input line 10.
-LaTeX Info: Redefining \pageref on input line 10.
-LaTeX Info: Redefining \nameref on input line 10.
+LaTeX Info: Redefining \ref on input line 27.
+LaTeX Info: Redefining \pageref on input line 27.
+LaTeX Info: Redefining \nameref on input line 27.
 
 (./Articles.out) (./Articles.out)
 \@outlinefile=\write4
@@ -1022,70 +1546,71 @@ LaTeX Info: Redefining \nameref on input line 10.
 .................................................
 \symlegacymaths=\mathgroup4
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 10.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 10.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 10.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 10.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 10.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 10.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 10.
-LaTeX Font Info:    Redeclaring math accent \check on input line 10.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 10.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 10.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \colon on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 10.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 10.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 10.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 27.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 27.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 27.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 27.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 27.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 27.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 27.
+LaTeX Font Info:    Redeclaring math accent \check on input line 27.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 27.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 27.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \colon on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 27.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 27.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 27.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU1' for symbol font
-(Font)              `operators' in the math version `normal' on input line 10.
+(Font)              `operators' in the math version `normal' on input line 27.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> EU1/LinuxLibertine(0)/m/n on input line
- 10.
+ 27.
 LaTeX Font Info:    Encoding `OT1' has changed to `EU1' for symbol font
-(Font)              `operators' in the math version `bold' on input line 10.
+(Font)              `operators' in the math version `bold' on input line 27.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  OT1/cmr/bx/n --> EU1/LinuxLibertine(0)/m/n on input lin
-e 10.
+e 27.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  EU1/LinuxLibertine(0)/m/n --> EU1/LinuxLibertine(0)/m/n
- on input line 10.
+ on input line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
 (Font)                  EU1/LinuxLibertine(0)/m/n --> EU1/LinuxLibertine(0)/m/n
- on input line 10.
+ on input line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
 (Font)                  OT1/cmr/m/it --> EU1/LinuxLibertine(0)/m/it on input li
-ne 10.
+ne 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
 (Font)                  OT1/cmr/bx/n --> EU1/LinuxLibertine(0)/bx/n on input li
-ne 10.
+ne 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> EU1/lmss/m/n on input line 10.
+(Font)                  OT1/cmss/m/n --> EU1/lmss/m/n on input line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> EU1/lmtt/m/n on input line 10.
+(Font)                  OT1/cmtt/m/n --> EU1/lmtt/m/n on input line 27.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
 (Font)                  EU1/LinuxLibertine(0)/m/n --> EU1/LinuxLibertine(0)/bx/
-n on input line 10.
+n on input line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
 (Font)                  EU1/LinuxLibertine(0)/m/n --> EU1/LinuxLibertine(0)/bx/
-n on input line 10.
+n on input line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
 (Font)                  OT1/cmr/bx/it --> EU1/LinuxLibertine(0)/bx/it on input 
-line 10.
+line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 10.
+(Font)                  OT1/cmss/bx/n --> EU1/lmss/bx/n on input line 27.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 10.
+(Font)                  OT1/cmtt/m/n --> EU1/lmtt/bx/n on input line 27.
+LaTeX Font Info:    Redeclaring math alphabet \mathrm on input line 27.
 Package biblatex Info: XeTeX detected.
 (biblatex)             Assuming input encoding 'utf8'.
 Package biblatex Info: Automatic encoding selection.
@@ -1095,18 +1620,28 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'Articles.bbl' found.
  (./Articles.bbl)
-Package biblatex Info: Reference section=0 on input line 10.
-Package biblatex Info: Reference segment=0 on input line 10.
+Package biblatex Info: Reference section=0 on input line 27.
+Package biblatex Info: Reference segment=0 on input line 27.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 12.
+(Font)              <14.4> on input line 29.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 12.
- (../../authors.tex
-LaTeX Font Info:    Try loading font information for EU1+lmtt on input line 1.
+(Font)              <7> on input line 29.
+ (../../authors.tex)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 29.
+
+*************************************************
+* xeCJK warning: "CJKfamily-Unknown"
+* 
+* Unknown CJK family `\CJKttdefault' is being ignored.
+* 
+* Try to use `\setCJKmonofont[...]{...}' to define it.
+*************************************************
+LaTeX Font Info:    Try loading font information for EU1+lmtt on input line 29.
 
 (/usr/share/texmf-dist/tex/latex/euenc/eu1lmtt.fd
 File: eu1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-)) (../../disclaimer.tex
+) (../../disclaimer.tex
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <10.95> on input line 3.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -1114,31 +1649,67 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 3.
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 17.
+(./Articles.toc)
+\tf@toc=\write5
+\openout5 = `Articles.toc'.
+
+
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\citetitle' on input line 37.
 
 (/usr/share/texmf-dist/tex/generic/oberdiek/se-ascii-print.def
 File: se-ascii-print.def 2011/12/02 v1.10 stringenc: Printable ASCII characters
 
-) [1
+)
 
-]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 17.
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\citetitle' on input line 38.
 
-(./Articles.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 17.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 17.
+
+Package biblatex Warning: Keyword 'read' not found on input line 41.
+
+
+LaTeX Warning: Empty bibliography on input line 41.
+
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+[1
+
+] [2]
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 44.
+[3]
+Overfull \hbox (5.19183pt too wide) in paragraph at lines 44--44
+[]\EU1/LinuxLibertine(0)/m/n/12 Hiromichi \EU1/LinuxLibertine(0)/m/sc/12 Fujisa
+wa\EU1/LinuxLibertine(0)/m/n/12 , Yasuaki \EU1/LinuxLibertine(0)/m/sc/12 Nakano
+ \EU1/LinuxLibertine(0)/m/n/12 et Kiyomichi \EU1/LinuxLibertine(0)/m/sc/12 Kuri
+no\EU1/LinuxLibertine(0)/m/n/12 . “Segmentation
+ []
+
+[4]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 45.
+ [5]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 45.
+ (./Articles.aux)
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 45.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 45.
 Package logreq Info: Writing requests to 'Articles.run.xml'.
 \openout1 = `Articles.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 17.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 45.
  ) 
 Here is how much of TeX's memory you used:
- 25638 strings out of 493918
- 471028 string characters out of 6153679
- 854268 words of memory out of 5000000
- 28706 multiletter control sequences out of 15000+600000
- 8761 words of font info for 51 fonts, out of 8000000 for 9000
+ 28776 strings out of 493918
+ 542297 string characters out of 6153679
+ 944628 words of memory out of 5000000
+ 31789 multiletter control sequences out of 15000+600000
+ 9635 words of font info for 64 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 48i,6n,52p,10428b,1449s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 48i,11n,57p,10428b,2768s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Articles.pdf (1 page).
+Output written on Articles.pdf (5 pages).
