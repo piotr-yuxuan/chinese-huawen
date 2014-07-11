@@ -10,6 +10,11 @@ Graph theoretic analysis of the sinograms set. That project was first aimed at f
 
 From that, a wonderful world of big, interesting paths appears. [Emacs and Lisp](https://github.com/kawabata/ids-edit) can be very useful
 
+misc
+====
+
+Chinese language is a fascinating boustrophedon, stoichedon Eastern language.
+
 Licence
 =======
 
