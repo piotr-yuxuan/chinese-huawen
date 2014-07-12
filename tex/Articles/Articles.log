@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013/Arch Linux) (format=xelatex 2014.3.14)  12 JUL 2014 23:51
+This is XeTeX, Version 3.1415926-2.5-0.9999.3 (TeX Live 2013/Arch Linux) (format=xelatex 2014.3.14)  13 JUL 2014 00:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1138,8 +1138,37 @@ Package footmisc Info: Declaring symbol style lamport-robust on input line 883.
 Package footmisc Info: Declaring symbol style lamport* on input line 903.
 Package footmisc Info: Declaring symbol style lamport*-robust on input line 924
 .
-))
-(/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
+)
+.................................................
+. fontspec info: "defining-font"
+. 
+. Font family 'Junicode(0)' created for font 'Junicode' with options [
+. Ligatures={Common, Rare, TeX}, Numbers=OldStyle, ].
+. 
+. This font family consists of the following shapes:
+.................................................
+
+*************************************************
+* xeCJK warning: "CJKfamily-redef"
+* 
+* Redefining CJKfamily `\CJKrmdefault' (教育部標準楷書(0)).
+*************************************************
+*************************************************
+* fontspec warning: "icu-feature-not-exist-in-font"
+* 
+* OpenType feature 'Style=Historic' (+hist) not available for font '教育部標準楷書'
+* with script 'CJK' and language 'Default'.
+*************************************************
+.................................................
+. fontspec info: "defining-font"
+. 
+. Font family '教育部標準楷書(0)' created for font '教育部標準楷書' with options
+. [Script={CJK},Style={Historic}].
+. 
+. This font family consists of the following shapes:
+.................................................
+Package hyperref Info: Option `colorlinks' set `true' on input line 38.
+) (/usr/share/texmf-dist/tex/latex/biblatex/biblatex.sty
 Package: biblatex 2013/11/25 v2.8a programmable bibliographies (PK/JW/AB)
 
 (/usr/share/texmf-dist/tex/latex/biblatex/biblatex2.sty
@@ -1539,7 +1568,7 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 )
 (./Articles.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 12.
+(Font)              <12> on input line 14.
 )
 \tf@toc=\write5
 \openout5 = `Articles.toc'.
@@ -1613,25 +1642,69 @@ icode(0)/m/n/12 , Martin C \EU1/Junicode(0)/m/sc/12 Rinard \EU1/Junicode(0)/m/n
 IDEOSY :
  []
 
-[7])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 54.
+[7]) (./Articles.toc)
+\tf@toc=\write6
+\openout6 = `Articles.toc'.
+
  [8]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 54.
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `\citetitle' on input line 61.
+
+[9
+
+]
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+[10
+
+]
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+
+Package biblatex Warning: Setting 'defernumbers=true' recommended.
+
+
+Overfull \hbox (8.63664pt too wide) in paragraph at lines 68--68
+[]\EU1/Junicode(0)/m/n/12 You-Yang \EU1/Junicode(0)/m/sc/12 Yu \EU1/Junicode(0)
+/m/n/12 et al. “Chinese language processing with complex network theory”.
+ []
+
+[11]
+Overfull \hbox (17.93637pt too wide) in paragraph at lines 68--68
+[]\EU1/Junicode(0)/m/n/12 Alessandro \EU1/Junicode(0)/m/sc/12 Giacalone\EU1/Jun
+icode(0)/m/n/12 , Martin C \EU1/Junicode(0)/m/sc/12 Rinard \EU1/Junicode(0)/m/n
+/12 et Thomas W \EU1/Junicode(0)/m/sc/12 Doeppner Jr\EU1/Junicode(0)/m/n/12 . “
+IDEOSY :
+ []
+
+[12]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 69.
+ [13]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 69.
  (./Articles.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 54.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 54.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 69.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 69.
 Package logreq Info: Writing requests to 'Articles.run.xml'.
 \openout1 = `Articles.run.xml'.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 54.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 69.
  ) 
 Here is how much of TeX's memory you used:
- 28942 strings out of 493918
- 544102 string characters out of 6153679
- 945167 words of memory out of 5000000
+ 28944 strings out of 493918
+ 544128 string characters out of 6153679
+ 945411 words of memory out of 5000000
  31936 multiletter control sequences out of 15000+600000
  9759 words of font info for 68 fonts, out of 8000000 for 9000
  1144 hyphenation exceptions out of 8191
- 50i,11n,57p,10456b,2771s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 50i,11n,57p,10456b,2755s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on Articles.pdf (8 pages).
+Output written on Articles.pdf (13 pages).
