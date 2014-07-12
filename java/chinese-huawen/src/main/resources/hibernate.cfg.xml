@@ -7,6 +7,10 @@
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/mysql?zeroDateTimeBehavior=convertToNull</property>
     <property name="hibernate.connection.username">root</property>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    <property name="hibernate.connection.password">Tux@d0xMarionTux@d0x</property>
+>>>>>>> aa25181a1dc2de06adddf3b207744bd4c174dea4
 =======
     <property name="hibernate.connection.password">Tux@d0xMarionTux@d0x</property>
 >>>>>>> aa25181a1dc2de06adddf3b207744bd4c174dea4
