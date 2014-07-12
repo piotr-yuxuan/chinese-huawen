@@ -31,15 +31,39 @@ sorting=none
 \input{../../disclaimer.tex}\par This is a recension meant to cover each article in the \texttt{ref} directory. First abstract is pasted then I briefly explain why I've chosen to put it in my bibliography. This is aimed at not getting drown in all those deep, difficult yet enthralling articles.\par I'll try for each of them to reply to several questions: what can I use from those for my own aims? What are new suggested projects? Does it make use of ideas I ought use for my own?
 \end{abstract}
 \selectlanguage{francais}
+<<<<<<< HEAD
+
 \tableofcontents
+\cleardoublepage
+
+\section*{Introduction}
 
 % Take care to keep the section number / citation number binding working.
-\section{\citetitle{cook2003unihan}}Il \cite{cook2003unihan}.
-\section{\citetitle{li2012chinese}}
+\section{\citetitle{yan2013efficient}}
+\input{yan2013efficient}
 
+\section*{Conclusion}
+
+\section*{About \LaTeX{} composition and misc}
+Rajouter une fonction qui affiche une étoile dans la marge pour indiquer les points à relire et donner une liste de ces étoiles.
+
+C'est bizarre, les sinogrammes ne sont pas reconnus quand ils sont dans \texttt{foreignlanguage\{\}} mais le sont bien à l'extérieur.
+
+Il faut régler ce p*** de problème avec les chemins. Il faut avoir une fonction \texttt{$\backslash$root} qui donnerait à la compilation le chemin absolu vers la racine du dépôt github. Déclarer des répertoires et organiser les préambules et autres serait bien plus facile ! On pourrait saucissonner les préambules pour des parties dans certains dossiers et d'autres ailleurs et ça serait super pour factoriser.
+
+\input{bibsection.tex}
+=======
+\tableofcontents
+
+\cleardoublepage
+% Take care to keep the section number / citation number binding working.
+\section{\citetitle{yan2013efficient}}
+
+\cleardoublepage
 \nocite{*}
 \printbibliography[title={Bibliographie}, keyword={read}, heading=bibliography] % subbibnumbered
 \printbibheading[title={Références à traiter},heading=bibliography]
 \printbibliography[title={A télécharger\footnote{Articles et documents auxquels je n'ai pas pu accéder.}}, keyword={wanted}, notkeyword={read}, heading=subbibliography]
 \printbibliography[title={A lire\footnote{En d'autres termes : \textsc{taf}}}, notkeyword={wanted}, notkeyword={read}, heading=subbibliography]
+>>>>>>> aa25181a1dc2de06adddf3b207744bd4c174dea4
 \end{document}

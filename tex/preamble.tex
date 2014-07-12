@@ -1,15 +1,35 @@
+<<<<<<< HEAD
+\input{./preamble.language.tex}
+\input{./preamble.font.tex}
+
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=green,          % color of internal links (change box color with linkbordercolor)
+    citecolor=magenta,        % color of links to bibliography
+    filecolor=red,      % color of file links
+    urlcolor=blue
+}
+\usepackage[stable]{footmisc}
+
+% In-text citation. Il doit sûrement exister un style de citation qui donne le titre et la référence à la première occurence puis seulement la référence.
+\newcommand\incite[1]{\english{\citetitle{#1} \cite{#1}}} % in-text citation
+=======
 \usepackage[english,francais]{babel} % Pour définir la langue
 \usepackage{hyperref,fontspec}
 \setmainfont[
-Ligatures={Rare, TeX, Historical},
+%Ligatures={Common, Rare, TeX, Historical},
+%Numbers=OldStyle,
+%Contextuals=Swash,
+%Style={Historic, Swash}
+Ligatures={Common, Rare, TeX},
 Numbers=OldStyle,
-Contextuals=Swash,
-Style={Historic}
-]{Linux Libertine}
+]
+{Junicode}
 \usepackage{xeCJK}
 \setCJKmainfont[
 Style={Historic},
-]{TW-MOE-Std-Kai}
+]{教育部標準楷書}
 \usepackage[stable]{footmisc}
 \hypersetup{
 	colorlinks=true,       % false: boxed links; true: colored links
@@ -19,3 +39,4 @@ Style={Historic},
     urlcolor=black
 }
 \selectlanguage{francais}
+>>>>>>> aa25181a1dc2de06adddf3b207744bd4c174dea4

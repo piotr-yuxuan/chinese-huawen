@@ -1941,9 +1941,9 @@
     <bcf:datasource type="file" datatype="bibtex">../../ref/entries.bib</bcf:datasource>
   </bcf:bibdata>
   <bcf:section number="0">
-    <bcf:citekey order="3">cook2003unihan</bcf:citekey>
-    <bcf:citekey order="4">cook2003unihan</bcf:citekey>
-    <bcf:citekey order="5">li2012chinese</bcf:citekey>
+    <bcf:citekey order="2">yan2013efficient</bcf:citekey>
+    <bcf:citekey order="3">liu2011visually</bcf:citekey>
+    <bcf:citekey order="4">liu2011visually</bcf:citekey>
     <bcf:citekey order="0">*</bcf:citekey>
   </bcf:section>
   <bcf:sortlist section="0" type="entry" label="none">

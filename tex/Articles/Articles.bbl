@@ -19,48 +19,66 @@
 
 \refsection{0}
   \sortlist{entry}{none}
-    \entry{cook2003unihan}{inproceedings}{}
-      \name{labelname}{1}{}{%
-        {{hash=8e398510cfc070291fc1f95c89680bd4}{Cook}{C\bibinitperiod}{Richard\bibnamedelima S}{R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
+    \entry{yan2013efficient}{article}{}
+      \name{labelname}{5}{}{%
+        {{hash=c554abcaf8c8266b2cec72483d1e7145}{Yan}{Y\bibinitperiod}{Xiaoyong}{X\bibinitperiod}{}{}{}{}}%
+        {{hash=107cb7a39a1608ce43ad269dbc647820}{Fan}{F\bibinitperiod}{Ying}{Y\bibinitperiod}{}{}{}{}}%
+        {{hash=1bd17bafc3aff27c54ee75308261b2c3}{Di}{D\bibinitperiod}{Zengru}{Z\bibinitperiod}{}{}{}{}}%
+        {{hash=742d135a5dd9af879149ba57bf45774c}{Havlin}{H\bibinitperiod}{Shlomo}{S\bibinitperiod}{}{}{}{}}%
+        {{hash=8fd5cb98d507dc893cb0496f7cbea5e2}{Wu}{W\bibinitperiod}{Jinshan}{J\bibinitperiod}{}{}{}{}}%
       }
-      \name{author}{1}{}{%
-        {{hash=8e398510cfc070291fc1f95c89680bd4}{Cook}{C\bibinitperiod}{Richard\bibnamedelima S}{R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
-      }
-      \strng{namehash}{8e398510cfc070291fc1f95c89680bd4}
-      \strng{fullhash}{8e398510cfc070291fc1f95c89680bd4}
-      \field{sortinit}{0}
-      \field{labeltitle}{UniHan Variation: Issues and Solutions}
-      \field{booktitle}{23 th Internationalization and Unicode Conference, Prague, Czech Republic}
-      \field{title}{UniHan Variation: Issues and Solutions}
-      \field{year}{2003}
-    \endentry
-    \entry{li2012chinese}{article}{}
-      \name{labelname}{4}{}{%
-        {{hash=eda2f86ac441afff7bdf9ec9def8721f}{Li}{L\bibinitperiod}{Jianyu}{J\bibinitperiod}{}{}{}{}}%
-        {{hash=873b7b14d7a3c7290a8ad393066ee9a3}{Zhou}{Z\bibinitperiod}{Jie}{J\bibinitperiod}{}{}{}{}}%
-        {{hash=95574e04c4865ba8a8bd5ef33f563b79}{Luo}{L\bibinitperiod}{Xiaoyue}{X\bibinitperiod}{}{}{}{}}%
-        {{hash=60dbfc94ad229c29d8151312db967934}{Yang}{Y\bibinitperiod}{Zhanxin}{Z\bibinitperiod}{}{}{}{}}%
-      }
-      \name{author}{4}{}{%
-        {{hash=eda2f86ac441afff7bdf9ec9def8721f}{Li}{L\bibinitperiod}{Jianyu}{J\bibinitperiod}{}{}{}{}}%
-        {{hash=873b7b14d7a3c7290a8ad393066ee9a3}{Zhou}{Z\bibinitperiod}{Jie}{J\bibinitperiod}{}{}{}{}}%
-        {{hash=95574e04c4865ba8a8bd5ef33f563b79}{Luo}{L\bibinitperiod}{Xiaoyue}{X\bibinitperiod}{}{}{}{}}%
-        {{hash=60dbfc94ad229c29d8151312db967934}{Yang}{Y\bibinitperiod}{Zhanxin}{Z\bibinitperiod}{}{}{}{}}%
+      \name{author}{5}{}{%
+        {{hash=c554abcaf8c8266b2cec72483d1e7145}{Yan}{Y\bibinitperiod}{Xiaoyong}{X\bibinitperiod}{}{}{}{}}%
+        {{hash=107cb7a39a1608ce43ad269dbc647820}{Fan}{F\bibinitperiod}{Ying}{Y\bibinitperiod}{}{}{}{}}%
+        {{hash=1bd17bafc3aff27c54ee75308261b2c3}{Di}{D\bibinitperiod}{Zengru}{Z\bibinitperiod}{}{}{}{}}%
+        {{hash=742d135a5dd9af879149ba57bf45774c}{Havlin}{H\bibinitperiod}{Shlomo}{S\bibinitperiod}{}{}{}{}}%
+        {{hash=8fd5cb98d507dc893cb0496f7cbea5e2}{Wu}{W\bibinitperiod}{Jinshan}{J\bibinitperiod}{}{}{}{}}%
       }
       \list{publisher}{1}{%
-        {Elsevier}%
+        {Public Library of Science}%
       }
-      \strng{namehash}{b479ddaf16020a857ed10076dbcf021f}
-      \strng{fullhash}{b820f71764322a68a898582598639707}
+      \strng{namehash}{d73cf9ac667d265f959caccc4dd2d63f}
+      \strng{fullhash}{5da8474dad350e9fc4a13df284cc91d2}
       \field{sortinit}{0}
-      \field{labeltitle}{Chinese lexical networks: The structure, function and formation}
-      \field{journaltitle}{Physica A: Statistical Mechanics and its Applications}
-      \field{number}{21}
-      \field{title}{Chinese lexical networks: The structure, function and formation}
-      \field{volume}{391}
-      \field{year}{2012}
-      \field{pages}{5254\bibrangedash 5263}
-      \keyw{wanted}
+      \field{labeltitle}{Efficient learning strategy of Chinese characters based on network approach}
+      \field{journaltitle}{PloS one}
+      \field{number}{8}
+      \field{title}{Efficient learning strategy of Chinese characters based on network approach}
+      \field{volume}{8}
+      \field{year}{2013}
+      \field{pages}{e69745}
+      \keyw{read}
+    \endentry
+    \entry{liu2011visually}{article}{}
+      \name{labelname}{6}{}{%
+        {{hash=cfcf4ddf0d03e672e74b76c2a42e0062}{Liu}{L\bibinitperiod}{C-L}{C\bibinithyphendelim L\bibinitperiod}{}{}{}{}}%
+        {{hash=fe3c155206f3ac67711a624dff249f50}{Lai}{L\bibinitperiod}{M-H}{M\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
+        {{hash=7eeaf132bc4f0acc2d52cf6435ff92e3}{Tien}{T\bibinitperiod}{K-W}{K\bibinithyphendelim W\bibinitperiod}{}{}{}{}}%
+        {{hash=f6a40f6f17677f0e97ac67dfe31ad0e3}{Chuang}{C\bibinitperiod}{Y-H}{Y\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
+        {{hash=956ea2db6e1504717024f41545db3f43}{Wu}{W\bibinitperiod}{S-H}{S\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
+        {{hash=730017afacfcd6b61edbaeebd73d77cc}{Lee}{L\bibinitperiod}{C-Y}{C\bibinithyphendelim Y\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{6}{}{%
+        {{hash=cfcf4ddf0d03e672e74b76c2a42e0062}{Liu}{L\bibinitperiod}{C-L}{C\bibinithyphendelim L\bibinitperiod}{}{}{}{}}%
+        {{hash=fe3c155206f3ac67711a624dff249f50}{Lai}{L\bibinitperiod}{M-H}{M\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
+        {{hash=7eeaf132bc4f0acc2d52cf6435ff92e3}{Tien}{T\bibinitperiod}{K-W}{K\bibinithyphendelim W\bibinitperiod}{}{}{}{}}%
+        {{hash=f6a40f6f17677f0e97ac67dfe31ad0e3}{Chuang}{C\bibinitperiod}{Y-H}{Y\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
+        {{hash=956ea2db6e1504717024f41545db3f43}{Wu}{W\bibinitperiod}{S-H}{S\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
+        {{hash=730017afacfcd6b61edbaeebd73d77cc}{Lee}{L\bibinitperiod}{C-Y}{C\bibinithyphendelim Y\bibinitperiod}{}{}{}{}}%
+      }
+      \list{publisher}{1}{%
+        {ACM}%
+      }
+      \strng{namehash}{07e08f553f136e84a97e67b04189fb6c}
+      \strng{fullhash}{5f301e0dc554bfe707ded1d05b9506be}
+      \field{sortinit}{0}
+      \field{labeltitle}{Visually and phonologically similar characters in incorrect Chinese words: Analyses, identification, and applications}
+      \field{journaltitle}{ACM Transactions on Asian Language Information Processing (TALIP)}
+      \field{number}{2}
+      \field{title}{Visually and phonologically similar characters in incorrect Chinese words: Analyses, identification, and applications}
+      \field{volume}{10}
+      \field{year}{2011}
+      \field{pages}{10}
     \endentry
     \entry{hu2012graph}{article}{}
       \name{labelname}{2}{}{%
@@ -254,6 +272,34 @@
       \field{pages}{451\bibrangedash 464}
       \keyw{wanted}
     \endentry
+    \entry{li2012chinese}{article}{}
+      \name{labelname}{4}{}{%
+        {{hash=eda2f86ac441afff7bdf9ec9def8721f}{Li}{L\bibinitperiod}{Jianyu}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=873b7b14d7a3c7290a8ad393066ee9a3}{Zhou}{Z\bibinitperiod}{Jie}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=95574e04c4865ba8a8bd5ef33f563b79}{Luo}{L\bibinitperiod}{Xiaoyue}{X\bibinitperiod}{}{}{}{}}%
+        {{hash=60dbfc94ad229c29d8151312db967934}{Yang}{Y\bibinitperiod}{Zhanxin}{Z\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{4}{}{%
+        {{hash=eda2f86ac441afff7bdf9ec9def8721f}{Li}{L\bibinitperiod}{Jianyu}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=873b7b14d7a3c7290a8ad393066ee9a3}{Zhou}{Z\bibinitperiod}{Jie}{J\bibinitperiod}{}{}{}{}}%
+        {{hash=95574e04c4865ba8a8bd5ef33f563b79}{Luo}{L\bibinitperiod}{Xiaoyue}{X\bibinitperiod}{}{}{}{}}%
+        {{hash=60dbfc94ad229c29d8151312db967934}{Yang}{Y\bibinitperiod}{Zhanxin}{Z\bibinitperiod}{}{}{}{}}%
+      }
+      \list{publisher}{1}{%
+        {Elsevier}%
+      }
+      \strng{namehash}{b479ddaf16020a857ed10076dbcf021f}
+      \strng{fullhash}{b820f71764322a68a898582598639707}
+      \field{sortinit}{0}
+      \field{labeltitle}{Chinese lexical networks: The structure, function and formation}
+      \field{journaltitle}{Physica A: Statistical Mechanics and its Applications}
+      \field{number}{21}
+      \field{title}{Chinese lexical networks: The structure, function and formation}
+      \field{volume}{391}
+      \field{year}{2012}
+      \field{pages}{5254\bibrangedash 5263}
+      \keyw{wanted}
+    \endentry
     \entry{shen2007radical}{article}{}
       \name{labelname}{2}{}{%
         {{hash=78f3f0501a99a28d43f844d7378f5f2b}{Shen}{S\bibinitperiod}{Helen\bibnamedelima H}{H\bibinitperiod\bibinitdelim H\bibinitperiod}{}{}{}{}}%
@@ -423,35 +469,6 @@
       \field{year}{2008}
       \field{pages}{710\bibrangedash 713}
     \endentry
-    \entry{yan2013efficient}{article}{}
-      \name{labelname}{5}{}{%
-        {{hash=c554abcaf8c8266b2cec72483d1e7145}{Yan}{Y\bibinitperiod}{Xiaoyong}{X\bibinitperiod}{}{}{}{}}%
-        {{hash=107cb7a39a1608ce43ad269dbc647820}{Fan}{F\bibinitperiod}{Ying}{Y\bibinitperiod}{}{}{}{}}%
-        {{hash=1bd17bafc3aff27c54ee75308261b2c3}{Di}{D\bibinitperiod}{Zengru}{Z\bibinitperiod}{}{}{}{}}%
-        {{hash=742d135a5dd9af879149ba57bf45774c}{Havlin}{H\bibinitperiod}{Shlomo}{S\bibinitperiod}{}{}{}{}}%
-        {{hash=8fd5cb98d507dc893cb0496f7cbea5e2}{Wu}{W\bibinitperiod}{Jinshan}{J\bibinitperiod}{}{}{}{}}%
-      }
-      \name{author}{5}{}{%
-        {{hash=c554abcaf8c8266b2cec72483d1e7145}{Yan}{Y\bibinitperiod}{Xiaoyong}{X\bibinitperiod}{}{}{}{}}%
-        {{hash=107cb7a39a1608ce43ad269dbc647820}{Fan}{F\bibinitperiod}{Ying}{Y\bibinitperiod}{}{}{}{}}%
-        {{hash=1bd17bafc3aff27c54ee75308261b2c3}{Di}{D\bibinitperiod}{Zengru}{Z\bibinitperiod}{}{}{}{}}%
-        {{hash=742d135a5dd9af879149ba57bf45774c}{Havlin}{H\bibinitperiod}{Shlomo}{S\bibinitperiod}{}{}{}{}}%
-        {{hash=8fd5cb98d507dc893cb0496f7cbea5e2}{Wu}{W\bibinitperiod}{Jinshan}{J\bibinitperiod}{}{}{}{}}%
-      }
-      \list{publisher}{1}{%
-        {Public Library of Science}%
-      }
-      \strng{namehash}{d73cf9ac667d265f959caccc4dd2d63f}
-      \strng{fullhash}{5da8474dad350e9fc4a13df284cc91d2}
-      \field{sortinit}{0}
-      \field{labeltitle}{Efficient learning strategy of Chinese characters based on network approach}
-      \field{journaltitle}{PloS one}
-      \field{number}{8}
-      \field{title}{Efficient learning strategy of Chinese characters based on network approach}
-      \field{volume}{8}
-      \field{year}{2013}
-      \field{pages}{e69745}
-    \endentry
     \entry{ji2014graph}{inproceedings}{}
       \name{labelname}{3}{}{%
         {{hash=e5ede9173fc5cea4bf8a4adeeb8b7e2a}{Ji}{J\bibinitperiod}{Jingning}{J\bibinitperiod}{}{}{}{}}%
@@ -593,37 +610,6 @@
       \field{year}{2012}
       \field{pages}{238\bibrangedash 245}
     \endentry
-    \entry{liu2011visually}{article}{}
-      \name{labelname}{6}{}{%
-        {{hash=cfcf4ddf0d03e672e74b76c2a42e0062}{Liu}{L\bibinitperiod}{C-L}{C\bibinithyphendelim L\bibinitperiod}{}{}{}{}}%
-        {{hash=fe3c155206f3ac67711a624dff249f50}{Lai}{L\bibinitperiod}{M-H}{M\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
-        {{hash=7eeaf132bc4f0acc2d52cf6435ff92e3}{Tien}{T\bibinitperiod}{K-W}{K\bibinithyphendelim W\bibinitperiod}{}{}{}{}}%
-        {{hash=f6a40f6f17677f0e97ac67dfe31ad0e3}{Chuang}{C\bibinitperiod}{Y-H}{Y\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
-        {{hash=956ea2db6e1504717024f41545db3f43}{Wu}{W\bibinitperiod}{S-H}{S\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
-        {{hash=730017afacfcd6b61edbaeebd73d77cc}{Lee}{L\bibinitperiod}{C-Y}{C\bibinithyphendelim Y\bibinitperiod}{}{}{}{}}%
-      }
-      \name{author}{6}{}{%
-        {{hash=cfcf4ddf0d03e672e74b76c2a42e0062}{Liu}{L\bibinitperiod}{C-L}{C\bibinithyphendelim L\bibinitperiod}{}{}{}{}}%
-        {{hash=fe3c155206f3ac67711a624dff249f50}{Lai}{L\bibinitperiod}{M-H}{M\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
-        {{hash=7eeaf132bc4f0acc2d52cf6435ff92e3}{Tien}{T\bibinitperiod}{K-W}{K\bibinithyphendelim W\bibinitperiod}{}{}{}{}}%
-        {{hash=f6a40f6f17677f0e97ac67dfe31ad0e3}{Chuang}{C\bibinitperiod}{Y-H}{Y\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
-        {{hash=956ea2db6e1504717024f41545db3f43}{Wu}{W\bibinitperiod}{S-H}{S\bibinithyphendelim H\bibinitperiod}{}{}{}{}}%
-        {{hash=730017afacfcd6b61edbaeebd73d77cc}{Lee}{L\bibinitperiod}{C-Y}{C\bibinithyphendelim Y\bibinitperiod}{}{}{}{}}%
-      }
-      \list{publisher}{1}{%
-        {ACM}%
-      }
-      \strng{namehash}{07e08f553f136e84a97e67b04189fb6c}
-      \strng{fullhash}{5f301e0dc554bfe707ded1d05b9506be}
-      \field{sortinit}{0}
-      \field{labeltitle}{Visually and phonologically similar characters in incorrect Chinese words: Analyses, identification, and applications}
-      \field{journaltitle}{ACM Transactions on Asian Language Information Processing (TALIP)}
-      \field{number}{2}
-      \field{title}{Visually and phonologically similar characters in incorrect Chinese words: Analyses, identification, and applications}
-      \field{volume}{10}
-      \field{year}{2011}
-      \field{pages}{10}
-    \endentry
     \entry{lai2004composite}{article}{}
       \name{labelname}{4}{}{%
         {{hash=f3a1c8d19ca5723ae7b15fe052ff01a4}{Lai}{L\bibinitperiod}{Chen-Yu}{C\bibinithyphendelim Y\bibinitperiod}{}{}{}{}}%
@@ -746,6 +732,21 @@
       \field{volume}{19}
       \field{year}{1984}
       \field{pages}{15\bibrangedash 20}
+    \endentry
+    \entry{cook2003unihan}{inproceedings}{}
+      \name{labelname}{1}{}{%
+        {{hash=8e398510cfc070291fc1f95c89680bd4}{Cook}{C\bibinitperiod}{Richard\bibnamedelima S}{R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
+      }
+      \name{author}{1}{}{%
+        {{hash=8e398510cfc070291fc1f95c89680bd4}{Cook}{C\bibinitperiod}{Richard\bibnamedelima S}{R\bibinitperiod\bibinitdelim S\bibinitperiod}{}{}{}{}}%
+      }
+      \strng{namehash}{8e398510cfc070291fc1f95c89680bd4}
+      \strng{fullhash}{8e398510cfc070291fc1f95c89680bd4}
+      \field{sortinit}{0}
+      \field{labeltitle}{UniHan Variation: Issues and Solutions}
+      \field{booktitle}{23 th Internationalization and Unicode Conference, Prague, Czech Republic}
+      \field{title}{UniHan Variation: Issues and Solutions}
+      \field{year}{2003}
     \endentry
     \entry{haralambous2013new}{incollection}{}
       \name{labelname}{1}{}{%
