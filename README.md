@@ -5,8 +5,6 @@ Summary
 * What the meaning of the title?
 * Ideographic Description Sequences
 * About \LaTeX{}
- * Why using \LaTeX{} instead of markdown?
- * Compilation
 * misc
 * Licence
 
