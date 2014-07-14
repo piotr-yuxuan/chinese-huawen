@@ -1,6 +1,12 @@
 # 華文
 
-[TOC]
+Summary
+* Why that repository?
+* What the meaning of the title?
+* Why using $$$\LaTeX{}$$$ instead of markdown?
+* Ideographic Description Sequences
+* misc
+* Licence
 
 ## Why that repository?
 
@@ -15,9 +21,9 @@ The first character 華 means something like sinity or chineseness. It's used to
 
 Github doesn't accept alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
 
-## Why using $$$\LaTeX{}$$$ instead of markdown?
+## Why using \LaTeX{} instead of markdown?
 
-You're right, markdown can be read directly on github with no downloads and is lighter than $$$\LaTeX{}$$$ but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on.
+You're right, markdown can be read directly on github with no downloads and is lighter than \LaTeX{} but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on.
 
 Nonetheless I've been trying to automatically generate markdown files with pandoc then to not to upload `pdf` here but just `tex` and `md`. I faced some issues (handling bibliographiy-related and `input` commands) then I gave up. I know you more than me about it, please tell me :-)
 
