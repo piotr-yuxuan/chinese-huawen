@@ -1,0 +1,25 @@
+% This is the global preamble file for xeLaTeX documents.
+
+% We use the package import to resolve paths correctly. That package should be use for preamble. In the opposite, \input should be used for including text. The following group set the preamble and should be pasted in every master document.
+%\usepackage{import}
+%\newcommand\directory{../../} % It's important to always know where is the root directory.
+%\import{\directory/tex/preamble/}{general.tex}
+
+\subimport{./}{paths.tex}
+\subimport{./}{language.tex}
+\subimport{./}{font.tex}
+
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=green,          % color of internal links (change box color with linkbordercolor)
+    citecolor=magenta,        % color of links to bibliography
+    filecolor=red,      % color of file links
+    urlcolor=blue
+}
+
+\usepackage[stable]{footmisc}
+
+% In-text citation. Actually I'd like to know a citation style which once give the title and the reference (just like here) then just the reference. Anyway, this is not bothering too much.
+\newcommand\incite[1]{\english{\citetitle{#1} \cite{#1}}} % in-text citation
