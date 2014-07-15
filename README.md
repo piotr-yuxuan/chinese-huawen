@@ -1,25 +1,16 @@
 # 華文
 
-Summary
-* Why that repository?
-* What the meaning of the title?
 * Ideographic Description Sequences
-* About \LaTeX{}
+* That repository
+ * What is this?
+ * What is the meaning of the title?
+ * Why that repository?
+* LaTeX
+ * Why using LaTeX instead of markdown?
+ * Preamble
+ * Known issues
+ * Compilation
 * misc
-* Licence
-
-## Why that repository?
-
-This is intended to be a long-time project about Graph theoretic analysis of the ideograms set.
-
-That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them.
-
-In a personnal way, a important milestone would be to make consistent enough work to write article.
-
-## What the meaning of the title?
-The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language.
-
-Github doesn't accept alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
 
 ## [Ideographic Description Sequences](https://github.com/kawabata/ids)
 
@@ -29,17 +20,34 @@ Ideographic Description Sequences are meant to break down every ideogram into sm
 
 From that, a wonderful world of big, interesting paths appears. [Emacs and Lisp](https://github.com/kawabata/ids-edit) can be very useful
 
-## About \LaTeX{}
+## That repository
 
-### Why using \LaTeX{} instead of markdown?
+### What is this?
 
-You're right, markdown can be read directly on github with no downloads and is lighter than \LaTeX{} but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on.
+That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them.
+
+In a personnal way, a important milestone would be to make consistent enough work to write article.
+
+### What is the meaning of the title?
+The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language.
+
+Github doesn't accept alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
+
+### Why that repository?
+
+I'm a freedom-oriented person, free both as in free speach and free beer ;-) I believe that feeding an public repository can't hurt me: some wanderer may be willing to help me or to give me some advice.
+
+## LaTeX
+
+### Why using LaTeX instead of markdown?
+
+You're right, markdown can be read directly on github with no downloads and is lighter than LaTeX but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on.
 
 Nonetheless I've been trying to automatically generate markdown files with pandoc then to not to upload `pdf` here but just `tex` and `md`. I faced some issues (handling bibliographiy-related and `input` commands) then I gave up. I know you more than me about it, please tell me :-)
 
 ### Preamble
 
-\LaTeX{} files here use preambles as modules, so rather prefer to load preambles with commands from the package [`import`](http://ctan.mines-albi.fr/macros/latex/contrib/import/import.pdf). On the contrary, it's easier to enclose text with `\input`.
+LaTeX files here use preambles as modules, so rather prefer to load preambles with commands from the package [`import`](http://ctan.mines-albi.fr/macros/latex/contrib/import/import.pdf). On the contrary, it's easier to enclose text with `\input`.
 
 ### Known issues
 
@@ -58,7 +66,3 @@ xelatex -recorder
 ## misc
 
 Chinese language is a fascinating boustrophedon, stoichedon Eastern language. Yes, those two words are uncommon but I learned them some days ago and I think they rock! 😉
-
-## Licence
-
-All personnal works of mine in that repository are under CC BY-NC-SA 4.0. Of course, files from other projects are not under that copyright.
