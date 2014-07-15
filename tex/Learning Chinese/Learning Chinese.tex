@@ -1,8 +1,11 @@
 \documentclass[12pt,onecolumn]{article} % Type de document
-\input{../../tex/preamble.tex}
+\usepackage{import}
+
+\newcommand\directory{../../} % It's important to always know where is the root directory.
+\import{\directory/tex/preamble/}{general.tex}
 
 \title{Jeu sur la structure de l'ensemble ouvert des sinogrammes}
-\author{\input{../../authors.tex}}
+\author{\input{\directory/authors.tex}}
 \date{mercredi 23 janvier 2014}
 
 \begin{document}
