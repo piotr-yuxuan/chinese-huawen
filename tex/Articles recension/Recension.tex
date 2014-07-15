@@ -7,32 +7,39 @@
 \import{\preamble/}{bibliography.tex}
 
 \title{Articles recension}
-\author{\import{\directory/}{authors.tex}}
+\author{\import{\tex/}{authors.tex}}
+
+% \import are useful for preambles but for including text, \input is fine. Maybe we could use includeonly and include to fasten a bit compilation step in redaction process.
 
 \begin{document}
 \maketitle
 \selectlanguage{english}
 \begin{abstract}
-\input{\directory/disclaimer.tex}\par This is a recension meant to cover each article in the \texttt{ref} directory. First abstract is pasted then I briefly explain why I've chosen to put it in my bibliography. This is aimed at not getting drown in all those deep, difficult yet enthralling articles.\par I'll try for each of them to reply to several questions: what can I use from those for my own aims? What are new suggested projects? Does it make use of ideas I ought use for my own?
+\input{\tex/disclaimer.tex}\par This is a recension meant to cover each article in the \texttt{ref} directory. First abstract is pasted then I briefly explain why I've chosen to put it in my bibliography. This is aimed at not getting drown in all those deep, difficult yet enthralling articles.\par I'll try for each of them to reply to several questions: what can I use from those for my own aims? What are new suggested projects? Does it make use of ideas I ought use for my own?
 \end{abstract}
 \selectlanguage{francais}
 
 \tableofcontents
-\cleardoublepage
+
+\input{bibsection.tex}
 
 \section*{Introduction}
 
 % Take care to keep the section number / citation number binding working.
 \section{\citetitle{yan2013efficient}}
-
-% \import are useful for preambles but for including text, \input is fine.
 \input{parts/yan2013efficient}
 
-\section*{Conclusion}
+\section{\citetitle{skala2014structural}}
+\input{parts/skala2014structural}
 
-\section{\LaTeX{} todos}
+\section{\citetitle{CLA:CLA003}}
+Son titre m'a attiré. Il pourrait n'être pas tout à fait dans le sujet mais au moins je serai fixé.
+
+\section*{Conclusion}
 \selectlanguage{english}
+\section{\LaTeX{} todos}
 Put websites in references and display it in two-part bibliography splitted with papers and online resources.
 
-\input{bibsection.tex}
+Methinks there is some issue with inline ideograms\dots{}
+
 \end{document}

@@ -1,5 +1,7 @@
 \usepackage[english,francais]{babel} % Pour définir la langue
 \selectlanguage{francais}
-\newcommand\english[1]{\foreignlanguage{english}{#1}}
-\newcommand\français[1]{\foreignlanguage{francais}{#1}}
+
+% For these commands we assume the documents to be written in no more than two languages : English and French. Thus when we ask for a bit of English surrounding text must be in French.
+\newcommand\english[1]{\selectlanguage{english}#1\selectlanguage{francais}}
+\newcommand\français[1]{\selectlanguage{francais}{#1}\selectlanguage{english}}
 

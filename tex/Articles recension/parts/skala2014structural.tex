@@ -1,0 +1,38 @@
+\selectlanguage{english}
+\subsection{Note de version}
+L'article que je lis est une pré-impression : \texttt{preprint arXiv:1404.5585}, peut-être y aura-t-il une nouvelle version ; à surveiller donc. Mais cette version a été publiée le 22 avril 2014 donc c'est récent.
+\subsection{Abstract}
+\english{The \textsc{ids}grep structural query system for Han character dictionaries is presented. This system includes a
+data model and syntax for describing the spatial structure of Han characters using Extended Ideographic
+Description Sequences (\textsc{eids}es) based on the Unicode \textsc{ids} syntax; a language for querying \textsc{eids} databases,
+designed to suit the needs of font developers and foreign language learners; a bit vector index inspired by
+Bloom filters for faster query operations; a freely available implementation; and format translation from
+popular third-party \textsc{ids} and \textsc{xml} character databases. Experimental results are included, with a comparison
+to other software used for similar applications.}
+\selectlanguage{francais}
+\subsection{Ressources en ligne du projet}
+\url{http://tsukurimashou.sourceforge.jp/}\par
+\url{http://tsukurimashou.sourceforge.jp/idsgrep.php.en}\par
+\url{http://ansuz.sooke.bc.ca/} Le site de l'auteur. J'y étais déjà allé faire un tour ! D'un certain côté c'est rassurant de retomber sur des choses connues mais ça prouve que je n'intègre pas assez profondément ce que je trouve, snif.
+\subsection{Réaction}
+J'ai trouvé cet article assez tard mais son titre m'a appâté et je l'ai lu en second. Outre que cela révèle que je n'ai pas lu d'autres articles que le premier avant de trouver celui-ci $\sim$$\sim$, j'imaginais pouvoir faire une base de données d'idéogrammes et lui envoyer des requêtes mais l'idée d'élaborer un langage de requête propre et d'améliorer les \textsc{ids} d'unicode va plus loin, c'est mieux.
+
+Le second lien indique : \english{Tsukurimashou, KanjiVG, CHISE, and EDICT2}. cela me fait toujours quelques bases de données en plus.
+
+Eh beh voilà un bel état de l'art ! Certains sites me seront utiles. Le paragraphe 1.1 recense plein de projets dont j'ai déjà eu connaissance et leur apporte un éclairage nouveau. Du coup cela montre que cet article est vraiment bien dans mon cœur de cible. Il parle de \textsc{wwwjdic} qui utilise un autre jeu de clef que les canoniques. On retrouve l'idée de mon premier brouillon qui décomposait les caractères de deux manières.
+
+En tout cas c'est cool, ça montre bien qu'il y a de vrais possibilités de faire de l'informatique avec les idéogrammes. Je suis content d'avoir choisi le parcours ingénieur logiciel : l'argument utilisé à l'époque semble toujours aussi bon.
+
+On retrouve dans cet article le vocabulaire d'arbre que j'utilisais dans mon premier brouillon. \citetitle{skala2014structural} utilise plutôt le point de vue du réseau mais les deux sont sans doute complémentaires et intéressants.
+
+Je me souviens que j'ai commencé de lire un jour le cours de linguistique générale de \textsc{Saussure}. Ce domaine étant à l'interface entre informatique et linguistique, peut-être ferai-je bien de le relire !
+
+Partie 3.1\marginpar{A lire}\\
+\url{http://arxiv.org/abs/1407.3751?context=cs.IR}\marginpar{Dans le doute, je l'ai pris.}
+
+\subsection{Pistes d'application}
+Je n'ai pas l'impression qu'il utilise des bases de données graphes mais plutôt un stockage en arbre. Il utilise des fichiers textes ou une vraie bdd ?
+
+Tsukurimashou font project may be a elegant to generate output for components yet outside of unicode.
+
+Existe-t-il un ensemble de clefs parfait ? comment définir cette perfection ? comment situer l'ensemble de clefs canoniques par rapport à cette définition ? cela ne dépendrait-il pas de l'utilisation ?
