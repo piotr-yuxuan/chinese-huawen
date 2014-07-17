@@ -17,9 +17,11 @@ to other software used for similar applications.}
 \subsection{Réaction}
 J'ai trouvé cet article assez tard mais son titre m'a appâté et je l'ai lu en second. Outre que cela révèle que je n'ai pas lu d'autres articles que le premier avant de trouver celui-ci $\sim$$\sim$, j'imaginais pouvoir faire une base de données d'idéogrammes et lui envoyer des requêtes mais l'idée d'élaborer un langage de requête propre et d'améliorer les \textsc{ids} d'unicode va plus loin, c'est mieux.
 
-Le second lien indique : \english{Tsukurimashou, KanjiVG, CHISE, and EDICT2}. cela me fait toujours quelques bases de données en plus.
+Le second lien indique : \english{Tsukurimashou, KanjiVG, CHISE, and EDICT2}. cela me fait toujours quelques bases de données en plus. Le corps de l'article (\english{table I}) indique des jeux de données.
 
-Eh beh voilà un bel état de l'art ! Certains sites me seront utiles. Le paragraphe 1.1 recense plein de projets dont j'ai déjà eu connaissance et leur apporte un éclairage nouveau. Du coup cela montre que cet article est vraiment bien dans mon cœur de cible. Il parle de \textsc{wwwjdic} qui utilise un autre jeu de clef que les canoniques. On retrouve l'idée de mon premier brouillon qui décomposait les caractères de deux manières.
+Eh beh voilà un bel état de l'art ! Le paragraphe 1.1 recense plein de projets dont j'ai déjà eu connaissance et leur apporte un éclairage nouveau. Du coup cela montre que cet article est vraiment bien dans mon cœur de cible. Il parle de \textsc{wwwjdic} qui utilise un autre jeu de clef que les canoniques. On retrouve l'idée de mon premier brouillon qui décomposait les caractères de deux manières.
+
+Je n'ai pas l'impression qu'il utilise des bases de données graphes mais plutôt un stockage en arbre dans des fichiers textes. Comme indiqué par le nom de son outil, le but d'\textsc{ids}grep est de parcourir du texte.
 
 En tout cas c'est cool, ça montre bien qu'il y a de vrais possibilités de faire de l'informatique avec les idéogrammes. Je suis content d'avoir choisi le parcours ingénieur logiciel : l'argument utilisé à l'époque semble toujours aussi bon.
 
@@ -27,12 +29,13 @@ On retrouve dans cet article le vocabulaire d'arbre que j'utilisais dans mon pre
 
 Je me souviens que j'ai commencé de lire un jour le cours de linguistique générale de \textsc{Saussure}. Ce domaine étant à l'interface entre informatique et linguistique, peut-être ferai-je bien de le relire !
 
-Partie 3.1\marginpar{A lire}\\
-\url{http://arxiv.org/abs/1407.3751?context=cs.IR}\marginpar{Dans le doute, je l'ai pris.}
+\url{http://arxiv.org/abs/1407.3751?context=cs.IR}\marginpar{Dans le doute. A lire.}
+
+Cet article est vraiment technique. Il présente quelques nouvelles idées et surtout les détails techniques de leurs implémentations. Je pense qu'il faudra que je le relise quand je travaillerai vraiment le sujet et que ma tâche principale de lire des articles sera terminée.
 
 \subsection{Pistes d'application}
-Je n'ai pas l'impression qu'il utilise des bases de données graphes mais plutôt un stockage en arbre. Il utilise des fichiers textes ou une vraie bdd ?
-
-Tsukurimashou font project may be a elegant to generate output for components yet outside of unicode.
+\english{Tsukurimashou font project may be a elegant way to generate output for components yet outside of unicode}.
 
 Existe-t-il un ensemble de clefs parfait ? comment définir cette perfection ? comment situer l'ensemble de clefs canoniques par rapport à cette définition ? cela ne dépendrait-il pas de l'utilisation ?
+
+Je pense qu'on peut voir comment implémenter ça avec une base de données \textsc{rdf} ou en graphe. Peut-être pourrais-je demander conseil à madame \textsc{Chiky} ?
