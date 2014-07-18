@@ -1,0 +1,39 @@
+% Warning, this should be compile with the following line:
+% pdflatex -shell-escape
+\documentclass[12pt,onecolumn]{minimal}
+\usepackage{pgffor}
+\usepackage[final]{pdfpages}
+\usepackage[francais,english]{babel}
+% \import are useful for preambles but for including text, \input is fine. Maybe we could use includeonly and include to fasten a bit compilation step in redaction process.
+
+\newcommand\print[1]{\includepdf[scale=1,pages=-]{links/#1.pdf}~\newpage~\newpage~\newpage~\newpage}
+
+% http://tex.stackexchange.com/questions/7653/how-to-iterate-through-the-name-of-files-in-a-folder
+% http://stackoverflow.com/questions/2561791/iteration-in-latex
+
+%\makeatletter
+%\def\app@exe{\immediate\write18}
+%\def\inputAllFiles#1{%
+%  \app@exe{ls #1/*.txt | xargs cat >> \jobname.tmp}%
+%  \InputIfFileExists{\jobname.tmp}{}
+%  \AtEndDocument{\app@exe{rm -f #1/\jobname.tmp}}}
+%\makeatother
+
+\begin{document}
+%\paragraph{notes} %structural and ngmras
+%A Research on the Stroke-Segment-Mesh (SSM) Glyph Depiction Method of Chinese Character
+\print{cdl}
+\print{ideosy}
+\print{processing}
+\print{structure}
+\print{composite}
+\print{metapost}
+\print{reconstruction}
+\print{unencoded}
+\print{empirical}
+\print{segmentation}
+\print{unihan}
+\print{frequency}
+\print{optimal}
+\print{visually}
+\end{document}
