@@ -1,3 +1,4 @@
+% Global paths file
 %\usepackage[abspath=true]{currfile}
 
 %\newcommand\directory{../../} % This is tricky: it's perfectly fine to define \directory command here but you still need it in your master document to reach that file ^^
@@ -6,3 +7,9 @@
     \newcommand\refs{\directory/refs/}
      \newcommand\tex{\directory/tex/}
 \newcommand\preamble{\directory/tex/preamble/}
+
+%% Usage
+% The upper commands can be use with the following syntaxes:
+%	\import{\data/}{Abc123.tex} % don't forget the path's final slash.
+%	\import\data{Abc123.tex} % Note final slash aforementionned has been deleted.
+%	\import{\data/}{Abc:123.tex} You can't use the previous shortcut if your filename is not simple. That's supposed to be a import package bug.

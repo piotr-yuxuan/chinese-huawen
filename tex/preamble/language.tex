@@ -1,7 +1,6 @@
-\usepackage[english,francais]{babel} % Pour définir la langue
-\selectlanguage{francais}
+\usepackage[francais,english]{babel} % Pour définir la langue
+% It's a good practice to set the language at the begenning of a file or just after having imported a file. For instance, use: \selectlanguage{francais}.
 
 % For these commands we assume the documents to be written in no more than two languages : English and French. Thus when we ask for a bit of English surrounding text must be in French.
 \newcommand\english[1]{\selectlanguage{english}#1\selectlanguage{francais}}
 \newcommand\français[1]{\selectlanguage{francais}{#1}\selectlanguage{english}}
-
