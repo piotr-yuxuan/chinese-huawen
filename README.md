@@ -18,7 +18,7 @@ Ideographic Description Sequences are meant to break down every ideogram into sm
 * `{⿱艹&CDP-8BF8;, ⿱亠, 乂}` where `&CDP-8BF8;` stands for a character still outside of the Unicode ;
 * `{⿱艹&CDP-8BF8;, ⿱⿱丶一⿻丿乀}`. `艹` is no more broken down because we stop at radical level.
 
-From that, a wonderful world of big, interesting paths appears. [Emacs and Lisp](https://github.com/kawabata/ids-edit) can be very useful
+From that, a wonderful world of big, interesting paths appears. [Emacs and Lisp](https://github.com/kawabata/ids-edit) can be very usefulJjjk
 
 ## That repository
 
@@ -66,3 +66,4 @@ xelatex -recorder
 ## misc
 
 Chinese language is a fascinating boustrophedon, stoichedon Eastern language. Yes, those two words are uncommon but I learned them some days ago and I think they rock! 😉
+
