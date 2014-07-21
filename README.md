@@ -1,3 +1,5 @@
+> Update temporarily halted for my final internship report then away-from-my-computer summer break :/ I'll keep to read articles anyway ;-)
+
 # 華文
 
 * Ideographic Description Sequences
