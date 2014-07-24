@@ -1,6 +1,7 @@
 # 華文
 
 * Ideographic Description Sequences
+* Current possible  
 * That repository
  * What is this?
  * What is the meaning of the title?
@@ -14,7 +15,7 @@
 
 ## [Ideographic Description Sequences](https://github.com/kawabata/ids)
 
-Ideographic Description Sequences are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged all together. For example, the two-item character set `{華, 文}` is described by the following sequences:
+Ideographic Description Sequences are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged all together. It is maintained by the Unicode Consortium. For example, the two-item character set `{華, 文}` is described by the following sequences:
 * `{⿱艹&CDP-8BF8;, ⿱亠, 乂}` where `&CDP-8BF8;` stands for a character still outside of the Unicode ;
 * `{⿱艹&CDP-8BF8;, ⿱⿱丶一⿻丿乀}`. `艹` is no more broken down because we stop at radical level.
 
