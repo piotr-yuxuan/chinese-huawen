@@ -1,4 +1,4 @@
-> Update temporarily halted for my final internship report then away-from-my-computer summer break :/ I'll keep to read articles anyway ;-)
+> About update pace: I've got my final internship report to write then I'll have an away-from-my-computer summer break :/ I'll keep to read articles anyway ;-)
 
 # 華文
 
