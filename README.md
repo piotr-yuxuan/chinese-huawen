@@ -42,8 +42,6 @@ From that, a wonderful world of big, interesting paths appears. [Emacs and Lisp]
 
 That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them.
 
-In a personnal way, a important milestone would be to make consistent enough work to write article.
-
 ### What is the meaning of the title?
 The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language.
 
