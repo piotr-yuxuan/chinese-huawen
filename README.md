@@ -45,7 +45,7 @@ That project was first aimed at finding the most efficient path to learn sinogra
 ### What is the meaning of the title?
 The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language.
 
-Github doesn't accept alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
+Github merely accepts alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
 
 ### Why that repository?
 
