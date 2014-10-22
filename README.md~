@@ -3,7 +3,7 @@
 * Work load path
 * Some concepts
  * Ideographic Description Sequences
- * Current possible implementations
+ * Current possible applications
 * That repository
  * What is this?
  * What is the meaning of the title?
@@ -44,7 +44,7 @@ For example, the character 灣 is described by the following equivalent sequence
 
 What is the most elegant? Do I need to learn [Emacs, Lisp](https://github.com/kawabata/ids-edit) and Perl to efficiently deal with parsing?
 
-## Current possible implementations
+## Current possible applications
 (subject to change. It merely skims up the recension)
 
 * How to store ideogram graphs? Graph databases are quite inviting. Such a database may be able to deal with character variants, thanks to the Unicode Consortium  [character-glyph model](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf) or any other;
