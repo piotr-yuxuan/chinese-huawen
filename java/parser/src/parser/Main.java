@@ -24,8 +24,8 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		parse(new File("src/test.txt"));
-		/*parse(new File("src/IDS-UCS-Basic.txt"));
+		// parse(new File("src/test.txt"));
+		parse(new File("src/IDS-UCS-Basic.txt"));
 		parse(new File("src/IDS-UCS-Compat-Supplement.txt"));
 		parse(new File("src/IDS-UCS-Compat.txt"));
 		parse(new File("src/IDS-UCS-Ext-A.txt"));
@@ -37,13 +37,20 @@ public class Main {
 		parse(new File("src/IDS-UCS-Ext-B-6.txt"));
 		parse(new File("src/IDS-UCS-Ext-C.txt"));
 		parse(new File("src/IDS-UCS-Ext-D.txt"));
-		parse(new File("src/IDS-UCS-Ext-E.txt"));*/
+		parse(new File("src/IDS-UCS-Ext-E.txt"));
+
+		int cardinality = 0;
+		for (Node n : dictionary.values()) {
+			cardinality += n.getCardinality();
+		}
 
 		System.out.println();
-		System.out.println(format("Main nodes", Main.main, Main.main));
-		System.out.println(format("Set size  ", Main.dictionary.size(),
+		System.out.println(format("Main nodes  ", Main.main, Main.main));
+		System.out.println(format("Set size    ", Main.dictionary.size(),
 				Main.main));
-		System.out.println(format("Exception ", Main.parserError, Main.main));
+		System.out.println(format("Cardinalité ", cardinality,
+				Main.dictionary.size()));
+		System.out.println(format("Exception   ", Main.parserError, Main.main));
 		System.exit(0);
 	}
 

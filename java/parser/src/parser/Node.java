@@ -7,13 +7,40 @@ import java.util.NoSuchElementException;
 
 public class Node {
 
-	private int id;
 	private String character;
 	private IDC type;
 	private ArrayList<Node> leaves;
 
 	public int getId() {
 		return getIDS().hashCode();
+	}
+
+	public int getDepth() {
+		if (leaves.size() == 0) {
+			return 1;
+		} else {
+			int max = 0;
+			for (Node n : leaves) {
+				max = Math.max(max, n.getDepth());
+			}
+			return max;
+		}
+	}
+
+	/***
+	 * There may be some bugs.
+	 * @return
+	 */
+	public int getCardinality() {
+		if (leaves.size() == 0) {
+			return 1;
+		} else {
+			int sum = 1;
+			for (Node n : leaves) {
+				sum += n.getDepth();
+			}
+			return sum;
+		}
 	}
 
 	public String getCharacter() {
@@ -79,7 +106,6 @@ public class Node {
 		this.character = character;
 		this.leaves = node.leaves;
 		this.type = node.type;
-		this.id = getIDS().hashCode(); // take care to malformed nodes.
 	}
 
 	private Deque<String> split(String sequence) {
