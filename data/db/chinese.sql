@@ -4,18 +4,19 @@ drop table if exists `structure`;
 drop table if exists `allography`;
 drop table if exists `sinogram`;
 
-create table sinogram ( -- caractère
-	cp varchar(12) not null, -- insérer le point de code en chaîne de caractère ou un substitut.
+create table `sinogram` ( -- caractère
+	cp varchar(12) not null, -- insert codepoint as a string or a substitute.
     semantics varchar(256),
     consonants char,
     rhyme char,
     tone int,
     stroke tinyint,
-    frequency tinyint,
+    frequency tinyint, -- we further need to distingish between use in speech or use in other sinograms
+    induced boolean not null, -- express whether that sinogram has been added properly or induced
     primary key (cp)
 );
 
-create table allography ( -- similitude
+create table `allography` ( -- similitude
 	cp varchar(12) not null,
     class int not null,
     foreign key (cp) references sinogram(cp),
