@@ -1,8 +1,14 @@
 package parser;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.HashSet;
 
 import org.jsefa.Deserializer;
 import org.jsefa.common.lowlevel.filter.HeaderAndFooterFilter;
@@ -11,12 +17,15 @@ import org.jsefa.csv.config.CsvConfiguration;
 
 public class Main {
 
-	public static int all = 0;
-	public static int ignored = 0;
+	public static int main = 0;
+	public static int induced = 0;
+	public static int parserError = 0;
+	public static HashMap<Integer, Node> dictionary = new HashMap<>();
 
 	public static void main(String[] args) {
 
-		parse(new File("src/IDS-UCS-Basic.txt"));
+		parse(new File("src/test.txt"));
+		/*parse(new File("src/IDS-UCS-Basic.txt"));
 		parse(new File("src/IDS-UCS-Compat-Supplement.txt"));
 		parse(new File("src/IDS-UCS-Compat.txt"));
 		parse(new File("src/IDS-UCS-Ext-A.txt"));
@@ -28,24 +37,30 @@ public class Main {
 		parse(new File("src/IDS-UCS-Ext-B-6.txt"));
 		parse(new File("src/IDS-UCS-Ext-C.txt"));
 		parse(new File("src/IDS-UCS-Ext-D.txt"));
-		parse(new File("src/IDS-UCS-Ext-E.txt"));
+		parse(new File("src/IDS-UCS-Ext-E.txt"));*/
 
 		System.out.println();
-		System.out.println(format("All nodes : ", Main.all, Main.all));
-		System.out.println(format("Ignored   : ", Main.ignored, Main.all));
+		System.out.println(format("Main nodes", Main.main, Main.main));
+		System.out.println(format("Set size  ", Main.dictionary.size(),
+				Main.main));
+		System.out.println(format("Exception ", Main.parserError, Main.main));
 		System.exit(0);
 	}
 
 	private static String format(String label, int field, int total) {
-		return label + ": " + field + " (" + (double) (100 * field / total)
+		return label + ": " + field + " (" + ((double) 100 * field / total)
 				+ ")";
 	}
 
 	public static void parse(File file) {
-		FileReader reader;
+
+		Reader reader = null;
 		try {
-			reader = new FileReader(file);
+			reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
 		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return;
+		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			return;
 		}
@@ -59,7 +74,6 @@ public class Main {
 
 		deserializer.open(reader);
 		while (deserializer.hasNext()) {
-
 			Row row = deserializer.next();
 			row.toEntities();
 		}

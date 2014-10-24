@@ -30,7 +30,7 @@ public class Row {
 		ArrayList<Sinogram> sons = new ArrayList<>();
 		for (Node n : node.getLeaves()) {
 			sons.add(toEntities(n, true));
-			Main.all++;
+			Main.main++;
 		}
 		// Le caractère est créé après tous les intermédiaires.
 		Sinogram sinogram = new Sinogram(Integer.toString(node.getCharacter()
@@ -39,17 +39,20 @@ public class Row {
 			for (int i = 0; i < node.getType().getArity(); i++) {
 				Structure structure = new Structure(sinogram, sons.get(i),
 						node.getType(), i);
-				//Main.structures++;
+				// Main.structures++;
 			}
 		}
 		return sinogram;
 	}
 
-	void toEntities() {
-		Node node = new Node(character);
-		node.parse(sequence);
-		Main.all++;
-		//toEntities(node, false);
+	Node toEntities() {
+		Node node = new Node(character, sequence);
+		Main.main++;
+		if (sequence.length() > 42) {
+			System.out.println(node);
+		}
+		return node;
+		// toEntities(node, false);
 
 		/*
 		 * if (ids.length() == 4) { if (IDC.contains(ids.charAt(0))) { } } else

@@ -4,17 +4,17 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.NoSuchElementException;
-import java.util.Stack;
-
-import entities.Allography;
-import entities.Sinogram;
-import entities.Structure;
 
 public class Node {
 
+	private int id;
 	private String character;
 	private IDC type;
 	private ArrayList<Node> leaves;
+
+	public int getId() {
+		return getIDS().hashCode();
+	}
 
 	public String getCharacter() {
 		return character;
@@ -32,15 +32,31 @@ public class Node {
 		return leaves;
 	}
 
+	public String getIDS() {
+		if (leaves.size() == 0) {
+			return character;
+		} else {
+			String retour = type.toString();
+			for (int i = 0; i < leaves.size(); i++) {
+				retour += leaves.get(i).toString();
+			}
+			return retour;
+		}
+	}
+
 	@Override
 	public String toString() {
 		if (leaves.size() == 0) {
 			return character;
 		} else {
-			String retour = type.toString();
-			for (Node n : leaves) {
-				retour += n.toString();
+			String retour = type.toString() + "(";
+			for (int i = 0; i < leaves.size(); i++) {
+				retour += leaves.get(i).toString();
+				if (i < leaves.size() - 1) {
+					retour += ", ";
+				}
 			}
+			retour += ")";
 			return retour;
 		}
 	}
@@ -51,61 +67,89 @@ public class Node {
 	/***
 	 * 
 	 * @param character
-	 *            can't be null
+	 *            If it's a anonymous character
+	 * @param sequence
+	 *            If character is a radical, repeat character in the sequence.
 	 */
-	public Node(String character) {
+	public Node(String character, String sequence) {
+
+		Deque<String> seq = split(sequence);
+		Node node = parse(seq, new ArrayDeque<>());
+
 		this.character = character;
-		this.type = null;
-		this.leaves = new ArrayList<>();
-	}
-
-	@SuppressWarnings("unused")
-	public void parse(String sequence) {
-
-		if (sequence.contains("&")) {
-			Main.ignored++;
-			return;
-		} else {
-			// System.out.println("debug " + sequence);
-		}
-
-		Node node = parse(new String(sequence), new ArrayDeque<>());
-
-		// this.character is already defined. Moreover it's not in the ids.
 		this.leaves = node.leaves;
 		this.type = node.type;
+		this.id = getIDS().hashCode(); // take care to malformed nodes.
 	}
 
-	@SuppressWarnings("unused")
-	private Node parse(String sequence, Deque<Node> stack) {
-		char current = sequence.charAt(sequence.length() - 1);
-		sequence = sequence.substring(0, sequence.length() - 1);
-
-		if (IDC.contains(current)) {
-			Node leaf = new Node();
-			IDC idc = new IDC(current);
-			for (int j = 0; j < idc.getArity(); j++) {
-				try {
-					leaf = stack.pop();
-					type = idc;
-					leaves.add(leaf);
-				} catch (NoSuchElementException e) {
-					System.out.println("Malformed IDS");
-					Main.ignored++;
+	private Deque<String> split(String sequence) {
+		Deque<String> queue = new ArrayDeque<String>();
+		while (sequence.length() != 0) {
+			String current = sequence.substring(0, 1);
+			sequence = sequence.substring(1);
+			if (current.charAt(0) == '&') {
+				while (current.charAt(current.length() - 1) != ';') {
+					current += sequence.substring(0, 1);
+					sequence = sequence.substring(1);
 				}
 			}
-			stack.push(leaf);
+			queue.addLast(current);
+		}
+		return queue;
+	}
+
+	private Node parse(Deque<String> sequence, Deque<Node> stack) {
+		String current = sequence.removeLast();
+
+		if (current.length() == 1 && IDC.contains(current.charAt(0))) {
+			IDC idc = new IDC(current.charAt(0));
+
+			Node node = new Node();
+			node.leaves = new ArrayList<Node>();
+			node.type = idc;
+
+			for (int j = 0; j < idc.getArity(); j++) {
+				try {
+					Node leaf = stack.removeLast();
+					node.leaves.add(leaf);
+				} catch (NoSuchElementException e) {
+					Main.parserError++;
+				}
+			}
+			// Ici on crée tous les nœuds : celui que l'on renvoit et ceux qu'il
+			// contient.
+			try {
+				if (Main.dictionary.containsKey(node.getId())) {
+					node = Main.dictionary.get(node.getId());
+				} else {
+					Main.dictionary.put(node.getId(), node);
+				}
+			} catch (NullPointerException e) {
+				Main.parserError++;
+			}
+
+			Main.induced++;
+
+			stack.addLast(node);
 		} else {
 			Node leaf = new Node();
-			leaf.character = Character.toString(current);
+			leaf.character = current;
 			leaf.type = null;
 			leaf.leaves = new ArrayList<>();
 
-			stack.push(leaf);
+			if (Main.dictionary.containsKey(leaf.getId())) {
+				leaf = Main.dictionary.get(leaf.getId());
+			} else {
+				Main.dictionary.put(leaf.getId(), leaf);
+			}
+			stack.addLast(leaf);
 		}
 
-		if (sequence.length() == 0) {
-			return stack.pop();
+		if (sequence.size() == 0) {
+			if (stack.size() != 1) {
+				Main.parserError++;
+			}
+			return stack.removeLast();
 		} else {
 			return parse(sequence, stack);
 		}
