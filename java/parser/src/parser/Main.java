@@ -11,9 +11,8 @@ import org.jsefa.csv.config.CsvConfiguration;
 
 public class Main {
 
-	public static int main = 0;
 	public static int all = 0;
-	public static int structures = 0;
+	public static int ignored = 0;
 
 	public static void main(String[] args) {
 
@@ -31,13 +30,9 @@ public class Main {
 		parse(new File("src/IDS-UCS-Ext-D.txt"));
 		parse(new File("src/IDS-UCS-Ext-E.txt"));
 
-		int totalNodes = Main.main + Main.all + Main.structures;
-
 		System.out.println();
-		System.out.println(format("All nodes   : ", Main.all, totalNodes));
-		System.out.println(format("Main nodes  : ", Main.main, totalNodes));
-		System.out.println(format("Structures  : ", Main.structures,
-				Main.structures));
+		System.out.println(format("All nodes : ", Main.all, Main.all));
+		System.out.println(format("Ignored   : ", Main.ignored, Main.all));
 		System.exit(0);
 	}
 
@@ -64,6 +59,7 @@ public class Main {
 
 		deserializer.open(reader);
 		while (deserializer.hasNext()) {
+
 			Row row = deserializer.next();
 			row.toEntities();
 		}

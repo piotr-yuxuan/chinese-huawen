@@ -28,83 +28,86 @@ public class Node {
 		return type;
 	}
 
-	public void setType(IDC node) {
-		this.type = node;
-	}
-
 	public ArrayList<Node> getLeaves() {
 		return leaves;
 	}
 
-	public void setLeaves(ArrayList<Node> leaves) {
-		this.leaves = leaves;
+	@Override
+	public String toString() {
+		if (leaves.size() == 0) {
+			return character;
+		} else {
+			String retour = type.toString();
+			for (Node n : leaves) {
+				retour += n.toString();
+			}
+			return retour;
+		}
 	}
 
 	private Node() {
-		this.character = "Ø";
 	}
 
-	public Node(String character, String ids) {
+	/***
+	 * 
+	 * @param character
+	 *            can't be null
+	 */
+	public Node(String character) {
 		this.character = character;
-		try {
-			parse(ids);
-		} catch (Exception e) {
-		}
+		this.type = null;
+		this.leaves = new ArrayList<>();
 	}
 
-	private void parse(String expression) {
+	@SuppressWarnings("unused")
+	public void parse(String sequence) {
 
-		// ⿱氏巾
-		// ⿱⿰⿱丿幺幺糸
-		// ⿰糹⿱氏巾
-		// ⿰糹⿰⿻卩丿⿱龴又
-
-		/* ⿱(⿰(⿱上夕)又)力 */
-
-		Deque<Node> stack = new ArrayDeque<>();
-
-		if (expression.equals("⿱⿰⿱上夕又力")) {
-			int a;
-			a = 3;
-			a = a + 1;
+		if (sequence.contains("&")) {
+			Main.ignored++;
+			return;
+		} else {
+			// System.out.println("debug " + sequence);
 		}
 
-		for (int i = expression.length() - 1; i >= 0; i--) {
-			char got = expression.charAt(i);
-			if (IDC.contains(got)) {
-				IDC idc = new IDC(got);
-				if (stack.size() >= idc.getArity()) {
-					// iff no &;
-					Node node = new Node();
-					node.type = idc;
-					node.leaves = new ArrayList<>();
+		Node node = parse(new String(sequence), new ArrayDeque<>());
 
-					for (int j = 0; j < idc.getArity(); j++) {
-						node.leaves.add(stack.pop());
-					}
+		// this.character is already defined. Moreover it's not in the ids.
+		this.leaves = node.leaves;
+		this.type = node.type;
+	}
 
-					stack.push(node);
+	@SuppressWarnings("unused")
+	private Node parse(String sequence, Deque<Node> stack) {
+		char current = sequence.charAt(sequence.length() - 1);
+		sequence = sequence.substring(0, sequence.length() - 1);
 
-				} else {
-					// Uh oh, trouble. Misformed expression.
+		if (IDC.contains(current)) {
+			Node leaf = new Node();
+			IDC idc = new IDC(current);
+			for (int j = 0; j < idc.getArity(); j++) {
+				try {
+					leaf = stack.pop();
+					type = idc;
+					leaves.add(leaf);
+				} catch (NoSuchElementException e) {
+					System.out.println("Malformed IDS");
+					Main.ignored++;
 				}
-			} else {
-				// d'autres tests pour &;
-				Node n = new Node();
-				n.character = Character.toString(got);
-				n.type = null;
-				n.leaves = new ArrayList<>();
-
-				stack.push(n);
 			}
+			stack.push(leaf);
+		} else {
+			Node leaf = new Node();
+			leaf.character = Character.toString(current);
+			leaf.type = null;
+			leaf.leaves = new ArrayList<>();
+
+			stack.push(leaf);
 		}
 
-		try {
-			Node node = stack.pop();
-			this.leaves = node.leaves;
-			this.type = node.type;
-		} catch (Exception e) {
-			throw new NoSuchElementException();
+		if (sequence.length() == 0) {
+			return stack.pop();
+		} else {
+			return parse(sequence, stack);
 		}
 	}
 }
