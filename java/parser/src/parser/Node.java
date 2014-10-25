@@ -29,6 +29,7 @@ public class Node {
 
 	/***
 	 * There may be some bugs.
+	 * 
 	 * @return
 	 */
 	public int getCardinality() {
@@ -101,6 +102,9 @@ public class Node {
 	public Node(String character, String sequence) {
 
 		Deque<String> seq = split(sequence);
+		if (!validate(seq)) {
+			Main.parserError++;
+		}
 		Node node = parse(seq, new ArrayDeque<>());
 
 		this.character = character;
@@ -108,6 +112,7 @@ public class Node {
 		this.type = node.type;
 	}
 
+	// Non recursive method.
 	private Deque<String> split(String sequence) {
 		Deque<String> queue = new ArrayDeque<String>();
 		while (sequence.length() != 0) {
@@ -122,6 +127,27 @@ public class Node {
 			queue.addLast(current);
 		}
 		return queue;
+	}
+
+	private boolean validate(Deque<String> queue) {
+		boolean validate = true;
+		// Tests about IDS length and syntax
+		/*
+		 * if (queue.getFirst().length() == 1) { char character =
+		 * queue.getFirst().charAt(0); if (queue.size() == 1 +
+		 * (IDC.contains(character) ? (new IDC( character).getArity()) : 0)) {
+		 * // It's OK validate &= true; } else { validate &= false; } } else {
+		 * if (queue.size() == 1) { // It's OK. validate &= true; } else {
+		 * validate &= false; } }
+		 */
+
+		// Tests about file consistency (a sinogram must be defined before to be
+		// used and you can't use its IDS instead of it once it's been defined)
+		{
+			// To be done;
+		}
+
+		return validate;
 	}
 
 	private Node parse(Deque<String> sequence, Deque<Node> stack) {

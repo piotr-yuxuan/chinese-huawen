@@ -21,11 +21,15 @@ public class Main {
 	public static int induced = 0;
 	public static int parserError = 0;
 	public static HashMap<Integer, Node> dictionary = new HashMap<>();
+	/***
+	 * Implements double-keyed dictionary. I need to consider that a character and its sequence are equivalent.
+	 */
+	public static HashMap<String, Integer> alias = new HashMap<>();
 
 	public static void main(String[] args) {
 
-		// parse(new File("src/test.txt"));
-		parse(new File("src/IDS-UCS-Basic.txt"));
+		parse(new File("src/test.txt"));
+		/*parse(new File("src/IDS-UCS-Basic.txt"));
 		parse(new File("src/IDS-UCS-Compat-Supplement.txt"));
 		parse(new File("src/IDS-UCS-Compat.txt"));
 		parse(new File("src/IDS-UCS-Ext-A.txt"));
@@ -37,7 +41,7 @@ public class Main {
 		parse(new File("src/IDS-UCS-Ext-B-6.txt"));
 		parse(new File("src/IDS-UCS-Ext-C.txt"));
 		parse(new File("src/IDS-UCS-Ext-D.txt"));
-		parse(new File("src/IDS-UCS-Ext-E.txt"));
+		parse(new File("src/IDS-UCS-Ext-E.txt"));*/
 
 		int cardinality = 0;
 		for (Node n : dictionary.values()) {
