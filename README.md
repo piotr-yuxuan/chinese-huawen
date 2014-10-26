@@ -20,7 +20,7 @@
 * Next I plan to get interested in Gephi visualization
  * Parse data to be processed
  * Export datafiles to Gephi
- * → I'm here: see the graph.png picture.
+ * → I'm here: see the pictures/ directory more some graphical result. Please forgive the code mess.
 * Handle database
  * Datamodel and its implementation in a database
  * Java bindings

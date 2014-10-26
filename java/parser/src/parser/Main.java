@@ -23,7 +23,7 @@ public class Main {
 	public static int main = 0;
 	public static int induced = 0;
 	public static int parserError = 0;
-	public static final int maxParsedLineNumber = 20 * 1000;
+	public static final int maxParsedLineNumber = 3 * 1000;
 	public static int currentParsedLineNumber = 0;
 	/***
 	 * Implements double-keyed dictionary. I need to consider that a character
@@ -145,7 +145,7 @@ public class Main {
 		System.out.println(" — Graph — ");
 		printerEdge.write("Source" + sep + "Target" + sep + "Type" + sep
 				+ "Weight\n");
-		printerNode.write("Nodes" + sep + "Id" + sep + "Label" + "\n");
+		printerNode.write("Id" + sep + "Label" + "\n");
 
 		Object[] graph = dictionary.entrySet().toArray();
 		HashMap<Integer, Integer> t = new HashMap<Integer, Integer>(); // translation
@@ -155,12 +155,16 @@ public class Main {
 			Node node = a.getValue();
 			if (!t.containsKey(node.getId())) {
 				t.put(node.getId(), t.size());
+				printerNode.write(t.get(node.getId()) + sep
+						+ node.getCharacter() + "\n");
 			}
 
 			ArrayList<Node> leaves = node.getFinalLeaves();
 			for (Node leaf : leaves) {
 				if (!t.containsKey(leaf.getId())) {
 					t.put(leaf.getId(), t.size());
+					printerNode.write(t.get(leaf.getId()) + sep
+							+ leaf.getCharacter() + "\n");
 				}
 				String printedEdge = t.get(leaf.getId()) + sep // Source
 						+ t.get(node.getId()) + sep// Target
@@ -172,6 +176,10 @@ public class Main {
 
 			}
 		}
+
+		// for (Map.Entry<Integer, Integer> a : t.entrySet()) {
+
+		// }
 		System.out.println(" — Done — ");
 	}
 
