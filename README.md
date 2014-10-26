@@ -17,16 +17,16 @@
 
 # Work load path
 
-* I'm working to handle data
+* Next I plan to get interested in Gephi visualization
+ * Parse data to be processed
+ * Export datafiles to Gephi
+ * → I'm here: see the graph.png picture.
+* Handle database
  * Datamodel and its implementation in a database
  * Java bindings
-* Populate the database
- * Parser for several datasources
+* Query the database
  * How to deal with data duplication -> database normalisation
-* Next I plan to get interested in Gephi visualization
- * First, build data to be processed
- * Then, export datafiles to Gephi
- * Finally use gephi toolkit
+ * Query database from gephi-toolkit.
 
 # Some concepts
 

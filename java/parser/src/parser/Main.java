@@ -23,7 +23,7 @@ public class Main {
 	public static int main = 0;
 	public static int induced = 0;
 	public static int parserError = 0;
-	public static final int maxParsedLineNumber = 20000;
+	public static final int maxParsedLineNumber = 20 * 1000;
 	public static int currentParsedLineNumber = 0;
 	/***
 	 * Implements double-keyed dictionary. I need to consider that a character
