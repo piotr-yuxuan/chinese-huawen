@@ -7,6 +7,13 @@ import java.util.NoSuchElementException;
 
 public class Node {
 
+	private static int graphNumber = 0;
+	private int graphID = Node.graphNumber++;
+
+	public int getGraphID() {
+		return graphID;
+	}
+
 	private String character;
 	private IDC type;
 	private ArrayList<Node> leaves;
@@ -15,6 +22,7 @@ public class Node {
 		return getIDS().hashCode();
 	}
 
+	// bugged?
 	public int getDepth() {
 		if (leaves.size() == 0) {
 			return 1;
@@ -25,6 +33,19 @@ public class Node {
 			}
 			return max;
 		}
+	}
+
+	public ArrayList<Node> getFinalLeaves() {
+		ArrayList<Node> back = new ArrayList<Node>();
+		for (Node n : leaves) {
+			if (n.getLeaves().size() == 0 && n.getCharacter() != null) {
+				back.add(n);
+			}
+			if (n.getLeaves().size() != 0) {
+				back.addAll(n.getFinalLeaves());
+			}
+		}
+		return back;
 	}
 
 	/***
@@ -72,6 +93,23 @@ public class Node {
 		}
 	}
 
+	public String getLink() {
+		if (leaves.size() == 0) {
+			return this.getId() + character;
+		} else {
+			String retour = this.getId() + type.toString() + "(";
+			for (int i = 0; i < leaves.size(); i++) {
+				Node vanish = leaves.get(i);
+				retour += vanish.getId() + vanish.toString();
+				if (i < leaves.size() - 1) {
+					retour += ",";
+				}
+			}
+			retour += ")";
+			return retour;
+		}
+	}
+
 	@Override
 	public String toString() {
 		if (leaves.size() == 0) {
@@ -81,7 +119,7 @@ public class Node {
 			for (int i = 0; i < leaves.size(); i++) {
 				retour += leaves.get(i).toString();
 				if (i < leaves.size() - 1) {
-					retour += ", ";
+					retour += ",";
 				}
 			}
 			retour += ")";
@@ -110,6 +148,9 @@ public class Node {
 		this.character = character;
 		this.leaves = node.leaves;
 		this.type = node.type;
+
+		Main.alias.put(this.getCharacter(), this.getId());
+		Main.dictionary.put(this.getId(), this);
 	}
 
 	// Non recursive method.
@@ -153,7 +194,10 @@ public class Node {
 	private Node parse(Deque<String> sequence, Deque<Node> stack) {
 		String current = sequence.removeLast();
 
-		if (current.length() == 1 && IDC.contains(current.charAt(0))) {
+		// Is it a control character or a basic sinogram?
+		if (current.length() == 1 && IDC.contains(current.charAt(0)))
+		// It's a control character which belongs to IDC.
+		{
 			IDC idc = new IDC(current.charAt(0));
 
 			Node node = new Node();
@@ -183,17 +227,27 @@ public class Node {
 			Main.induced++;
 
 			stack.addLast(node);
-		} else {
+		} else
+		// It's a sinogram.
+		{
 			Node leaf = new Node();
 			leaf.character = current;
 			leaf.type = null;
 			leaf.leaves = new ArrayList<>();
 
-			if (Main.dictionary.containsKey(leaf.getId())) {
-				leaf = Main.dictionary.get(leaf.getId());
-			} else {
+			if (Main.alias.containsKey(leaf.getCharacter())) {
+				int id = Main.alias.get(leaf.getCharacter());
+				leaf = Main.dictionary.get(id);
+			} else
+			// I feel like this may better seldom occur (just for radicals):
+			// it
+			// means that use an character (that leaf) which has never been
+			// described before.
+			{
+				Main.alias.put(leaf.getCharacter(), leaf.getId());
 				Main.dictionary.put(leaf.getId(), leaf);
 			}
+
 			stack.addLast(leaf);
 		}
 
