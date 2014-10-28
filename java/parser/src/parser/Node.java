@@ -7,32 +7,12 @@ import java.util.NoSuchElementException;
 
 public class Node {
 
-	private static int graphNumber = 0;
-	private int graphID = Node.graphNumber++;
-
-	public int getGraphID() {
-		return graphID;
-	}
-
 	private String character;
 	private IDC type;
 	private ArrayList<Node> leaves;
 
 	public int getId() {
 		return getIDS().hashCode();
-	}
-
-	// bugged?
-	public int getDepth() {
-		if (leaves.size() == 0) {
-			return 1;
-		} else {
-			int max = 0;
-			for (Node n : leaves) {
-				max = Math.max(max, n.getDepth());
-			}
-			return max;
-		}
 	}
 
 	public ArrayList<Node> getFinalLeaves() {
@@ -48,18 +28,13 @@ public class Node {
 		return back;
 	}
 
-	/***
-	 * There may be some bugs.
-	 * 
-	 * @return
-	 */
 	public int getCardinality() {
 		if (leaves.size() == 0) {
 			return 1;
 		} else {
 			int sum = 1;
 			for (Node n : leaves) {
-				sum += n.getDepth();
+				sum += n.getCardinality();
 			}
 			return sum;
 		}
@@ -139,7 +114,7 @@ public class Node {
 	 */
 	public Node(String character, String sequence) {
 
-		Deque<String> seq = split(sequence);
+		Deque<String> seq = Node.split(sequence);
 		if (!validate(seq)) {
 			Main.parserError++;
 		}
@@ -153,9 +128,11 @@ public class Node {
 		Main.dictionary.put(this.getId(), this);
 	}
 
-	// Non recursive method.
-	private Deque<String> split(String sequence) {
+	// Non recursive method, use a stack instead.
+	public static Deque<String> split(String sequence) {
+		
 		Deque<String> queue = new ArrayDeque<String>();
+		
 		while (sequence.length() != 0) {
 			String current = sequence.substring(0, 1);
 			sequence = sequence.substring(1);
@@ -167,20 +144,16 @@ public class Node {
 			}
 			queue.addLast(current);
 		}
+		
 		return queue;
 	}
 
 	private boolean validate(Deque<String> queue) {
 		boolean validate = true;
 		// Tests about IDS length and syntax
-		/*
-		 * if (queue.getFirst().length() == 1) { char character =
-		 * queue.getFirst().charAt(0); if (queue.size() == 1 +
-		 * (IDC.contains(character) ? (new IDC( character).getArity()) : 0)) {
-		 * // It's OK validate &= true; } else { validate &= false; } } else {
-		 * if (queue.size() == 1) { // It's OK. validate &= true; } else {
-		 * validate &= false; } }
-		 */
+		{
+			// To be done;
+		}
 
 		// Tests about file consistency (a sinogram must be defined before to be
 		// used and you can't use its IDS instead of it once it's been defined)

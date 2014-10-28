@@ -53,29 +53,19 @@ public final class IDC {
 	public int getArity() {
 		switch (idc) {
 		case '⿰':
-			return 2;
 		case '⿱':
-			return 2;
-		case '⿲':
-			return 3;
-		case '⿳':
-			return 3;
 		case '⿴':
-			return 2;
 		case '⿵':
-			return 2;
 		case '⿶':
-			return 2;
 		case '⿷':
-			return 2;
 		case '⿸':
-			return 2;
 		case '⿹':
-			return 2;
 		case '⿺':
-			return 2;
 		case '⿻':
 			return 2;
+		case '⿲':
+		case '⿳':
+			return 3;
 		default:
 			return -1;
 		}
