@@ -123,9 +123,6 @@ public class Node {
 		this.character = character;
 		this.leaves = node.leaves;
 		this.type = node.type;
-
-		Main.alias.put(this.getCharacter(), this.getId());
-		Main.dictionary.put(this.getId(), this);
 	}
 
 	// Non recursive method, use a stack instead.
@@ -217,6 +214,7 @@ public class Node {
 			// means that use an character (that leaf) which has never been
 			// described before.
 			{
+				// It's not perfect : Main should not be modified outside of itself.
 				Main.alias.put(leaf.getCharacter(), leaf.getId());
 				Main.dictionary.put(leaf.getId(), leaf);
 			}

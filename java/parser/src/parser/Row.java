@@ -1,27 +1,20 @@
 package parser;
 
+import org.jsefa.common.lowlevel.filter.HeaderAndFooterFilter;
 import org.jsefa.csv.annotation.CsvDataType;
-import org.jsefa.csv.annotation.CsvField;
+import org.jsefa.csv.config.CsvConfiguration;
 
 @CsvDataType()
-public class Row {
+public abstract class Row {
 
-	@CsvField(pos = 1)
-	String codepoint;
+	// public String character;
 
-	@CsvField(pos = 2)
-	String character;
+	// public String sequence;
 
-	@CsvField(pos = 3)
-	String sequence;
-
-	Node parse() {
-		Node node = new Node(character, sequence);
-		Main.main++;
-		if (Node.split(sequence).size() > 15) {
-			// Helps to wait for the parsing to be processed.
-			System.out.println(node);
-		}
-		return node;
+	public static CsvConfiguration getConfiguration() {
+		CsvConfiguration conf = new CsvConfiguration();
+		conf.setFieldDelimiter('\t');
+		conf.setLineFilter(new HeaderAndFooterFilter(1, false, false));
+		return conf;
 	}
 }

@@ -1,24 +1,15 @@
 package parser;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import org.jsefa.Deserializer;
-import org.jsefa.common.lowlevel.filter.HeaderAndFooterFilter;
-import org.jsefa.csv.CsvIOFactory;
-import org.jsefa.csv.config.CsvConfiguration;
-
 public class Main {
-
-	public static final int maxParsedLineNumber = 80 * 1000;
 
 	public static int main = 0;
 	public static int induced = 0;
@@ -34,20 +25,35 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		// parse(new File("src/test.txt"));
-		parse(new File("src/IDS-UCS-Basic.txt"));
-		parse(new File("src/IDS-UCS-Compat-Supplement.txt"));
-		parse(new File("src/IDS-UCS-Compat.txt"));
-		parse(new File("src/IDS-UCS-Ext-A.txt"));
-		parse(new File("src/IDS-UCS-Ext-B-1.txt"));
-		parse(new File("src/IDS-UCS-Ext-B-2.txt"));
-		parse(new File("src/IDS-UCS-Ext-B-3.txt"));
-		parse(new File("src/IDS-UCS-Ext-B-4.txt"));
-		parse(new File("src/IDS-UCS-Ext-B-5.txt"));
-		parse(new File("src/IDS-UCS-Ext-B-6.txt"));
-		parse(new File("src/IDS-UCS-Ext-C.txt"));
-		parse(new File("src/IDS-UCS-Ext-D.txt"));
-		parse(new File("src/IDS-UCS-Ext-E.txt"));
+		ArrayDeque<File> files = new ArrayDeque<File>();
+
+		// More to be found here: http://www.chise.org/ids/index.html
+		// Order should better not matter ~
+		files.addLast(new File("src/IDS-UCS-Basic.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-A.txt"));
+		files.addLast(new File("src/IDS-UCS-Compat.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-B-1.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-B-2.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-B-3.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-B-4.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-B-5.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-B-6.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-C.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-D.txt"));
+		files.addLast(new File("src/IDS-UCS-Ext-E.txt"));
+		files.addLast(new File("src/IDS-UCS-Compat-Supplement.txt"));
+
+		Parser<Node, RowChise> parser = new Parser<>(files);
+		Iterator<RowChise> iterator = parser.iterator();
+
+		while (iterator.hasNext()) {
+			RowChise row = iterator.next();
+			Node node = new Node(row.getCharacter(), row.getSequence());
+
+			alias.put(node.getCharacter(), node.getId());
+			dictionary.put(node.getId(), node);
+			main++;
+		}
 
 		int cardinality = 0;
 		for (Node n : dictionary.values()) {
@@ -56,48 +62,14 @@ public class Main {
 
 		System.out.println();
 		System.out.println(format("Main nodes  ", Main.main, Main.main));
-		System.out.println(format("Set size    ", Main.dictionary.size(),
-				Main.main));
-		System.out.println(format("Cardinalité ", cardinality,
-				Main.dictionary.size()));
+		System.out.println(format("Set size    ", Main.dictionary.size(), Main.main));
+		System.out.println(format("Cardinalité ", cardinality, Main.dictionary.size()));
 		System.out.println(format("Exception   ", Main.parserError, Main.main));
 
 		// printDictionaries();
 		exportFinalGraph();
 
 		System.exit(0);
-	}
-
-	public static void parse(File file) {
-
-		int currentParsedLineNumber = 0;
-
-		Reader reader = null;
-		try {
-			reader = new InputStreamReader(new FileInputStream(file), "UTF-8");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return;
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return;
-		}
-
-		CsvConfiguration conf = new CsvConfiguration();
-		conf.setFieldDelimiter('\t');
-		conf.setLineFilter(new HeaderAndFooterFilter(1, false, false));
-
-		Deserializer deserializer = CsvIOFactory.createFactory(conf, Row.class)
-				.createDeserializer();
-
-		deserializer.open(reader);
-		while (deserializer.hasNext()
-				&& currentParsedLineNumber < maxParsedLineNumber) {
-			currentParsedLineNumber++;
-			Row row = deserializer.next();
-			row.parse();
-		}
-		deserializer.close(true);
 	}
 
 	// Should be polymorph
@@ -120,13 +92,11 @@ public class Main {
 		}
 		System.out.println(" — Dico — ");
 		for (Map.Entry<Integer, Node> g : dictionary.entrySet()) {
-			System.out.println(g.getValue().getCharacter() + "\t"
-					+ g.getValue().getIDS());
+			System.out.println(g.getValue().getCharacter() + "\t" + g.getValue().getIDS());
 		}
 		System.out.println(" — Final leaves — ");
 		for (Map.Entry<Integer, Node> g : dictionary.entrySet()) {
-			System.out.println(g.getValue().getCharacter() + "\t"
-					+ g.getValue().getFinalLeaves());
+			System.out.println(g.getValue().getCharacter() + "\t" + g.getValue().getFinalLeaves());
 		}
 	}
 
@@ -147,8 +117,7 @@ public class Main {
 		}
 
 		System.out.println(" — Graph — ");
-		printerEdge.write("Source" + sep + "Target" + sep + "Type" + sep
-				+ "Weight\n");
+		printerEdge.write("Source" + sep + "Target" + sep + "Type" + sep + "Weight\n");
 		printerNode.write("Id" + sep + "Label" + "\n");
 
 		Object[] graph = dictionary.entrySet().toArray();
@@ -159,16 +128,14 @@ public class Main {
 			Node node = a.getValue();
 			if (!t.containsKey(node.getId())) {
 				t.put(node.getId(), t.size());
-				printerNode.write(t.get(node.getId()) + sep
-						+ node.getCharacter() + "\n");
+				printerNode.write(t.get(node.getId()) + sep + node.getCharacter() + "\n");
 			}
 
 			ArrayList<Node> leaves = node.getFinalLeaves();
 			for (Node leaf : leaves) {
 				if (!t.containsKey(leaf.getId())) {
 					t.put(leaf.getId(), t.size());
-					printerNode.write(t.get(leaf.getId()) + sep
-							+ leaf.getCharacter() + "\n");
+					printerNode.write(t.get(leaf.getId()) + sep + leaf.getCharacter() + "\n");
 				}
 				String printedEdge = t.get(leaf.getId()) + sep // Source
 						+ t.get(node.getId()) + sep// Target
@@ -185,7 +152,6 @@ public class Main {
 	}
 
 	private static String format(String label, int field, int total) {
-		return label + ": " + field + " (" + ((double) 100 * field / total)
-				+ ")";
+		return label + ": " + field + " (" + ((double) 100 * field / total) + ")";
 	}
 }
