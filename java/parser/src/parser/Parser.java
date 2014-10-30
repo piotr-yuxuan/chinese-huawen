@@ -6,13 +6,12 @@ import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.TypeVariable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import org.jsefa.Deserializer;
-import org.jsefa.common.lowlevel.filter.HeaderAndFooterFilter;
 import org.jsefa.csv.CsvIOFactory;
 import org.jsefa.csv.config.CsvConfiguration;
 
@@ -42,9 +41,21 @@ public class Parser<S extends Node, T extends Row> implements Iterable<T> {
 		this.currentParsedLineNumber = 0;
 		this.files = files;
 
-		// Class<?> classT = this.getClass().getTypeParameters()[1].getClass();
-		Class<?> classT = RowChise.class; // How to do it properly?
-		this.conf = RowChise.getConfiguration();
+		@SuppressWarnings("unchecked")
+		Class<T> classT = (Class<T>) (new RowChise()).getClass();
+		try {
+			this.conf = (CsvConfiguration) classT.getMethod("getConfiguration").invoke(null);
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		} catch (NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		}
 
 		this.deserializer = CsvIOFactory.createFactory(conf, classT).createDeserializer();
 	}

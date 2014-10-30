@@ -7,9 +7,9 @@ import org.jsefa.csv.config.CsvConfiguration;
 @CsvDataType()
 public abstract class Row {
 
-	// public String character;
+	public abstract String getCharacter();
 
-	// public String sequence;
+	public abstract String getSequence();
 
 	public static CsvConfiguration getConfiguration() {
 		CsvConfiguration conf = new CsvConfiguration();

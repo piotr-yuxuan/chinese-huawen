@@ -3,6 +3,7 @@ package parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +23,17 @@ public class Main {
 	 */
 	public static HashMap<String, Integer> alias = new HashMap<>();
 	public static HashMap<Integer, Node> dictionary = new HashMap<>();
+	public static int errorType1 = 0;
+	public static int errorType2 = 0;
+	public static int errorType3 = 0;
+	public static int errorType4 = 0;
 
 	public static void main(String[] args) {
 
 		ArrayDeque<File> files = new ArrayDeque<File>();
 
-		// More to be found here: http://www.chise.org/ids/index.html
+		// More to be found here: http://www.chise.org/ids/index.html or here
+		// http://git.chise.org/gitweb/?p=chise/ids.git;a=tree
 		// Order should better not matter ~
 		files.addLast(new File("src/IDS-UCS-Basic.txt"));
 		files.addLast(new File("src/IDS-UCS-Ext-A.txt"));
@@ -65,6 +71,10 @@ public class Main {
 		System.out.println(format("Set size    ", Main.dictionary.size(), Main.main));
 		System.out.println(format("Cardinalité ", cardinality, Main.dictionary.size()));
 		System.out.println(format("Exception   ", Main.parserError, Main.main));
+		System.out.println(format("    Type 1  ", Main.errorType1, Main.parserError));
+		System.out.println(format("    Type 2  ", Main.errorType2, Main.parserError));
+		System.out.println(format("    Type 3  ", Main.errorType3, Main.parserError));
+		System.out.println(format("    Type 4  ", Main.errorType4, Main.parserError));
 
 		// printDictionaries();
 		exportFinalGraph();
@@ -152,6 +162,7 @@ public class Main {
 	}
 
 	private static String format(String label, int field, int total) {
-		return label + ": " + field + " (" + ((double) 100 * field / total) + ")";
+		Double percentage = 100 * field / (double) total;
+		return label + ": " + field + " (" + (new DecimalFormat("#.##")).format(percentage) + " %)";
 	}
 }

@@ -117,8 +117,16 @@ public class Node {
 		Deque<String> seq = Node.split(sequence);
 		if (!validate(seq)) {
 			Main.parserError++;
+			Main.errorType1++;
 		}
+
+		int old = Main.parserError;
+
 		Node node = parse(seq, new ArrayDeque<>());
+
+		// if (Main.parserError != old) {
+		// System.out.println(sequence);
+		// }
 
 		this.character = character;
 		this.leaves = node.leaves;
@@ -127,9 +135,9 @@ public class Node {
 
 	// Non recursive method, use a stack instead.
 	public static Deque<String> split(String sequence) {
-		
+
 		Deque<String> queue = new ArrayDeque<String>();
-		
+
 		while (sequence.length() != 0) {
 			String current = sequence.substring(0, 1);
 			sequence = sequence.substring(1);
@@ -141,7 +149,7 @@ public class Node {
 			}
 			queue.addLast(current);
 		}
-		
+
 		return queue;
 	}
 
@@ -180,6 +188,7 @@ public class Node {
 					node.leaves.add(leaf);
 				} catch (NoSuchElementException e) {
 					Main.parserError++;
+					Main.errorType4++;
 				}
 			}
 			// Ici on crée tous les nœuds : celui que l'on renvoit et ceux qu'il
@@ -192,6 +201,7 @@ public class Node {
 				}
 			} catch (NullPointerException e) {
 				Main.parserError++;
+				Main.errorType3++;
 			}
 
 			Main.induced++;
@@ -214,7 +224,8 @@ public class Node {
 			// means that use an character (that leaf) which has never been
 			// described before.
 			{
-				// It's not perfect : Main should not be modified outside of itself.
+				// It's not perfect : Main should not be modified outside of
+				// itself.
 				Main.alias.put(leaf.getCharacter(), leaf.getId());
 				Main.dictionary.put(leaf.getId(), leaf);
 			}
@@ -225,6 +236,7 @@ public class Node {
 		if (sequence.size() == 0) {
 			if (stack.size() != 1) {
 				Main.parserError++;
+				Main.errorType2++;
 			}
 			return stack.removeLast();
 		} else {

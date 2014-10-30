@@ -15,15 +15,17 @@ public class RowChise extends Row {
 	@CsvField(pos = 3)
 	private String sequence;
 
-	public String getCodepoint() {
-		return codepoint;
-	}
-
+	@Override
 	public String getCharacter() {
 		return character;
 	}
 
+	@Override
 	public String getSequence() {
 		return sequence;
+	}
+
+	public String getCodepoint() {
+		return codepoint;
 	}
 }
