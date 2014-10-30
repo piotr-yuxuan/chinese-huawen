@@ -1,61 +1,22 @@
 # 華文
 
-* Work load path
-* Some concepts
- * Ideographic Description Sequences
- * Current possible implementations
+#### Summary
+
 * That repository
  * What is this?
  * What is the meaning of the title?
  * Why that repository?
+* Some concepts
+ * Ideographic Description Sequences
+ * Parsing
+ * Current possible implementations
+* Work load path
 * LaTeX
  * Why using LaTeX instead of markdown?
  * Preamble
  * Known issues
  * Compilation
 * misc
-
-# Work load path
-
-* Next I plan to get interested in Gephi visualization
- * Parse data to be processed
- * Export datafiles to Gephi
- * → I'm here: see the pictures/ directory more some graphical result. Please forgive the code mess.
-* Handle database
- * Datamodel and its implementation in a database
- * Java bindings
-* Query the database
- * How to deal with data duplication -> database normalisation
- * Query database from gephi-toolkit.
-
-# Some concepts
-
-## [Ideographic Description Sequences](https://github.com/kawabata/ids)
-
-Ideographic Description Sequences are defined by the Unicode Consortium. They are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged altogether. The way pieces are compound is defined by Ideographic Description Character:
-
-> ⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺, ⿻;
-
-For example, the character 灣 is described by the following equivalent sequences:
-
-`灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`
-
-## Parsing
-
-What is the most elegant? Do I need to learn [Emacs, Lisp](https://github.com/kawabata/ids-edit) and Perl to efficiently deal with parsing?
-
-## Current possible implementations
-(subject to change. It merely skims up the recension)
-
-* How to store ideogram graphs? Graph databases are quite inviting. Such a database may be able to deal with character variants, thanks to the Unicode Consortium  [character-glyph model](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf) or any other;
-* How to query character set? [Query language](https://github.com/piotr2b/chinese-huawen/blob/master/refs/A%20Structural%20Query%20System%20for%20Han%20Characters.pdf) sketch has been drawn to mimic `grep`;
-* Signal processing may be useful to break down a character in all possible ways. Either it'd use IDS (so-called [Unicode way](https://en.wikipedia.org/wiki/Chinese_character_description_languages#Ideographic_Description_Sequences)) either it'd choose [Wenlin's CDL way](https://en.wikipedia.org/wiki/Chinese_character_description_languages#CDL). Assuming Unicode way has been chosen, could we break down a character only by  analysing its glyph or would we need to use Wenlin's stroke-end way then to browse for fetched patterns in an already-kown-character database?
-* I was first aiming at learning characters better and more easily: given a characters set, what's a best order to learn all of them? This sounds like a sylvan  graph traversal for which we would hop from tree to tree in a forest ^^ Well, actually not: a forest is a disjoint tree union and trees hereby are intertwined. The aforementionned order may be related to [most semantic subcharacter paths](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf);
-* Student could thus build a optimal learning strategy. To sort out by frequency is not [maximal](https://github.com/piotr2b/chinese-huawen/blob/master/refs/Efficient%20learning%20strategy%20of%20Chinese%20characters%20based%20on%20network%20approach.pdf));
-* Ideograms can be seen as a set which we could give a [basis](https://en.wikipedia.org/wiki/Basis_%28linear_algebra%29) to. A basis is a free, spanning orthogonal family. It's a radical list. Some attempt have been performed by Ancient lettered Chinese to give radical lists. Can we find criteria to evaluate such list relevance? According to those criteria, can we find the best basis?
-* Once we've found such a criteria, we can use it to find the best base we could use to generate characters. We can enhance IDS by adding them some cues about glyph construction and thus we can build a new way for computers to handle Asian scripts. So fonts would be defined as a set of clues. This is similar to Wenlin's Institute way, but something more intersting cause embedded in computer font rendering softwares. So finally they could deduce glyphs of previouly unkown characters.
-* Moreover character are compound most of the time. What's the relation between the number *n* of existing characters we can make from *x* characters?
-* Several tools can compose new ideograms from existing components. I don't feel enough a valuable typesetter to be useful in any way in that field. Methinks the more than 80,000 ideograms included in unicode make that issue less critical.
 
 ## That repository
 
@@ -97,6 +58,66 @@ The option `recorder` is required by the package [`currfile`](http://www.ctan.or
 ```
 xelatex -recorder
 ```
+
+## Some concepts
+
+### [Ideographic Description Sequences](https://github.com/kawabata/ids)
+
+Ideographic Description Sequences are defined by the Unicode Consortium. They are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged altogether. The way pieces are compound is defined by Ideographic Description Character: ⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺, ⿻;
+
+For example, the character 灣 is described by the following equivalent sequences:
+
+`灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`
+
+### Parsing
+
+What is the most elegant? Do I need to learn [Emacs, Lisp](https://github.com/kawabata/ids-edit) and Perl to efficiently deal with parsing?
+
+### Current possible implementations
+(subject to change. It merely skims up the recension)
+
+* How to store ideogram graphs? Graph databases are quite inviting. Such a database may be able to deal with character variants, thanks to the Unicode Consortium  [character-glyph model](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf) or any other;
+* How to query character set? [Query language](https://github.com/piotr2b/chinese-huawen/blob/master/refs/A%20Structural%20Query%20System%20for%20Han%20Characters.pdf) sketch has been drawn to mimic `grep`;
+* Signal processing may be useful to break down a character in all possible ways. Either it'd use IDS (so-called [Unicode way](https://en.wikipedia.org/wiki/Chinese_character_description_languages#Ideographic_Description_Sequences)) either it'd choose [Wenlin's CDL way](https://en.wikipedia.org/wiki/Chinese_character_description_languages#CDL). Assuming Unicode way has been chosen, could we break down a character only by  analysing its glyph or would we need to use Wenlin's stroke-end way then to browse for fetched patterns in an already-kown-character database?
+* I was first aiming at learning characters better and more easily: given a characters set, what's a best order to learn all of them? This sounds like a sylvan  graph traversal for which we would hop from tree to tree in a forest ^^ Well, actually not: a forest is a disjoint tree union and trees hereby are intertwined. The aforementionned order may be related to [most semantic subcharacter paths](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf);
+* Student could thus build a optimal learning strategy. To sort out by frequency is not [maximal](https://github.com/piotr2b/chinese-huawen/blob/master/refs/Efficient%20learning%20strategy%20of%20Chinese%20characters%20based%20on%20network%20approach.pdf));
+* Ideograms can be seen as a set which we could give a [basis](https://en.wikipedia.org/wiki/Basis_%28linear_algebra%29) to. A basis is a free, spanning orthogonal family. It's a radical list. Some attempt have been performed by Ancient lettered Chinese to give radical lists. Can we find criteria to evaluate such list relevance? According to those criteria, can we find the best basis?
+* Once we've found such a criteria, we can use it to find the best base we could use to generate characters. We can enhance IDS by adding them some cues about glyph construction and thus we can build a new way for computers to handle Asian scripts. So fonts would be defined as a set of clues. This is similar to Wenlin's Institute way, but something more intersting cause embedded in computer font rendering softwares. So finally they could deduce glyphs of previouly unkown characters.
+* Moreover character are compound most of the time. What's the relation between the number *n* of existing characters we can make from *x* characters?
+* Several tools can compose new ideograms from existing components. I don't feel enough a valuable typesetter to be useful in any way in that field. Methinks the more than 80,000 ideograms included in unicode make that issue less critical.
+
+## Work load path
+
+Instead of nice planning line which has never been followed I prefer to set a journal with two lists. The first one is ordered and new element are added at its end. It shows what I've been working on. The second is unordrerd, it's just a collection of what I could work on.
+
+Items in the second list can seem closed to current possible implementations but merely are technical issues whilst the latter are rather some abstract.
+
+### What's been done
+
+ * Parse data to be processed
+ * Export datafiles to Gephi
+ * Use Gephi to get pictures
+ * Datamodel and its implementation in a database
+ * Maven project
+ * Connection to the database
+ * Tables created
+ * Naive entities created
+ * Gephi library integrated
+ 
+### What to do next:
+
+ * Find nice way to query the database upon IDS
+ * Use Gephi to produce svg
+ * Avoid writing SQL in Java but find a library to access full relationel model
+ * Compare Chise Ids to other.
+ * Send mails to know more about Ids files: who have they been written by? is it traditionnal Chinese? is it Japanese decomposition?
+ * Add views to allow Gephi to query the database
+ * Find frequency lists and normalize them
+ * Find a way to retrieve stroke count
+ * Write doc, increase comment number
+ * How to deal with data replication?
+ * Integrate Unihan and populate the database with variants
+ * Write JUnit tests
 
 ## misc
 
