@@ -47,49 +47,9 @@ Giving functional features would be interesting, how to get advantage of monads 
 * Moreover character are compound most of the time. What's the relation between the number *n* of existing characters we can make from *x* characters?
 * Several tools can compose new ideograms from existing components. I don't feel enough a valuable typesetter to be useful in any way in that field. Methinks the more than 80,000 ideograms included in unicode make that issue less critical.
 
-## Work load path
+## Work path
 
-Instead of nice planning line which has never been followed I prefer to set a journal with two lists. The first one is ordered and new element are added at its end. It shows what I've been working on. The second is unordrerd, it's just a collection of what I could work on.
-
-Items in the second list can seem closed to current possible implementations but merely are technical issues whilst the latter are rather some abstract.
-
-### What's been done
-
- * Parse data to be processed
- * Export datafiles to Gephi
- * Use Gephi to get pictures
- * Datamodel and its implementation in a database
- * Maven project
- * Connection to the database
- * Tables created
- * Naive entities created
- * Gephi library integrated
- 
-11/1
- * Use jOOQ, an object-oriented SQL query tool.
- * Automatic entity creation.
- * Interested into Java 8 monads. They seem very useful for such tools like parsers!
- * Draft: PairMap data structure to store a given value with two possible keys, both deductible from the other.
- * Formal use of TypeResolver with a maven dependency.
-
-### What to do next:
-
- * Find nice way to query the database upon IDS
- * Use Gephi to produce svg
- * Avoid writing SQL in Java but find a library to access full relationel model
- * Compare Chise Ids to other.
- * Send mails to know more about Ids files: who have they been written by? is it traditionnal Chinese? is it Japanese decomposition?
- * Add views to allow Gephi to query the database
- * Find frequency lists and normalize them
- * Find a way to retrieve stroke count
- * Write doc, increase comment number
- * How to deal with data replication?
- * Integrate Unihan and populate the database with variants
- * Write JUnit tests
- * Understand monads
- * Use monads for parser
- * Implements PairMap
- * Understand how to idiomatically use ot avoid TypeResolver.
+See `Work path.md` for details
 
 ## LaTeX
 
