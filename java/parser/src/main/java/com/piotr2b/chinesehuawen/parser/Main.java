@@ -1,5 +1,7 @@
 package com.piotr2b.chinesehuawen.parser;
 
+import static com.piotr2b.chinesehuawen.entities.Tables.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -14,6 +16,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
+
+import com.piotr2b.chinesehuawen.entities.tables.Sinogram;
 
 public class Main {
 
@@ -45,10 +55,14 @@ public class Main {
 			String connectionUser = "huawen";
 			String connectionPassword = "huawen";
 			conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("desc sinogram;");
-			while (rs.next()) {
-				System.out.print("");
+
+			DSLContext create = DSL.using(conn, SQLDialect.MARIADB);
+			Result<Record> result = create.select().from(SINOGRAM).fetch();
+
+			for (Record r : result) {
+				String codePoint = r.getValue(SINOGRAM.CP);
+				System.out.println("ID: " + codePoint);
+				Sinogram sinogram = new Sinogram();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,19 +95,22 @@ public class Main {
 		// More to be found here: http://www.chise.org/ids/index.html or here
 		// http://git.chise.org/gitweb/?p=chise/ids.git;a=tree
 		// Order should better not matter ~
-		files.addLast(new File(idsPath + "IDS-UCS-Basic.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
+		files.addLast(new File("test.txt"));
+		/*
+		 * files.addLast(new File(idsPath + "IDS-UCS-Basic.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
+		 * files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
+		 */
 
 		Parser<Node, RowChise> parser;
 		parser = new Parser<>(files);

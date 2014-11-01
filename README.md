@@ -73,6 +73,8 @@ For example, the character 灣 is described by the following equivalent sequence
 
 What is the most elegant? Do I need to learn [Emacs, Lisp](https://github.com/kawabata/ids-edit) and Perl to efficiently deal with parsing?
 
+Giving functional features would be interesting, how to get advantage of monads in Java 8?
+
 ### Current possible implementations
 (subject to change. It merely skims up the recension)
 
@@ -103,7 +105,13 @@ Items in the second list can seem closed to current possible implementations but
  * Tables created
  * Naive entities created
  * Gephi library integrated
- 
+_11/1_
+ * Use jOOQ, an object-oriented SQL query tool.
+ * Automatic entity creation.
+ * Interested into Java 8 monads. They seem very useful for such tools like parsers!
+ * Draft: PairMap data structure to store a given value with two possible keys, both deductible from the other.
+ * Formal use of TypeResolver with a maven dependency.
+
 ### What to do next:
 
  * Find nice way to query the database upon IDS
@@ -118,6 +126,22 @@ Items in the second list can seem closed to current possible implementations but
  * How to deal with data replication?
  * Integrate Unihan and populate the database with variants
  * Write JUnit tests
+ * Understand monads
+ * Use monads for parser
+ * Implements PairMap
+ * Understand how to idiomatically use ot avoid TypeResolver.
+
+#### About jOOQ code generation
+
+Refer to the jOOQ official website tutorial for further informations.
+
+Given the modified `pom.xml` and the additionnal file `huawen.xml` (aimed at setting bindings with Java project), you may execute the following lines to update Java entities.
+
+```
+mvn compile #
+mvn exec:java -Dexec.mainClass="org.jooq.util.GenerationTool" -Dexec.args="/huawen.xml"
+```
+
 
 ## misc
 

@@ -3,6 +3,7 @@ package com.piotr2b.chinesehuawen.parser;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.List;
 import java.util.NoSuchElementException;
 
 public class Node {
@@ -175,7 +176,7 @@ public class Node {
 		// It's a control character which belongs to IDC.
 		{
 			IDC idc = new IDC(current.charAt(0));
-
+			
 			Node node = new Node();
 			node.leaves = new ArrayList<Node>();
 			node.type = idc;

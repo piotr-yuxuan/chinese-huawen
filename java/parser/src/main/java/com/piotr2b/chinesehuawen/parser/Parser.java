@@ -15,7 +15,14 @@ import net.sf.jsefa.Deserializer;
 import net.sf.jsefa.csv.CsvIOFactory;
 import net.sf.jsefa.csv.config.CsvConfiguration;
 
-public class Parser<S extends Node, T extends Row> implements Iterable<T> {
+/***
+ * 
+ * @author caocoa
+ *
+ * @param <S> How to parse? String to export to 
+ * @param <T>
+ */
+public class Parser<S, T extends Row> implements Iterable<T> {
 
 	private ArrayDeque<File> files;
 
@@ -65,7 +72,7 @@ public class Parser<S extends Node, T extends Row> implements Iterable<T> {
 		return new ParserIterator<T>();
 	}
 
-	private class ParserIterator<U extends Row> implements Iterator<U> {
+	private class ParserIterator<U extends T> implements Iterator<U> {
 
 		Reader reader;
 
