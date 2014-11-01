@@ -64,9 +64,8 @@ Items in the second list can seem closed to current possible implementations but
  * Tables created
  * Naive entities created
  * Gephi library integrated
-
-*11/1*
-
+ 
+11/1
  * Use jOOQ, an object-oriented SQL query tool.
  * Automatic entity creation.
  * Interested into Java 8 monads. They seem very useful for such tools like parsers!
