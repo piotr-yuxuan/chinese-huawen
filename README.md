@@ -1,6 +1,6 @@
 # 華文
 
-That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them. I'm a freedom-oriented person, free both as in free speach and free beer ;-) I believe that feeding an public repository can't hurt me: some wanderer may be willing to help me or to give me some advice.
+That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them thus authored I that repository. I'm a freedom-oriented person, free both as in free speach and free beer so I believe it can't hurt me: some wanderer may be willing to help me or to give me some advice.
 
 The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language. Github merely accepts alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
 
@@ -24,9 +24,7 @@ The first character 華 means something like sinity or chineseness. It's used to
 
 Ideographic Description Sequences are defined by the Unicode Consortium. They are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged altogether. The way pieces are compound is defined by Ideographic Description Character: ⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺, ⿻;
 
-For example, the character 灣 is described by the following equivalent sequences:
-
-`灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`
+For example, the character 灣 is described by the following equivalent sequences: `灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`. Full IDS datafiles are tough to find.
 
 ### Parsing
 

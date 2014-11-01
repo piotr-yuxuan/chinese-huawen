@@ -129,6 +129,8 @@ public class Main {
 		for (Node n : dictionary.values()) {
 			cardinality += n.getCardinality();
 		}
+		
+		// 灣 is used as example in README.md but currently seems not correctly processed. To be investigated ~
 
 		System.out.println();
 		System.out.println(format("Main nodes  ", Main.main, Main.main));
