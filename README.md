@@ -65,7 +65,7 @@ Items in the second list can seem closed to current possible implementations but
  * Naive entities created
  * Gephi library integrated
 
-#### 11/1
+*11/1*
 
  * Use jOOQ, an object-oriented SQL query tool.
  * Automatic entity creation.
