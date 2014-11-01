@@ -1,11 +1,11 @@
 # 華文
 
+That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them. I'm a freedom-oriented person, free both as in free speach and free beer ;-) I believe that feeding an public repository can't hurt me: some wanderer may be willing to help me or to give me some advice.
+
+The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language. Github merely accepts alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
+
 #### Summary
 
-* That repository
- * What is this?
- * What is the meaning of the title?
- * Why that repository?
 * Some concepts
  * Ideographic Description Sequences
  * Parsing
@@ -16,48 +16,7 @@
  * Preamble
  * Known issues
  * Compilation
-* misc
-
-## That repository
-
-### What is this?
-
-That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them.
-
-### What is the meaning of the title?
-The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language.
-
-Github merely accepts alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
-
-### Why that repository?
-
-I'm a freedom-oriented person, free both as in free speach and free beer ;-) I believe that feeding an public repository can't hurt me: some wanderer may be willing to help me or to give me some advice.
-
-## LaTeX
-
-### Why using LaTeX instead of markdown?
-
-You're right, markdown can be read directly on github with no downloads and is lighter than LaTeX but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on.
-
-Nonetheless I've been trying to automatically generate markdown files with pandoc then to not to upload `pdf` here but just `tex` and `md`. I faced some issues (handling bibliographiy-related and `input` commands) then I gave up. I know you more than me about it, please tell me :-)
-
-### Preamble
-
-LaTeX files here use preambles as modules, so rather prefer to load preambles with commands from the package [`import`](http://ctan.mines-albi.fr/macros/latex/contrib/import/import.pdf). On the contrary, it's easier to enclose text with `\input`.
-
-### Known issues
-
-An ideogram in standard text is rendered correctly but when typed in `\foreignlanguage` just produces a `?` character.
-
-### Compilation
-
-I use the XeLaTeX compiler.
-
-The option `recorder` is required by the package [`currfile`](http://www.ctan.org/tex-archive/macros/latex/contrib/currfile). More specifically, the `abspath` option loads the sub-package `currfile-abspath` and requires compiler option `recorder` to be used. Thus, as `currfile` *could be used*, your compilation line should look comething like:
-
-```
-xelatex -recorder
-```
+* Technical points and misc
 
 ## Some concepts
 
@@ -105,7 +64,9 @@ Items in the second list can seem closed to current possible implementations but
  * Tables created
  * Naive entities created
  * Gephi library integrated
-_11/1_
+
+#### 11/1
+
  * Use jOOQ, an object-oriented SQL query tool.
  * Automatic entity creation.
  * Interested into Java 8 monads. They seem very useful for such tools like parsers!
@@ -131,7 +92,42 @@ _11/1_
  * Implements PairMap
  * Understand how to idiomatically use ot avoid TypeResolver.
 
-#### About jOOQ code generation
+## LaTeX
+
+### Why using LaTeX instead of markdown?
+
+You're right, markdown can be read directly on github with no downloads and is lighter than LaTeX but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on.
+
+Nonetheless I've been trying to automatically generate markdown files with pandoc then to not to upload `pdf` here but just `tex` and `md`. I faced some issues (handling bibliographiy-related and `input` commands) then I gave up. I know you more than me about it, please tell me :-)
+
+### Preamble
+
+LaTeX files here use preambles as modules, so rather prefer to load preambles with commands from the package [`import`](http://ctan.mines-albi.fr/macros/latex/contrib/import/import.pdf). On the contrary, it's easier to enclose text with `\input`.
+
+### Known issues
+
+An ideogram in standard text is rendered correctly but when typed in `\foreignlanguage` just produces a `?` character.
+
+## Technical points and misc
+
+### Chinese language
+
+Chinese language is a fascinating boustrophedon, stoichedon Eastern language. Yes, those two words are uncommon but I learned them some days ago and I think they rock!
+
+Please feel free to point out English mistakes! The most obnoxious-English-written parts have been translated from French, please forgive it 😉
+
+### Compilation
+
+I use the XeLaTeX compiler.
+
+The option `recorder` is required by the package [`currfile`](http://www.ctan.org/tex-archive/macros/latex/contrib/currfile). More specifically, the `abspath` option loads the sub-package `currfile-abspath` and requires compiler option `recorder` to be used. Thus, as `currfile` *could be used*, your compilation line should look comething like:
+
+```
+xelatex -recorder
+```
+
+
+### About jOOQ code generation
 
 Refer to the jOOQ official website tutorial for further informations.
 
@@ -141,10 +137,3 @@ Given the modified `pom.xml` and the additionnal file `huawen.xml` (aimed at set
 mvn compile #
 mvn exec:java -Dexec.mainClass="org.jooq.util.GenerationTool" -Dexec.args="/huawen.xml"
 ```
-
-
-## misc
-
-Chinese language is a fascinating boustrophedon, stoichedon Eastern language. Yes, those two words are uncommon but I learned them some days ago and I think they rock!
-
-Please feel free to point out English mistakes! The most obnoxious-English-written parts have been translated from French, please forgive it 😉
