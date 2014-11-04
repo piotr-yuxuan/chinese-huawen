@@ -24,7 +24,7 @@ The first character 華 means something like sinity or chineseness. It's used to
 
 Ideographic Description Sequences are defined by the Unicode Consortium. They are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged altogether. The way pieces are compound is defined by Ideographic Description Character: ⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺, ⿻;
 
-For example, the character 灣 is described by the following equivalent sequences: `灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`. Full IDS datafiles are tough to find.
+For example, the character 灣 is described by the following equivalent sequences: `灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`. Full IDS datafiles are tough to find. That project use [Chise datafiles](http://git.chise.org/gitweb/?p=chise/ids.git) which are quite interesting.
 
 ### Parsing
 
