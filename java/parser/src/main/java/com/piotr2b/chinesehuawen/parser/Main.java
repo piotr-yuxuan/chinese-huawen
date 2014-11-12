@@ -96,28 +96,32 @@ public class Main {
 		// http://git.chise.org/gitweb/?p=chise/ids.git;a=tree
 		// Order should better not matter ~
 		files.addLast(new File("test.txt"));
-		/*
-		 * files.addLast(new File(idsPath + "IDS-UCS-Basic.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
-		 * files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
-		 */
+
+		files.addLast(new File(idsPath + "IDS-UCS-Basic.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
+		files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
 
 		Parser<Node, RowChise> parser;
-		parser = new Parser<>(files);
+		parser = new Parser<>(files, 25000);
 		Iterator<RowChise> iterator = parser.iterator();
 
 		while (iterator.hasNext()) {
 			RowChise row = iterator.next();
+
+			if (row.getCharacter().contains("灣") || row.getCharacter().contains("䜌")) {
+				System.out.print("");
+			}
+
 			Node node = new Node(row.getCharacter(), row.getSequence());
 
 			alias.put(node.getCharacter(), node.getId());
@@ -129,8 +133,9 @@ public class Main {
 		for (Node n : dictionary.values()) {
 			cardinality += n.getCardinality();
 		}
-		
-		// 灣 is used as example in README.md but currently seems not correctly processed. To be investigated ~
+
+		// 灣 is used as example in README.md but currently seems not correctly
+		// processed. To be investigated ~
 
 		System.out.println();
 		System.out.println(format("Main nodes  ", Main.main, Main.main));
