@@ -3,7 +3,6 @@ The following is a technical document where it's first introduced the global str
 This document shows neither evolution of available features and foreseen bugs to be added nor technical details which can be found both in folder [documentation](https://github.com/piotr2b/chinese-huawen/tree/master/doc).
 
 > You may give give that [website](http://piotr2b.github.io/chinese-huawen/) a glance as for a general, non programmatical introduction to this project.
-
 > Pour voir le dépôt à une date donnée, suivre ce [lien](https://github.com/piotr2b/chinese-huawen/commits/master) ou cliquer sur « commits » à gauche au dessus de la liste des fichiers.
 
 # How to use this repository
