@@ -1,0 +1,43 @@
+\subsection{Abstract}
+\english{%
+Based on network analysis of hierarchical structural relations among Chinese characters, we develop
+an efficient learning strategy of Chinese characters. We regard a more efficient learning method
+if one learns the same number of useful Chinese characters in less effort or time. We construct a
+node-weighted network of Chinese characters, where character usage frequencies are used as node
+weights. Using this hierarchical node-weighted network, we propose a new learning method, the
+distributed node weight (\textsc{dnw}) strategy, which is based on a new measure of nodes' importance
+that takes into account both the weight of the nodes and the hierarchical structure of the network.
+Chinese character learning strategies, particularly their learning order, are analyzed as dynamical
+processes over the network. We compare the efficiency of three theoretical learning methods
+and two commonly used methods from mainstream Chinese textbooks, one for Chinese elementary
+school students and the other for students learning Chinese as a second language. We find that the
+\textsc{dnw} method significantly outperforms the others, implying that the efficiency of current learning
+methods of major textbooks can be greatly improved.}
+
+\subsection{Réaction}
+C'est le premier article que j'ai lu. A Taïwan j'avais déjà en tête de construire un graphe (ils appellent ça un réseau), et de trier les caractères (vus comme des nœuds) par degrés. Cet article ajoute une idée intéressante : panacher avec des fréquences.
+
+En voyant leur \english{full map of Chinese characters network} j'ai eu envie de l'explorer davantage. Ils disent montrer un \english{minimal spanning tree} mais il en existe plusieurs possibles.
+
+Cet article est adossé à \url{http://learnm.org/} qui propose beaucoup de matériau.
+
+Ils n'ont pas donné de tables d'adjacence sur leur site mais plutôt des listes d'adjacence. Pas fou ! Ca m'inquiétait un peu de voir un tableau contenant à peu près $3500^2$ zéros !
+
+[Maths avec les mains] La figure 5 présente deux cas : d'abord une courbe qui finit droite puis une courbe qui penche (car on intègre la fréquence). Soit $b$ la valeur maximum atteinte par cette courbe et $x$ la quantité de fréquence qu'on intègre. Exprimer $b(x)$.\marginpar{A relire}
+
+\subsection{Pistes d'application}
+Peut-on montrer que le choix des clefs par les anciens est un optimal ? de quel type et selon quels critères ?
+
+\paragraph{Accès aux caractères} On peut aussi regarder combien de caractères il faut pour accéder à tous les caractères. Par exemple avec trois caractères je peux apprendre toutes leur combinaisons possibles mais pas plus\footnote{Le nombre est élevé mais il faut restreindre à l'ensemble de caractères existants.}. Quelle est l'évolution de la taille du jeu de caractères en fonction du nombre de caractères auxquels on veut accéder ? La tête de cette fonction doit être intéressante. La taille du jeu n'est pas forcément très impressionnante : les lettrés ont proposé 214 pour Kangxi, il y en a souvent moins pour les dictionnaires condensés modernes.
+
+\paragraph{\textsc{dnw}}Je pense que leur idée de prendre en compte \english{both the weight of the nodes and the hierarchical structure of the network} est bonne. Cependant un étudiant étudie (sic) et passe des examens. Un examen connu dans le monde sinophone est le \textsc{hsk}. Je ne connais pas l'équivalent taïwanais mais je suppose que le \textsc{hsk} a une déclinaison en caractères non simplifiés. Le site \url{http://hskhsk.com} offre alors une démarche intéressante. Il faudrait s'en inspirer et faire des listes progressives qui pour chaque niveau contiennent tous les caractères requis plus un minimum. Ce minimum serait tous les caractères intermédiaires nécessaires, les clefs et les caractères proches.
+
+Qu'est-ce qu'un caractère proche ? Il faudrait voir dans la structure du chinois. Par exemple, un caractère ayant les mêmes composants mais pas la même structure peut être considérer proche. A cet effet il doit être instructif se renseigner sur les types de décomposition. 
+
+\paragraph{Erreurs}\incite{liu2011visually} permet d'apprendre des erreurs standard des étudiants chinois. On pourrait également choisir de proposer en même temps qu'un caractère différents autres pour éviter des erreurs, ou au contraire éloigner le plus possible leur apprentissage pour éviter toute confusion\footnote{Exemples : droite et gauche (apprendre ensemble ou séparément ?) ; aimer et détester} suivant le type d'erreurs..
+
+\paragraph{Base de données} Dans le paragraphe de l'accès au caractères, une application standard peut être d'étudier et d'optimiser \english{the Academia Sinica's 漢字構形資料庫 Chinese character structure database}. Ca serait vraiment un travail sur la base de données pour trouver le meilleur type. Base de données en graphe ? autres ?
+
+\paragraph{Conclusion} Cet article a le bon goût de susciter plein de questions. Loin de n'être pas intéressant, l'étude des caractères chinois est parfaitement possible en restant en informatique et il semble même que l'informatique soit la manière reine d'étudier les caractères chinois en revenant à sa définition fondamentale : science de l'information.\par Théorie des graphes, bases de données, combinatoire et même en cherchant un peu théorie de l'apprentissage et intelligence artificielle : la langue chinoise est passionnante et permet manifestement à tout un chacun de s'éclater.
+
+\paragraph{Note personnelle} Ca me rappelle ce que me disait un animateur\footnote{þ : celui qui avait un petit nez pointu, que j'avais revu à une lecture inaugurale au collège de France mais également dans un train. Je ne me rappelle pas de son prénom :-(.} de Mathématic Park : à partir d'un certain moment quand on s'intéresse à un domaine on prend des livres et on apprend tout seul ; il avait manifestement raison. Je redoute d'avoir à me plonger dans des mathématiques de \textsc{mp} ! mais dans le même temps je suis curieux de voir ce qui pourrait m'y emmener. Si le travail de chercheur consiste à apprendre tout ce qui peut le mener à ses fins alors il n'y a pas de métier facile mais celui-ci en est un beau.
