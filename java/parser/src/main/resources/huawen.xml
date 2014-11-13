@@ -3,7 +3,7 @@
 	<!-- Configure the database connection here -->
 	<jdbc>
 		<driver>org.mariadb.jdbc.Driver</driver>
-		<url>jdbc:mariadb://localhost:3306/chinese</url>
+		<url>jdbc:mariadb://localhost:3306/huawen</url>
 		<user>huawen</user>
 		<password>huawen</password>
 	</jdbc>
@@ -19,7 +19,7 @@
 
 			<!-- The database schema (or in the absence of schema support, in your 
 				RDBMS this can be the owner, user, database name) to be generated -->
-			<inputSchema>chinese</inputSchema>
+			<inputSchema>huawen</inputSchema>
 
 			<!-- All elements that are generated from your schema (A Java regular 
 				expression. Use the pipe to separate several expressions) Watch out for case-sensitivity. 
