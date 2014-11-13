@@ -14,14 +14,15 @@ This repository has been used in different ways. It initially hosted a [article 
 
 ## 0. Software prerequesite
 
- * Java 8 First of all, you need [Java 8](https://en.wikipedia.org/wiki/Java_version_history#Java_SE_8_.28March_18.2C_2014.29) to be available on your computer. There is no need to establish it as default version.
- * I use the [XeTeX](https://en.wikipedia.org/wiki/XeTeX) compiler to typeset pdf documents. I don't know at all whether it's relevant but try to have a version number equal or greater than `3.14159265-2.6-0.99991 (TeX Live 2014/Arch Linux)`.
- * [Gephi](https://gephi.github.io/) is not required but you may like to use it for graph exploration. Be carefull: it doesn't support yet Java 8 so just keep to Java 7 as default version.
- * Maven You must ensure [Maven 3](http://maven.apache.org/download.cgi) is available to build java projects.
- * MariaDB I use this [database management system](https://mariadb.com/). It's a GPL-licenced drop-in replacement for MySQL so it can be installed very easily.
+ * [*`git`*](http://git-scm.com/downloads) You obviously need `git`.
+ * *Java 8* You need [Java 8](https://en.wikipedia.org/wiki/Java_version_history#Java_SE_8_.28March_18.2C_2014.29) to be available on your computer. There is no need to establish it as default version.
+ * *XeTeX* I use the [XeTeX](https://en.wikipedia.org/wiki/XeTeX) compiler to typeset pdf documents. I don't know at all whether it's relevant but try to have a version number equal or greater than `3.14159265-2.6-0.99991 (TeX Live 2014/Arch Linux)`.
+ * [*Gephi*](https://gephi.github.io/) is not required but you may like to use it for graph exploration. Be carefull: it doesn't support yet Java 8 so just keep to Java 7 as default version.
+ * *Maven* You must ensure [Maven 3](http://maven.apache.org/download.cgi) is available to build java projects.
+ * *MariaDB* I use this [database management system](https://mariadb.com/). It's a GPL-licenced drop-in replacement for MySQL so it can be installed very easily.
 
 ## 1. Clone that repository
-
+git clone https://github.com/libgit2/libgit2 mylibgit
 ## 2. Retrieve updates
 
 ## 3. Propose upgrades
