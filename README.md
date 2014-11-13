@@ -4,6 +4,8 @@ This document shows neither evolution of available features and foreseen bugs to
 
 > You may give give that [website](http://piotr2b.github.io/chinese-huawen/) a glance as for a general, non programmatical introduction to this project.
 
+> Pour voir le dépôt à une date donnée, suivre ce [lien](https://github.com/piotr2b/chinese-huawen/commits/master) ou cliquer sur « commits » à gauche au dessus de la liste des fichiers.
+
 # How to use this repository
 About the repository structure
 
