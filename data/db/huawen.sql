@@ -1,13 +1,10 @@
--- A new user is created at the end of that file.
--- This file might better be executed by user root.
+-- This file might better be executed by user root. It deletes a database then
+-- create it again.
 
-create database if not exists huawen;
+drop database if exists huawen;
+create database huawen;
 
 use huawen;
-
-drop table if exists `structure`;
-drop table if exists `allography`;
-drop table if exists `sinogram`;
 
 create table `sinogram` ( -- caractère
 	cp varchar(12) not null, -- insert codepoint as a string or a substitute.
@@ -37,7 +34,4 @@ create table `structure` ( -- composition
 	foreign key (son_cp) references sinogram(cp),
 	primary key (father_cp, son_cp, idc, ordinal)
 );
-
-create user 'huawen'@'localhost' identified by 'huawen';
-grant select, insert, delete on 'huawen'.* to 'huawen'@'localhost';
 
