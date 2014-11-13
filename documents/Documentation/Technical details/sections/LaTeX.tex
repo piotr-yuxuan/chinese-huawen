@@ -1,0 +1,25 @@
+\section{\LaTeX{}}
+
+\subsection{Why using \LaTeX{} instead of markdown?}
+
+You're right, markdown can be read directly on github with no downloads and is lighter than \LaTeX{} but the latter is pretty easier than markdown in purpose of typesetting hypertext including links, bibliographies and so on. Documents written with \LaTeX{} are far more beautiful and so much easier to compose instead of being a few bit slower to get typed.
+
+Nonetheless I've been trying to automatically generate markdown files with pandoc then to not to upload `pdf` here but just \texttt{*.tex} and \texttt{*.md}. I faced some issues (handling bibliographiy-related and \texttt{\textbackslash{}input} commands) then I gave up. I know you more than me about it, please tell me :-)
+
+\subsection{Preamble}
+
+\LaTeX{} files here use preambles as modules, so rather prefer to load preambles with commands from the package \href{http://ctan.mines-albi.fr/macros/latex/contrib/import/import.pdf}{\texttt{import}}. On the contrary, it's easier to enclose text with \texttt{\textbackslash{}input} or even \texttt{\textbackslash{}inputAllFiles} which import \texttt{*.tex} files from a directory and sort them lexicographically.
+
+\subsection{Known issues}
+
+An sinogram in standard text is rendered correctly but when typed in \texttt{\textbackslash{}foreignlanguage} just produces a \français{華} character. Hum\dots{}, it seems it was a bug and it's been fixed.
+
+\subsection{Compilation}
+
+I use the Xe\TeX{} compiler.
+
+The option \texttt{recorder} is required by the package \href{http://www.ctan.org/tex-archive/macros/latex/contrib/currfile}{\texttt{currfile}}. More specifically, the \texttt{abspath} option loads the sub-package \texttt{currfile-abspath} and requires compiler option \texttt{recorder} to be used. Thus, as \texttt{currfile} \textsl{could be used}, your compilation line should look comething like:
+
+\begin{lstlisting}
+xelatex -recorder
+\end{lstlisting}
