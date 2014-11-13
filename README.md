@@ -1,49 +1,23 @@
-# 華文
+> The following is a technical document. An general introduction to this project can be found on its [website](http://piotr2b.github.io/chinese-huawen/).
 
-That project was first aimed at finding the most efficient path to learn sinograms. I found that topic interesting and turned my mind to study a bit ideograms set and to contribute to help people in memorizing them thus authored I that repository. I'm a freedom-oriented person, free both as in free speach and free beer so I believe it can't hurt me: some wanderer may be willing to help me or to give me some advice.
+# How to use this repository
+About the repository structure
 
-The first character 華 means something like sinity or chineseness. It's used to refers to Chinese people or Chinese civilisation. 文 is the language. Both together means Chinese language. Github merely accepts alphanumerical project name so `chinese-huawen` is just the English translation of 華文.
+# Getting started
 
-#### Summary
+## 0. Software prerequesite
+maven, java 8
+Help to deal with classpath issue.
 
-* Some concepts
- * Ideographic Description Sequences
- * Parsing
- * Current possible implementations
-* Work load path
-* LaTeX
- * Why using LaTeX instead of markdown?
- * Preamble
- * Known issues
- * Compilation
-* Technical points and misc
+## 1. Clone that repository
 
-## Some concepts
+## 2. Retrieve updates
 
-### [Ideographic Description Sequences](https://github.com/kawabata/ids)
+## 3. Propose upgrades
 
-Ideographic Description Sequences are defined by the Unicode Consortium. They are meant to break down every ideogram into smaller pieces and describe how those pieces are arranged altogether. The way pieces are compound is defined by Ideographic Description Character: ⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺, ⿻;
+## 4. Construct the database 
 
-For example, the character 灣 is described by the following equivalent sequences: `灣 ~ ⿰氵彎 ~ ⿰氵⿱⿲⿱幺小言⿱幺小弓`. Full IDS datafiles are tough to find. That project use [Chise datafiles](http://git.chise.org/gitweb/?p=chise/ids.git) which are quite interesting.
-
-### Parsing
-
-What is the most elegant? Do I need to learn [Emacs, Lisp](https://github.com/kawabata/ids-edit) and Perl to efficiently deal with parsing?
-
-Giving functional features would be interesting, how to get advantage of monads in Java 8?
-
-### Current possible implementations
-(subject to change. It merely skims up the recension)
-
-* How to store ideogram graphs? Graph databases are quite inviting. Such a database may be able to deal with character variants, thanks to the Unicode Consortium  [character-glyph model](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf) or any other;
-* How to query character set? [Query language](https://github.com/piotr2b/chinese-huawen/blob/master/refs/A%20Structural%20Query%20System%20for%20Han%20Characters.pdf) sketch has been drawn to mimic `grep`;
-* Signal processing may be useful to break down a character in all possible ways. Either it'd use IDS (so-called [Unicode way](https://en.wikipedia.org/wiki/Chinese_character_description_languages#Ideographic_Description_Sequences)) either it'd choose [Wenlin's CDL way](https://en.wikipedia.org/wiki/Chinese_character_description_languages#CDL). Assuming Unicode way has been chosen, could we break down a character only by  analysing its glyph or would we need to use Wenlin's stroke-end way then to browse for fetched patterns in an already-kown-character database?
-* I was first aiming at learning characters better and more easily: given a characters set, what's a best order to learn all of them? This sounds like a sylvan  graph traversal for which we would hop from tree to tree in a forest ^^ Well, actually not: a forest is a disjoint tree union and trees hereby are intertwined. The aforementionned order may be related to [most semantic subcharacter paths](https://github.com/piotr2b/chinese-huawen/blob/master/refs/New%20Perspectives%20in%20Sinographic%20Language%20Processing%20through%20the%20Use%20of%20Character%20Structure.pdf);
-* Student could thus build a optimal learning strategy. To sort out by frequency is not [maximal](https://github.com/piotr2b/chinese-huawen/blob/master/refs/Efficient%20learning%20strategy%20of%20Chinese%20characters%20based%20on%20network%20approach.pdf));
-* Ideograms can be seen as a set which we could give a [basis](https://en.wikipedia.org/wiki/Basis_%28linear_algebra%29) to. A basis is a free, spanning orthogonal family. It's a radical list. Some attempt have been performed by Ancient lettered Chinese to give radical lists. Can we find criteria to evaluate such list relevance? According to those criteria, can we find the best basis?
-* Once we've found such a criteria, we can use it to find the best base we could use to generate characters. We can enhance IDS by adding them some cues about glyph construction and thus we can build a new way for computers to handle Asian scripts. So fonts would be defined as a set of clues. This is similar to Wenlin's Institute way, but something more intersting cause embedded in computer font rendering softwares. So finally they could deduce glyphs of previouly unkown characters.
-* Moreover character are compound most of the time. What's the relation between the number *n* of existing characters we can make from *x* characters?
-* Several tools can compose new ideograms from existing components. I don't feel enough a valuable typesetter to be useful in any way in that field. Methinks the more than 80,000 ideograms included in unicode make that issue less critical.
+# Technical details
 
 ## Work path
 
@@ -65,14 +39,6 @@ LaTeX files here use preambles as modules, so rather prefer to load preambles wi
 
 An ideogram in standard text is rendered correctly but when typed in `\foreignlanguage` just produces a `?` character.
 
-## Technical points and misc
-
-### Chinese language
-
-Chinese language is a fascinating boustrophedon, stoichedon Eastern language. Yes, those two words are uncommon but I learned them some days ago and I think they rock!
-
-Please feel free to point out English mistakes! The most obnoxious-English-written parts have been translated from French, please forgive it 😉
-
 ### Compilation
 
 I use the XeLaTeX compiler.
@@ -83,8 +49,13 @@ The option `recorder` is required by the package [`currfile`](http://www.ctan.or
 xelatex -recorder
 ```
 
+## Idioms
 
-### About jOOQ code generation
+Chinese language is a fascinating boustrophedon, stoichedon Eastern language. Yes, those two words are uncommon but I learned them some days ago and I think they rock!
+
+Please feel free to point out English mistakes! The most obnoxious-English-written parts have been translated from French, please forgive it 😉
+
+## jOOQ code generation
 
 Refer to the jOOQ official website tutorial for further informations.
 
