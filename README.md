@@ -34,4 +34,7 @@ git pull
 Oh really? That would be awesome! Use GitHub dedicated « Pull Requests » tool and send me a mail.
 
 ## 4. Construct the database
-[link](data/db/chinese.sql)
+Go in root folder then execute [`huawen.sql`](data/db/huawen.sql) in your MariaDB client. You may launch the following command. This file will create a new user called `huawen` and give them minimum rights over the database it will also create.
+```
+mysql -u root -p < huawen.sql
+```
