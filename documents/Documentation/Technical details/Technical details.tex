@@ -1,0 +1,22 @@
+% !TeX encoding = UTF-8
+\documentclass[12pt,onecolumn]{article}
+\usepackage{import}
+
+\newcommand\directory{../../}
+\import{\directory/tex/preamble/}{general.tex}
+\import\preamble{bibliography.tex}
+
+\title{Technical Details}
+\author{\import{\tex/}{authors.tex}}
+
+% \import are useful for preambles but for including text, \input is fine. Maybe we could use includeonly and include to fasten a bit compilation step in redaction process.
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+
+\inputAllFiles{sections}
+
+\end{document}

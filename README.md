@@ -34,7 +34,7 @@ git pull
 Oh really? That would be awesome! Use GitHub dedicated « Pull Requests » tool and send me a mail.
 
 ## 4. Construct the database
-Go in root folder then execute [`huawen.sql`](data/db/huawen.sql) in your MariaDB client.
+Go in root folder then execute [`huawen.sql`](data/db/huawen.sql) in your MariaDB client to create a new database names `huawen`.
 ```
 mysql -u root -p < huawen.sql
 ```
