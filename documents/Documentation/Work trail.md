@@ -22,6 +22,11 @@ Items in the second list can seem closed to current possible implementations but
  * Interested into Java 8 monads. They seem very useful for such tools like parsers!
  * Draft: PairMap data structure to store a given value with two possible keys, both deductible from the other.
  * Formal use of TypeResolver with a maven dependency.
+ * Use structural change in the repository.
+  * Readme has been completely changed and turned into a getting starting help.
+  * A webpage has been created.
+  * General knowledge know is exposed in the project webpage.
+ * ENST 'miniproject' report part (technical detail) has been typesetted. Now we just need to fill it in.
 
 ## What to do next:
 
