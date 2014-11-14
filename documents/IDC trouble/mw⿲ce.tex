@@ -1,0 +1,30 @@
+\documentclass{minimal}
+
+\usepackage{fontspec}
+
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Linux Libertine}
+\newfontfamily{\chinesefont}{AR PL New Sung}
+\newfontfamily{\idcfont}{Unifont}
+
+\usepackage[CJK, IdeographicDescriptionCharacters]{ucharclasses}
+\setTransitionsForCJK{\chinesefont}{\normalfont}
+\setTransitionTo{IdeographicDescriptionCharacters}{\idcfont}
+\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+
+\begin{document}
+a 貴\par
+a ⿵\par
+貴 a\par
+貴 ⿵\par
+⿵ a\par
+⿵ 貴\par
+
+a貴\par
+a⿵\par
+貴a\par
+貴⿵\par
+⿵ \par
+⿵ \par
+
+\end{document}

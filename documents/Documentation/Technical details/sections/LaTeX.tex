@@ -10,9 +10,36 @@ Nonetheless I've been trying to automatically generate markdown files with pando
 
 \LaTeX{} files here use preambles as modules, so rather prefer to load preambles with commands from the package \href{http://ctan.mines-albi.fr/macros/latex/contrib/import/import.pdf}{\texttt{import}}. On the contrary, it's easier to enclose text with \texttt{\textbackslash{}input} or even \texttt{\textbackslash{}inputAllFiles} which import \texttt{*.tex} files from a directory and sort them lexicographically.
 
-\subsection{Known issues}
+\subsection{Babel and \textsc{cjk}\footnote{Stands for \textsl{C}hinese, \textsl{J}aponese and \textsl{K}orean.}}
 
 An sinogram in standard text is rendered correctly but when typed in \texttt{\textbackslash{}foreignlanguage} just produces a \français{華} character. Hum\dots{}, it seems it was a bug and it's been fixed.
+
+\subsection{Font and \textsc{idc}\footnote{Stands for \textsl{i}deographic \textsl{d}escription \textsl{c}haracter.}}
+
+Using \texttt{xe\textsc{cjk}} is bad and short-minded:
+\begin{lstlisting}
+\usepackage{fontspec,xeCJK}
+
+\setmainfont{Linux Libertine}
+\setCJKmainfont{AR PL New Sung}
+\end{lstlisting}
+
+It's better to use \texttt{ucharclasses} which is buggy but do the job when nicely asked to.
+\begin{lstlisting}
+\usepackage{fontspec}
+
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Linux Libertine}
+\newfontfamily{\chinesefont}{AR PL New Sung}
+\newfontfamily{\idcfont}{Unifont}
+
+\usepackage[CJK, IdeographicDescriptionCharacters]{ucharclasses}
+\setTransitionsForCJK{\chinesefont}{\normalfont}
+\setTransitionTo{IdeographicDescriptionCharacters}{\idcfont}
+\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+\end{lstlisting}
+
+Methinks the compiler automatically embeds needed font glyphs so no need to add arguments like \texttt{-dSubsetFonts=true} \texttt{-dEmbedAllFonts=true}.
 
 \subsection{Compilation}
 

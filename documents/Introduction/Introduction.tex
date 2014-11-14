@@ -1,14 +1,19 @@
 \documentclass[12pt,oneside]{article}
 
-\usepackage{fontspec,xeCJK,listingsutf8,xcolor,hyperref}
+\usepackage{listingsutf8,xcolor,hyperref}
 \usepackage[english,francais]{babel}
-\setmainfont{Linux Libertine}
-\setCJKmainfont{AR PL New Sung}
-\newfontfamily\idc{Arial}
 
-\definecolor{mygreen}{rgb}{0,0.6,0}
-\definecolor{mygray}{rgb}{0.5,0.5,0.5}
-\definecolor{mymauve}{rgb}{0.58,0,0.82}
+\usepackage{fontspec}
+
+\defaultfontfeatures{Mapping=tex-text}
+\setmainfont{Linux Libertine}
+\newfontfamily{\chinesefont}{AR PL New Sung}
+\newfontfamily{\idcfont}{Unifont}
+
+\usepackage[CJK, IdeographicDescriptionCharacters]{ucharclasses}
+\setTransitionsForCJK{\chinesefont}{\normalfont}
+\setTransitionTo{IdeographicDescriptionCharacters}{\idcfont}
+\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
 
 \lstset{
   backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
@@ -45,26 +50,26 @@
 \begin{document}
 
 \maketitle
-\begin{abstract}\foreignlanguage{english}{Quick briefing about 華文. Introduce the context, what we plan to do and how to do it.}
+\begin{abstract}\foreignlanguage{english}{Quick briefing about {華文}. Introduce the context, what we plan to do and how to do it.}
 
 Ce document est une présentation du projet \og 華文 \fg{}. Nous commencerons par décrire rapidement le contexte général de ce projet avant d'être plus spécifique et d'énumérer ce que nous aimerions pouvoir faire. Nous projetterons enfin quelques pistes de développement.\end{abstract}
 \tableofcontents
 
 \section{Enjeux et contexte}
 
-La langue chinois n'est pas comme le français : un caractère comme 貴\footnote{Signifie : honorable, précieux et se prononce \textsl{guì}.} peut signifier quelque chose en lui-même alors qu'une lettre comme \textsl{z} ne veut rien dire prise en dehors d'un mot. Le chinois est donc une langue très différente et donc très intéressante.
+La langue chinois n'est pas comme le français : un caractère comme {貴}\footnote{Signifie : honorable, précieux et se prononce \textsl{guì}.} peut signifier quelque chose en lui-même alors qu'une lettre comme \textsl{z} ne veut rien dire prise en dehors d'un mot. Le chinois est donc une langue très différente et donc très intéressante.
 
-Mon but premier en commençant ce projet est de répondre à la question : \og quel est l'ordre le plus facile pour apprendre les caractères chinois ?\fg{}. On peut en première approximation considérer qu'il suffit d'apprendre d'abord les composants d'un caractère avant d'apprendre le caractère lui-même. 貴 est par exemple composé de trois caractères : 中, 一 et 貝.
+Mon but premier en commençant ce projet est de répondre à la question : \og quel est l'ordre le plus facile pour apprendre les caractères chinois ?\fg{}. On peut en première approximation considérer qu'il suffit d'apprendre d'abord les composants d'un caractère avant d'apprendre le caractère lui-même. 貴 est par exemple composé de trois caractères : {中}, 一 et {貝}.
 
 \subsection{Type d'un sinogramme}
 
-Un sinogramme peut être classé selon son étymologie ou sa structure. Le type d'étymologie apporte un peu d'information à l'étudiant\footnote{Un sinogramme peut être un pictogramme (il représentent plus ou moins bien une forme, par exemple 木 représente un arbre), un idéogramme strict (本 désigne l'origine en montrant la racine d'un arbre) ou composé (明 réunit le soleil et la lune et désigne la lumière) ou encore un idéophonogramme (河 est composé de 氵, version déformé de l'eau 水 et de 可 qui indique la prononciation). Les lettrés chinois distinguent aussi les emprunts phonétiques et les dérivations.} et sa structure indique comment agencer les caractères qui le composent. Douze structures différentes existent et sont identifiées par les points de code du bloc Unicode \texttt{U+2FF0..U+2FFF} \href{https://en.wikipedia.org/wiki/Ideographic\_Description\_Characters\_\%28Unicode\_block\%29}{Ideographic Description Characters}\footnote{Les structures disponibles sont : ⿰, ⿱, ⿲, ⿳, ⿴, ⿵, ⿶, ⿷, ⿸, ⿹, ⿺ et ⿻.}.
+Un sinogramme peut être classé selon son étymologie ou sa structure. Le type d'étymologie apporte un peu d'information à l'étudiant\footnote{Un sinogramme peut être un pictogramme (il représentent plus ou moins bien une forme, par exemple 木 représente un arbre), un idéogramme strict ({本} désigne l'origine en montrant la racine d'un arbre) ou composé ({明} réunit le soleil et la lune et désigne la lumière) ou encore un idéophonogramme ({河} est composé de {氵}, version déformé de l'eau {水} et de {可} qui indique la prononciation). Les lettrés chinois distinguent aussi les emprunts phonétiques et les dérivations.} et sa structure indique comment agencer les caractères qui le composent. Douze structures différentes existent et sont identifiées par les points de code du bloc Unicode \texttt{U+2FF0..U+2FFF} \href{https://en.wikipedia.org/wiki/Ideographic\_Description\_Characters\_\%28Unicode\_block\%29}{Ideographic Description Characters}\footnote{Les structures disponibles sont : {⿰}, {⿱}, {⿲}, {⿳}, {⿴}, {⿵}, {⿶}, {⿷}, {⿸}, {⿹}, {⿺} et {⿻}.}.
 
 \subsection{Etude de l'ensemble des sinogrammes}
 
 La plupart des sinogrammes sont dont composés d'éléments plus simples. Deux types de décompositions existent. Le premier considère qu'on peut décomposer un caractère comme un assemblage de traits de \href{https://en.wikipedia.org/wiki/Stroke\_\%28CJKV\_character\%29}{différents types}. Cette façon de faire est pratique pour les calligraphes ou les \href{http://www.wenlin.com/cdl/}{typographes} mais moins pour les étudiants.
 
-Le second type de décomposition s'appuie sur l'étymologie et considère que certains caractères, les clefs, ne peuvent pas être décomposés. Dans cette optique, la clef 鼻, qui signifie \textsl{nez} ou \textsl{premier}, ne devrait pas se décomposer en 自, 田 et 丌 car cela n'a pas de sens. Nous utiliserons cette décomposition dans la suite.
+Le second type de décomposition s'appuie sur l'étymologie et considère que certains caractères, les clefs, ne peuvent pas être décomposés. Dans cette optique, la clef {鼻}, qui signifie \textsl{nez} ou \textsl{premier}, ne devrait pas se décomposer en {自}, {田} et {丌} car cela n'a pas de sens. Nous utiliserons ce type décomposition dans la suite.
 
 En décomposant les caractères, on obtient un graphe orienté acyclique que l'on peut appeler une forêt : il contient beaucoup d'arbres, chacun ayant pour racine un caractère composé et comme feuilles les clefs qui le composent.
 
@@ -134,6 +139,6 @@ Cependant, comment écrire un algorithme pour disposer harmonieusement la struct
 
 \subsection{Une modélisation plus complexe : rendre compte des variations}
 
-Les sinogrammes sont le fruit de huit mille ans d'histoire dont les aléas ont produits quelques particularités : ils peuvent être traditionnels ou simplifiés et peuvent avoir plusieurs variations\footnote{Le caractère 馬 qui signifie cheval est écrit 马 en chinois simplifié. Les caractères \symbol{"6236}, \symbol{"6237} et \symbol{"6238} représentent le même sinogramme mais n'ont pas le même point de code Unicode (respectivement \texttt{6236}, \texttt{6237} et \texttt{6238})} en fonction de la langue par laquelle il est utilisé. Les \og sinogrammes \fg{} coréens diffèrent légèrement de leurs homologues chinois ou japonais. Réussir à unifier les variations d'un même caractère n'est vraiment pas évident mais permettrait de simplifier la sortie obtenue et généraliserait élégamment ce projet : il serait alors possible d'apprendre le chinois traditionnel ou le japonais (qui utilise des caractères simplifiés particuliers) sans mélanger les deux.
+Les sinogrammes sont le fruit de huit mille ans d'histoire dont les aléas ont produits quelques particularités : ils peuvent être traditionnels ou simplifiés et peuvent avoir plusieurs variations\footnote{Le caractère {馬} qui signifie cheval est écrit 马 en chinois simplifié. Les caractères \symbol{"6236}, \symbol{"6237} et \symbol{"6238} représentent le même sinogramme mais n'ont pas le même point de code Unicode (respectivement \texttt{6236}, \texttt{6237} et \texttt{6238})} en fonction de la langue par laquelle il est utilisé. Les \og sinogrammes \fg{} coréens diffèrent légèrement de leurs homologues chinois ou japonais. Réussir à unifier les variations d'un même caractère n'est vraiment pas évident mais permettrait de simplifier la sortie obtenue et généraliserait élégamment ce projet : il serait alors possible d'apprendre le chinois traditionnel ou le japonais (qui utilise des caractères simplifiés particuliers) sans mélanger les deux.
 
 \end{document}
