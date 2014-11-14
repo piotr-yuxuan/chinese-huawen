@@ -1,47 +1,10 @@
 \documentclass[12pt,oneside]{article}
+\usepackage{import}
 
-\usepackage{listingsutf8,xcolor,hyperref}
-\usepackage[english,francais]{babel}
-
-\usepackage{fontspec}
-
-\defaultfontfeatures{Mapping=tex-text}
-\setmainfont{Linux Libertine}
-\newfontfamily{\chinesefont}{AR PL New Sung}
-\newfontfamily{\idcfont}{Unifont}
-
-\usepackage[CJK, IdeographicDescriptionCharacters]{ucharclasses}
-\setTransitionsForCJK{\chinesefont}{\normalfont}
-\setTransitionTo{IdeographicDescriptionCharacters}{\idcfont}
-\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
-
-\lstset{
-  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
-  basicstyle=\footnotesize\ttfamily,% the size of the fonts that are used for the code
-  breakatwhitespace=true,         % sets if automatic breaks should only happen at whitespace
-  breaklines=true,                 % sets automatic line breaking
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygreen}\itshape,    % comment style
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
-  frame=single,                    % adds a frame around the code
-  keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
-  keywordstyle=\color{blue},       % keyword style
-  language=Java,                      % the language of the code
-  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
-  numbersep=5pt,                   % how far the line-numbers are from the code
-  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
-  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
-  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
-  showstringspaces=true,          % underline spaces within strings only
-  showtabs=true,                  % show tabs within strings adding particular underscores
-  stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
-  stringstyle=\color{mymauve},     % string literal style
-  tabsize=4,                       % sets default tabsize to 2 spaces
-  tab=\rightarrowfill,
-  belowskip=-0.8\baselineskip,
-  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
-}
+\newcommand\directory{../}
+\import{\directory/tex/preamble/}{general.tex}
+\import\preamble{dev.tex}
+\import\preamble{bibliography.tex}
 
 \title{\textsc{inf723} Dossier}
 \date{12 novembre 2014}
@@ -49,10 +12,11 @@
 \newcommand\fileref[1]{(\textsl{cf.} fichier \texttt{#1})}
 \begin{document}
 
-\maketitle
-\begin{abstract}\foreignlanguage{english}{Quick briefing about {華文}. Introduce the context, what we plan to do and how to do it.}
+\selectlanguage{francais}
 
-Ce document est une présentation du projet \og 華文 \fg{}. Nous commencerons par décrire rapidement le contexte général de ce projet avant d'être plus spécifique et d'énumérer ce que nous aimerions pouvoir faire. Nous projetterons enfin quelques pistes de développement.\end{abstract}
+\maketitle
+
+\begin{abstract}\foreignlanguage{english}{Quick briefing about {華文}. Introduce the context, what we plan to do and how to do it.}\par Ce document est une présentation du projet \og 華文 \fg{}. Nous commencerons par décrire rapidement le contexte général de ce projet avant d'être plus spécifique et d'énumérer ce que nous aimerions pouvoir faire. Nous projetterons enfin quelques pistes de développement.\end{abstract}
 \tableofcontents
 
 \section{Enjeux et contexte}

@@ -11,30 +11,95 @@ Ligatures={Common, Rare, TeX},
 Numbers=OldStyle
 ]
 {Junicode}
-\newfontfamily{\chinesefont}{TW-MOE-Std-Kai}
-\newfontfamily{\chinextfont}{MOESongUN}
+\newfontfamily{\cursivefont}{AR PL UKai TW MBE}
+\newfontfamily{\hanaminafont}{HanaMinA}
+\newfontfamily{\hanaminbfont}{HanaMinB}
+\newfontfamily{\idcfont}{AR PL UMing TW MBE}
 \newfontfamily{\defaultfont}{Unifont}
 
-\usepackage[CJK, CJKUnifiedIdeographs]{ucharclasses} % IdeographicDescriptionCharacters is implied
+\usepackage[
+%CJK,
+CJKCompatibility,
+CJKCompatibilityForms,
+CJKCompatibilityIdeographs,
+CJKCompatibilityIdeographsSupplement,
+CJKRadicalsSupplement,
+CJKStrokes,
+CJKSymbolsAndPunctuation,
+CJKUnifiedIdeographs,
+CJKUnifiedIdeographsExtensionA,
+CJKUnifiedIdeographsExtensionB,
+CJKUnifiedIdeographsExtensionC,
+CJKUnifiedIdeographsExtensionD,
+EnclosedCJKLettersAndMonths,
+IdeographicDescriptionCharacters,
+KangxiRadicals]{ucharclasses} % IdeographicDescriptionCharacters is implied
 
 \setDefaultTransitions{\defaultfont}{\normalfont}
 
-\setTransitionsForCJK{\defaultfont}{\normalfont}
+\setTransitionsForCJK{\hanaminbfont}{\normalfont}
 
-%\setTransitionTo{IdeographicDescriptionCharacters}{\defaultfont} % Can we find a better one?
-%\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+\setTransitionTo{CJKCompatibility}{\hanaminafont}
+\setTransitionFrom{CJKCompatibility}{\normalfont}
 
-\setTransitionTo{CJKUnifiedIdeographs}{\chinesefont}
+\setTransitionTo{CJKCompatibilityForms}{\hanaminafont}
+\setTransitionFrom{CJKCompatibilityForms}{\normalfont}
+
+\setTransitionTo{CJKCompatibilityIdeographs}{\hanaminafont}
+\setTransitionFrom{CJKCompatibilityIdeographs}{\normalfont}
+
+\setTransitionTo{CJKCompatibilityIdeographsSupplement}{\hanaminafont}
+\setTransitionFrom{CJKCompatibilityIdeographsSupplement}{\normalfont}
+
+\setTransitionTo{CJKRadicalsSupplement}{\cursivefont}
+\setTransitionFrom{CJKRadicalsSupplement}{\normalfont}
+
+\setTransitionTo{CJKStrokes}{\hanaminafont}
+\setTransitionFrom{CJKStrokes}{\normalfont}
+
+\setTransitionTo{CJKSymbolsAndPunctuation}{\hanaminafont}
+\setTransitionFrom{CJKSymbolsAndPunctuation}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographs}{\cursivefont} % It covers 99.9 %
 \setTransitionFrom{CJKUnifiedIdeographs}{\normalfont}
 
-\setTransitionTo{CJKUnifiedIdeographsExtensionA}{\chinextfont}
+\setTransitionTo{CJKUnifiedIdeographsExtensionA}{\hanaminafont}
 \setTransitionFrom{CJKUnifiedIdeographsExtensionA}{\normalfont}
 
+\setTransitionTo{CJKUnifiedIdeographsExtensionB}{\hanaminbfont}
+\setTransitionFrom{CJKUnifiedIdeographsExtensionB}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographsExtensionC}{\hanaminbfont}
+\setTransitionFrom{CJKUnifiedIdeographsExtensionC}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographsExtensionD}{\hanaminbfont}
+\setTransitionFrom{CJKUnifiedIdeographsExtensionD}{\normalfont}
+
+\setTransitionTo{IdeographicDescriptionCharacters}{\idcfont}
+\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+
+\setTransitionTo{EnclosedCJKLettersAndMonths}{\hanaminafont}
+\setTransitionFrom{EnclosedCJKLettersAndMonths}{\normalfont}
+
+\setTransitionTo{KangxiRadicals}{\cursivefont}
+\setTransitionFrom{KangxiRadicals}{\normalfont}
+
 \begin{document}
-鷳 Basic\par
-䶫 Ext-A\par
-𠀂 Ext-B1\par
-𫢔 Ext-E\par
+㌀ CJKCompatibility\par
+︰ CJKCompatibilityForms\par
+豈 CJKCompatibilityIdeographs\par
+丽 CJKCompatibilityIdeographsSupplement\par
+⺀ CJKRadicalsSupplement\par
+㇀ CJKStrokes\par
+〄 CJKSymbolsAndPunctuation\par
+丂 CJKUnifiedIdeographs\par
+㐀 CJKUnifiedIdeographsExtensionA\par
+𠀀 CJKUnifiedIdeographsExtensionB\par
+𪜀 CJKUnifiedIdeographsExtensionC\par
+𫝀 CJKUnifiedIdeographsExtensionD\par
+⿰ IdeographicDescriptionCharacters\par
+㊫ EnclosedCJKLettersAndMonths\par
+⿑ KangxiRadicals\par
 
 a 貴\par
 a ⿵\par
@@ -49,5 +114,4 @@ a⿵\par
 貴⿵\par
 ⿵ \par
 ⿵ \par
-
 \end{document}
