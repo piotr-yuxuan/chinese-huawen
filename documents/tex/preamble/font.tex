@@ -1,4 +1,21 @@
+%\usepackage{fontspec}
+%\setmainfont[
+%Ligatures={Common, Rare, TeX},
+%%Ligatures={Common, Rare, TeX, Historical},
+%%Numbers=OldStyle,
+%%Contextuals=Swash,
+%%Style={Historic}, % Swash
+%Numbers=OldStyle
+%]
+%{Junicode}
+%
+%\usepackage{xeCJK}
+%\setCJKmainfont[
+%Style={Historic},
+%]{教育部標準楷書}
+
 \usepackage{fontspec}
+
 \setmainfont[
 Ligatures={Common, Rare, TeX},
 %Ligatures={Common, Rare, TeX, Historical},
@@ -8,8 +25,21 @@ Ligatures={Common, Rare, TeX},
 Numbers=OldStyle
 ]
 {Junicode}
+\newfontfamily{\chinesefont}{TW-MOE-Std-Kai}
+\newfontfamily{\chinextfont}{MOESongUN}
+\newfontfamily{\defaultfont}{Unifont}
 
-\usepackage{xeCJK}
-\setCJKmainfont[
-Style={Historic},
-]{教育部標準楷書}
+\usepackage[CJK, CJKUnifiedIdeographs]{ucharclasses} % IdeographicDescriptionCharacters is implied
+
+\setDefaultTransitions{\defaultfont}{\normalfont}
+
+\setTransitionsForCJK{\defaultfont}{\normalfont}
+
+%\setTransitionTo{IdeographicDescriptionCharacters}{\defaultfont} % Can we find a better one?
+%\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographs}{\chinesefont}
+\setTransitionFrom{CJKUnifiedIdeographs}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographsExtensionA}{\chinextfont}
+\setTransitionFrom{CJKUnifiedIdeographsExtensionA}{\normalfont}

@@ -2,17 +2,40 @@
 
 \usepackage{fontspec}
 
-\defaultfontfeatures{Mapping=tex-text}
-\setmainfont{Linux Libertine}
-\newfontfamily{\chinesefont}{AR PL New Sung}
-\newfontfamily{\idcfont}{Unifont}
+\setmainfont[
+Ligatures={Common, Rare, TeX},
+%Ligatures={Common, Rare, TeX, Historical},
+%Numbers=OldStyle,
+%Contextuals=Swash,
+%Style={Historic}, % Swash
+Numbers=OldStyle
+]
+{Junicode}
+\newfontfamily{\chinesefont}{TW-MOE-Std-Kai}
+\newfontfamily{\chinextfont}{MOESongUN}
+\newfontfamily{\defaultfont}{Unifont}
 
-\usepackage[CJK, IdeographicDescriptionCharacters]{ucharclasses}
-\setTransitionsForCJK{\chinesefont}{\normalfont}
-\setTransitionTo{IdeographicDescriptionCharacters}{\idcfont}
-\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+\usepackage[CJK, CJKUnifiedIdeographs]{ucharclasses} % IdeographicDescriptionCharacters is implied
+
+\setDefaultTransitions{\defaultfont}{\normalfont}
+
+\setTransitionsForCJK{\defaultfont}{\normalfont}
+
+%\setTransitionTo{IdeographicDescriptionCharacters}{\defaultfont} % Can we find a better one?
+%\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographs}{\chinesefont}
+\setTransitionFrom{CJKUnifiedIdeographs}{\normalfont}
+
+\setTransitionTo{CJKUnifiedIdeographsExtensionA}{\chinextfont}
+\setTransitionFrom{CJKUnifiedIdeographsExtensionA}{\normalfont}
 
 \begin{document}
+鷳 Basic\par
+䶫 Ext-A\par
+𠀂 Ext-B1\par
+𫢔 Ext-E\par
+
 a 貴\par
 a ⿵\par
 貴 a\par
