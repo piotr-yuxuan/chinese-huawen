@@ -12,7 +12,7 @@ Nonetheless I've been trying to automatically generate markdown files with pando
 
 \subsection{Babel and \textsc{cjk}\footnote{Stands for \textsl{C}hinese, \textsl{J}aponese and \textsl{K}orean.}}
 
-An sinogram in standard text is rendered correctly but when typed in \texttt{\textbackslash{}foreignlanguage} just produces a \français{華} character. Hum\dots{}, it seems it was a bug and it's been fixed.
+A sinogram in standard text is rendered correctly but when typed in \texttt{\textbackslash{}foreignlanguage} just produces a \français{華} character. Hum\dots{}, it seems it was a bug and it's been fixed.
 
 \subsection{Font and \textsc{idc}\footnote{Stands for \textsl{i}deographic \textsl{d}escription \textsl{c}haracter.}}
 
@@ -24,38 +24,9 @@ Using \texttt{xe\textsc{cjk}} is bad and short-minded:
 \setCJKmainfont{AR PL New Sung}
 \end{lstlisting}
 
-It's better to use \texttt{ucharclasses} which is buggy but do the job when nicely asked to.
-\begin{lstlisting}
-\usepackage{fontspec}
+It's better to use \texttt{ucharclasses}. Two characters from different unicode block may be separated by a blank or enclosed in \{⋅\} because that package doesn't change font inside a word. I think it's a bug. Refer to \texttt{mw⿲ce.tex} to see how to use it.
 
-\setmainfont[
-Ligatures={Common, Rare, TeX},
-%Ligatures={Common, Rare, TeX, Historical},
-%Numbers=OldStyle,
-%Contextuals=Swash,
-%Style={Historic}, % Swash
-Numbers=OldStyle
-]
-{Junicode}
-\newfontfamily{\chinesefont}{TW-MOE-Std-Kai}
-\newfontfamily{\chinextfont}{MOESongUN}
-\newfontfamily{\defaultfont}{Unifont}
-
-\usepackage[CJK, CJKUnifiedIdeographs]{ucharclasses} % IdeographicDescriptionCharacters is implied
-
-\setDefaultTransitions{\defaultfont}{\normalfont}
-
-\setTransitionsForCJK{\defaultfont}{\normalfont}
-
-%\setTransitionTo{IdeographicDescriptionCharacters}{\defaultfont} % Can we find a better one?
-%\setTransitionFrom{IdeographicDescriptionCharacters}{\normalfont}
-
-\setTransitionTo{CJKUnifiedIdeographs}{\chinesefont}
-\setTransitionFrom{CJKUnifiedIdeographs}{\normalfont}
-
-\setTransitionTo{CJKUnifiedIdeographsExtensionA}{\chinextfont}
-\setTransitionFrom{CJKUnifiedIdeographsExtensionA}{\normalfont}
-\end{lstlisting}
+It has been put in general \texttt{font.tex} preamble.
 
 Methinks the compiler automatically embeds needed font glyphs so no need to add arguments like \texttt{-dSubsetFonts=true} \texttt{-dEmbedAllFonts=true}.
 
