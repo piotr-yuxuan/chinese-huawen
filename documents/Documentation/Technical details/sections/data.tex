@@ -1,4 +1,29 @@
-\section{La carte de données \texttt{PairMap}}
+Analyser un fichier et construire une représentation abstraite de l'information qu'il contient à partir des informations que l'on en obtient ligne par ligne est un problème d'analyse syntaxique\footnote{Un analyseur syntaxique est un \textsl{parser} en anglais.} dont il faut ensuite enregistrer les résultats pour pouvoir les utiliser plus tard. Plusieurs solutions sont envisagées dans le cadre de ce micro-projet. 
+
+\section{Analyse syntaxique d'un fichier texte}
+
+Programmation impérative ou tentative de programmation fonctionnelle.
+
+\section{Stockage des données}
+
+L'idée la plus naturelle est d'obtenir en sortie du programme deux fichiers textes qui contiennent une liste de nœuds et une liste d'arêtes mais cette idée mène très rapidement à utiliser une représentation temporaire de la structure de composition des sinogrammes. On peut donc également construire une représentation temporaire des objets, l'afficher puis éteindre le programme sans en garder trace. Il est enfin envisageable d'enregistrer le résultat obtenu dans une base de données pour faciliter son exploitation ultérieure.
+
+Nous avons bénéficié des lumières de Messieurs \textsc{Robert} et \textsc{Talel}, professeurs respectivement d'architecture des ordinateurs et de bases de données que nous remercions, pour explorer ces trois voies : représentation temporaire, génération de listes et utilisation de base de données. Ces trois voies posent chacune des questions intéressantes en optimisation et modèle relationnel.
+
+Plusieurs choix s'offrent à nous pour le stockage des sinogrammes. La solution la plus pérenne est de passer par une base de données et donc d'utiliser le disque dur. Cela pose des contraintes de , mais quelle est la solution la plus rapide ? 
+Tous les caractères ont une \textsc{ids} mais seulement les caractères explicites ont un point de code.
+
+\subsection{Listes d'arêtes et de nœuds}
+
+\subsection{Base de données Maria\textsc{db}}
+
+\paragraph{Notule} Je remercie M. \textsc{Talel}, qui donne le cours \texttt{inf225}, de bien avoir accepté de répondre à mes questions.
+
+\subsection{La carte de données \texttt{PairMap}}
+
+\paragraph{Notule} Je remercie M. \textsc{Robert}, qui donne le cours \texttt{inf227}, de bien avoir accepté de répondre à mes questions.
+
+\subsubsection{Statégies d'optimisation}
 
 La structure de données dans laquelle on stocke les caractères est un dictionnaire qui a pour clef l'\textsc{ids} d'un caractère (ou son hash). Il faut une structure qui évite complètement les redondances, c'est-à-dire que la forêt des sinogrammes n'ait pas de doublon quel que soit l'ordre dans lequel les caractères sont entrés et quel que soit le détail des \textsc{ids}. \texttt{PairMap} n'a pas vocation a être générique : des structures existent déjà pour cela mais à offrir la solution la plus adaptée au stockage des sinogrammes.
 

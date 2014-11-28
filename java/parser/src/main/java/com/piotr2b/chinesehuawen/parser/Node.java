@@ -168,7 +168,7 @@ public class Node {
 		return validate;
 	}
 
-	private Node parse(Deque<String> sequence, Deque<Node> stack) {
+	public Node parse(Deque<String> sequence, Deque<Node> stack) {
 		String current = sequence.removeLast();
 
 		// Is it a control character or a basic sinogram?

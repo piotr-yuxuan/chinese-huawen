@@ -2,8 +2,12 @@ package com.piotr2b.chinesehuawen.parser;
 
 import static com.piotr2b.chinesehuawen.entities.Tables.*;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,9 +17,14 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -42,6 +51,26 @@ public class Main {
 	public static int errorType2 = 0;
 	public static int errorType3 = 0;
 	public static int errorType4 = 0;
+
+	public static PairMap<String, Integer, Node> e = new PairMap<>();
+
+	public static Node getTransitiveReductionTree(String x) {
+		return new Node("a", "b");
+	}
+
+	public static String[] parseRow(String x) {
+		return x.split("\t");
+	}
+
+	// public static Node getParsedTree(String x) {
+	// Node node;
+	// return node;
+	// }
+	//
+	// public static Node getEtymonTree(String x) {
+	// Node node;
+	// return node;
+	// }
 
 	public static void main(String[] args) {
 
@@ -89,6 +118,39 @@ public class Main {
 
 		String idsPath = "../../data/ids/chise/ids/";
 		String exportPath = "../../gephi/files/";
+
+		try {
+			// On ne regarde que les IDS donc on n'a pas besoin du PairMap.
+			HashMap<Integer, Node> map = new HashMap<>();
+			InputStream is = new FileInputStream(new File(idsPath + "IDS-UCS-Basic.txt"));
+			BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+			// stateless (their result should not depend on any state that might
+			// change during
+			// execution of the stream pipeline).
+
+			br.lines()//
+					.parallel() //
+					.map(Main::parseRow) // stateless
+					// parallèle ici ?
+					.forEach(x -> { // can be stateful
+								String codepoint = x[0];
+								String character = x[1];
+								String sequence = x[2];
+								System.out.print(x);
+
+								if (map.containsKey(sequence.hashCode()))
+									return;
+								else {
+									Node node = new Node(character, sequence);
+									map.put(node.getId(), node);
+								}
+							});
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		ArrayDeque<File> files = new ArrayDeque<File>();
 

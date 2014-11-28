@@ -17,14 +17,14 @@ A sinogram in standard text is rendered correctly but when typed in \texttt{\tex
 \subsection{Font and \textsc{idc}\footnote{Stands for \textsl{i}deographic \textsl{d}escription \textsl{c}haracter.}}
 
 Using \texttt{xe\textsc{cjk}} is bad and short-minded:
-\begin{lstlisting}
+\begin{lstlisting}[caption={}]
 \usepackage{fontspec,xeCJK}
 
 \setmainfont{Linux Libertine}
 \setCJKmainfont{AR PL New Sung}
 \end{lstlisting}
 
-It's better to use \texttt{ucharclasses}. Two characters from different unicode block may be separated by a blank or enclosed in \{⋅\} because that package doesn't change font inside a word. I think it's a bug. Refer to \texttt{mw⿲ce.tex} to see how to use it.
+It's better to use \texttt{ucharclasses}. Two characters from different unicode block may be separated by a blank or enclosed in \{.\} because that package doesn't change font inside a word. I think it's a bug. Refer to \texttt{mw⿲ce.tex} to see how to use it.
 
 It has been put in general \texttt{font.tex} preamble.
 
@@ -36,6 +36,6 @@ I use the Xe\TeX{} compiler.
 
 The option \texttt{recorder} is required by the package \href{http://www.ctan.org/tex-archive/macros/latex/contrib/currfile}{\texttt{currfile}}. More specifically, the \texttt{abspath} option loads the sub-package \texttt{currfile-abspath} and requires compiler option \texttt{recorder} to be used. Thus, as \texttt{currfile} \textsl{could be used}, your compilation line should look comething like:
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={}]
 xelatex -recorder
 \end{lstlisting}

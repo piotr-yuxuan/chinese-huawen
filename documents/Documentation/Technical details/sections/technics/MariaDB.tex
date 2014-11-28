@@ -1,0 +1,15 @@
+\section{Maria\textsc{DB}}
+
+\subsection{Why not My\textsc{sql}?} Because I prefer truely free and maintained software.
+
+\subsection{Préparation}
+
+Le script \textsc{huawen.sql} crée la base de données \texttt{huawen}. Il peut être exécuté par la commande suivante: 
+\begin{lstlisting}[caption={Création de la base de données}]
+mysql -u root -p < huawen.sql
+\end{lstlisting}
+Le projet Java utilise un utilisateur \texttt{huawen} muni du mot de passe \texttt{huawen}.
+\begin{lstlisting}[caption={Création de l'utilisateur}]
+create user 'huawen'@'localhost' identified by 'huawen';
+grant select, insert on huawen.* to 'huawen'@'localhost';
+\end{lstlisting}
