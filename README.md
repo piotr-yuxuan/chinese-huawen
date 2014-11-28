@@ -1,8 +1,18 @@
+# General background
+
+You may give give that [website](http://piotr2b.github.io) a glance as for a general, non programmatical introduction to this project.
+
+This project is aimed at analysis of the sinogram set with graph and set theories. What’s the best way to learn and remember Chinese characters? Most of Chinese handbooks are built in a Western fashion: daily-life conversation samples bring new vocabulary and syntax examples. This fashion doesn’t take advantage of intrinsic Chinese language structure, which makes easier to discover 貴 when knowing yet 中, 一 and 貝. 貴 stands for expensive or honourable while 貝 refers to shell or money. This semantic link lets it easy to remember both of them.
+
+The first character 華 of the project name means sinity; 文 stands for language. The whole phrase 華文 means Chinese language and is read ㄏㄨㄚˊ ㄨㄣˊ or huáwén.
+
+This site has been in some extent redacted in French because part of this project is being developped whithin the frame of a school project.
+
+# Introduction
+
 The following is a technical document where it's first introduced the global structure of that repository: what do folders contain, and where can you what find you're looking for. Then we step-by-setp explain how to get a working copy of that project on your computer. We'll target a [GNU / Linux](https://www.gnu.org)[ computer](https://www.archlinux.org/) but no big changes may be required if you're using another operating system.
 
 This document shows neither [evolution](documents/Documentation/Work trail.md) of available features and foreseen bugs to be added nor technical details which can be found both in folder [documentation](documents/Documentation).
-
-> You may give give that [website](http://piotr2b.github.io) a glance as for a general, non programmatical introduction to this project.
 
 > Pour voir le dépôt à une date donnée, suivre ce [lien](https://github.com/piotr2b/chinese-huawen/commits/master) ou cliquer sur « commits » à gauche au dessus de la liste des fichiers.
 
