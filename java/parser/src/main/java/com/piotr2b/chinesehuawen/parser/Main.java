@@ -1,6 +1,6 @@
 package com.piotr2b.chinesehuawen.parser;
 
-import static com.piotr2b.chinesehuawen.entities.Tables.*;
+import static com.piotr2b.chinesehuawen.entities.Tables.SINOGRAM;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,14 +17,9 @@ import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
-import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import org.jooq.DSLContext;
 import org.jooq.Record;
@@ -51,8 +46,6 @@ public class Main {
 	public static int errorType2 = 0;
 	public static int errorType3 = 0;
 	public static int errorType4 = 0;
-
-	public static PairMap<String, Integer, Node> e = new PairMap<>();
 
 	public static Node getTransitiveReductionTree(String x) {
 		return new Node("a", "b");
@@ -129,23 +122,23 @@ public class Main {
 			// change during
 			// execution of the stream pipeline).
 
-			br.lines()//
-					.parallel() //
-					.map(Main::parseRow) // stateless
-					// parallèle ici ?
-					.forEach(x -> { // can be stateful
-								String codepoint = x[0];
-								String character = x[1];
-								String sequence = x[2];
-								System.out.print(x);
-
-								if (map.containsKey(sequence.hashCode()))
-									return;
-								else {
-									Node node = new Node(character, sequence);
-									map.put(node.getId(), node);
-								}
-							});
+			// br.lines()//
+			// .parallel() //
+			// .map(Main::parseRow) // stateless
+			// // parallèle ici ?
+			// .forEach(Node::x -> { // can be stateful
+			// String codepoint = x[0];
+			// String character = x[1];
+			// String sequence = x[2];
+			// System.out.print(x);
+			//
+			// if (map.containsKey(sequence.hashCode()))
+			// return;
+			// else {
+			// Node node = new Node(character, sequence);
+			// map.put(node.getId(), node);
+			// }
+			// });
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -157,21 +150,21 @@ public class Main {
 		// More to be found here: http://www.chise.org/ids/index.html or here
 		// http://git.chise.org/gitweb/?p=chise/ids.git;a=tree
 		// Order should better not matter ~
-		files.addLast(new File("test.txt"));
+		// files.addLast(new File("test.txt"));
 
 		files.addLast(new File(idsPath + "IDS-UCS-Basic.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
-		files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
+		// files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
 
 		Parser<Node, RowChise> parser;
 		parser = new Parser<>(files, 25000);
@@ -208,6 +201,27 @@ public class Main {
 		System.out.println(format("    Type 2  ", Main.errorType2, Main.parserError));
 		System.out.println(format("    Type 3  ", Main.errorType3, Main.parserError));
 		System.out.println(format("    Type 4  ", Main.errorType4, Main.parserError));
+
+		PairMap<Integer, String, Node> pairMap = new PairMap<>(Integer.class, String.class, Node.class);
+		// On prend un cas simple avec K1 puis Pair<K1, K2>.
+		// Sans fonctionnel
+		// for (Map.Entry<Integer, Node> entry : dictionary.entrySet()) {
+		// Integer key = entry.getKey();
+		// Node value = entry.getValue();
+		// pairMap.put(key, value);
+		// }
+
+		// Avec fonctionnel
+		dictionary.entrySet().stream().forEach(entry -> {
+			try {
+				pairMap.put(entry.getKey(), entry.getValue());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		});
+
+		// check
+		pairMap.entrySet().stream().forEach(entry -> System.out.println(Integer.toString(entry.getKey().getK1()) + " " + entry.getValue().getIDS()));
 
 		// printDictionaries();
 		exportFinalGraph(exportPath);
