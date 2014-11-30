@@ -22,7 +22,7 @@ import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
 // K2>. Here, K1 is the main key and K2 is optionnal key.
 
 // Ca serait cool que ça implémente Stream<Entry<Pair<K1, K2>, V>>.
-public class PairMap<K1, K2, V extends Node> implements Map<Alias<K1, K2>, V> {
+public class AliasMap<K1, K2, V extends Node> implements Map<Alias<K1, K2>, V> {
 
 	private final Class<?> K1_class;
 	private final Class<?> K2_class;
@@ -46,13 +46,13 @@ public class PairMap<K1, K2, V extends Node> implements Map<Alias<K1, K2>, V> {
 
 	private Class<K1> persistentClass;
 
-	private PairMap() {
+	private AliasMap() {
 		K1_class = null;
 		K2_class = null;
 		V_class = null;
 	}
 
-	public PairMap(Class<?> k1, Class<?> k2, Class<?> V) {
+	public AliasMap(Class<?> k1, Class<?> k2, Class<?> V) {
 		if (k1 == null || k2 == null || V == null) {
 			throw new NullPointerException();
 		}

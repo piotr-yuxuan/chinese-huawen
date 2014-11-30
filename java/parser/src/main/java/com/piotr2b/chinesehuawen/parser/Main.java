@@ -202,7 +202,7 @@ public class Main {
 		System.out.println(format("    Type 3  ", Main.errorType3, Main.parserError));
 		System.out.println(format("    Type 4  ", Main.errorType4, Main.parserError));
 
-		PairMap<Integer, String, Node> pairMap = new PairMap<>(Integer.class, String.class, Node.class);
+		AliasMap<Integer, String, Node> pairMap = new AliasMap<>(Integer.class, String.class, Node.class);
 		// On prend un cas simple avec K1 puis Pair<K1, K2>.
 		// Sans fonctionnel
 		// for (Map.Entry<Integer, Node> entry : dictionary.entrySet()) {
