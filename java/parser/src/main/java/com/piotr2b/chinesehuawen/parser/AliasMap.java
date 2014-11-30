@@ -1,15 +1,13 @@
 package com.piotr2b.chinesehuawen.parser;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
 
