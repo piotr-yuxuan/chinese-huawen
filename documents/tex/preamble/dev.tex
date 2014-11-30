@@ -1,4 +1,5 @@
 \usepackage{url}
+\usepackage{color}
 \usepackage{hyperref}
 \hypersetup{
 	colorlinks=true,       % false: boxed links; true: colored links
@@ -7,6 +8,9 @@
     filecolor=red,      % color of file links
     urlcolor=blue
 }
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
 \usepackage{listings}
 \lstset{ %
   basicstyle=\footnotesize,        % the size of the fonts that are used for the code
@@ -26,6 +30,11 @@
   tab=\rightarrowfill,
   stepnumber=1,                    % the step between two line-numbers. If it's 1, each line will be numbered
   tabsize=3,                       % sets default tabsize to 2 spaces
+  commentstyle=\color{mygreen},    % comment style
+  keywordstyle=\color{blue},       % keyword style
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  stringstyle=\color{mymauve},     % string literal style
   title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
 \usepackage{longtable}

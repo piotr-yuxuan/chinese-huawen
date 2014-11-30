@@ -1,8 +1,11 @@
 package com.piotr2b.chinesehuawen.parser;
 
 import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,17 +25,30 @@ import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
 // K2>. Here, K1 is the main key and K2 is optionnal key.
 
 // Ca serait cool que ça implémente Stream<Entry<Pair<K1, K2>, V>>.
+@Deprecated
 public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain, Kalias>, V> {
 
-	private final Class<?> KMAIN;
-	private final Class<?> KALIAS;
-	private final Class<?> VALUE;
+	protected final Class<? extends Kmain> KMAIN;
+	protected final Class<? extends Kalias> KALIAS;
+	protected final Class<? extends V> VALUE;
+
+	private Node.TreeType type;
+
+	public void setTreeType(Node.TreeType type) {
+		this.type = type;
+	}
+
+	public Node.TreeType getTreeType() {
+		return this.type;
+	}
 
 	// TODO take care about K1 = null
-	private HashMap<Kmain, Kalias> ma; // should not be null
-	private HashMap<Kalias, Kmain> am; // object can be null
-	private HashMap<Kmain, V> mv;
-	private HashMap<Kalias, V> av; // k1 is main key
+	// HashMap allows null as key or value. Hashtable doesn't. ConcurrentHashMap
+	// is built over Hastable so it doesn't either.
+	private HashMap<Kmain, Kalias> ma; // may not be null
+	private ConcurrentHashMap<Kalias, Kmain> am; // object can be null
+	private ConcurrentHashMap<Kmain, V> mv;
+	private ConcurrentHashMap<Kalias, V> av; // k1 is main key
 
 	@Override
 	public int size() {
@@ -44,15 +60,13 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		return mv.isEmpty();
 	}
 
-	private Class<Kmain> persistentClass;
-
 	private AliasMap() {
 		KMAIN = null;
 		KALIAS = null;
 		VALUE = null;
 	}
 
-	public AliasMap(Class<?> kMain, Class<?> kAlias, Class<?> value) {
+	public AliasMap(Class<? extends Kmain> kMain, Class<? extends Kalias> kAlias, Class<? extends V> value, Node.TreeType type) {
 		if (kMain == null || kAlias == null || value == null) {
 			throw new NullPointerException();
 		}
@@ -61,10 +75,76 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		KALIAS = kAlias;
 		VALUE = value;
 
-		mv = new HashMap<Kmain, V>();
-		av = new HashMap<Kalias, V>();
+		mv = new ConcurrentHashMap<Kmain, V>();
+		av = new ConcurrentHashMap<Kalias, V>();
 		ma = new HashMap<Kmain, Kalias>();
-		am = new HashMap<Kalias, Kmain>();
+		am = new ConcurrentHashMap<Kalias, Kmain>();
+
+		this.type = type;
+	}
+
+	/**
+	 * Cette méthode peut sembler être la pire victime de l'explosion
+	 * combinatoire mais en réalité il y a encore pire : à chaque nouveau,
+	 * vérifier qu'il est unique et que chacun de ses enfants est unique.
+	 * 
+	 * Il y a sans doute des algorithmes parallèles très intelligents qui
+	 * assurent l'unicité des éléments mais cela sort du cadre de ce
+	 * mini-projet.
+	 */
+	public void performLinkage() {
+		// Premier arrivé, premier servi.
+		// distinct() method returns a stream consisting of the distinct
+		// elements based on the result returned by equals().
+
+		HashMap<Integer, Node> a = new HashMap<>();
+		Integer inc = 0;
+		a.put(inc++, new Node("A", "A"));
+		a.put(inc++, new Node("A", "A"));
+		a.put(inc++, new Node("A", "A"));
+		a.put(inc++, new Node("A", "A"));
+
+		for (Node n : a.values()) {
+			n = null;
+		}
+
+		mv.entrySet().stream() //
+				.flatMap(entry -> entry.getValue().getAllNodes().stream()) //
+				.collect(Collectors.groupingBy(Node::getId)).forEach((id, list) -> {
+					/* Il y a au moins un élément dans la liste. */
+					list.forEach(oldNode -> {
+						System.out.println("oldNode : " + ((Object) oldNode).hashCode());
+						Node newNode = mv.get(oldNode.getId());
+						System.out.println("newNode : " + ((Object) newNode).hashCode());
+						System.out.println("old equals: " + oldNode.equals(newNode));
+						System.out.println("new equals: " + oldNode.equals(newNode));
+						oldNode = newNode;
+						System.out.println("modified oldNode: " + ((Object) oldNode).hashCode());
+						System.out.println("old equals: " + oldNode.equals(newNode));
+						System.out.println("new equals: " + oldNode.equals(newNode));
+						System.out.println();
+					});
+				});
+
+		Map<Integer, List<Node>> map = mv.entrySet().stream() //
+				.flatMap(entry -> entry.getValue().getAllNodes().stream()) //
+				.collect(Collectors.groupingBy(Node::getId));
+		Node node = new Node();
+		for (List<Node> list : map.values()) {
+			for (Node n : list) {
+				n = node;
+			}
+		}
+
+		System.out.print("");
+	}
+
+	/**
+	 * Il faut séparer l'édition de lien de la formation des arbres et respecter
+	 * cet ordre. Sinon les types d'arbres ne correspondent pas à leur
+	 * définition.
+	 */
+	public void shapeTree() {
 	}
 
 	@Override
@@ -81,7 +161,8 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		} else if (key.getClass().isAssignableFrom((new Alias<Kmain, Kalias>()).getClass())) {
 			Alias<Kmain, Kalias> K = new Alias<>();
 			return containsKey(K.getKMain()); // You can't have K2 alone without
-											// K1, you automatically have K1.
+												// K1, you automatically have
+												// K1.
 		} else {
 			return false;
 		}
@@ -119,6 +200,10 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		if (key == null || key.getKMain() == null) {
 			return null;
 		}
+
+		value.getAllNodes().forEach(node -> {
+
+		});
 
 		mv.put(key.getKMain(), value);
 
@@ -242,7 +327,6 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		return mv.entrySet();
 	}
 
-	
 	// // Should be polymorph
 	// public static void printDictionariesId() {
 	// System.out.println(" — Alias — ");

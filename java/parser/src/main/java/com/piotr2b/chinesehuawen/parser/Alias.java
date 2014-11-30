@@ -1,5 +1,6 @@
 package com.piotr2b.chinesehuawen.parser;
 
+@Deprecated
 public class Alias<Kmain, Kalias> {
 	private Kmain kMain;
 	private Kalias kAlias;

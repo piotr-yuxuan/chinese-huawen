@@ -3,20 +3,96 @@ package com.piotr2b.chinesehuawen.parser;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Set;
+
+import javax.print.attribute.HashAttributeSet;
 
 import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
 
 public class Node {
 
-	private String character;
-	private IDC type;
-	private ArrayList<Node> leaves;
+	public enum TreeType {
+		/**
+		 * Just the basic tree.
+		 */
+		Parsed,
+		/**
+		 * Transitive reduction of the basic tree. It ensures path unicity from
+		 * a sinogram to a component.
+		 */
+		TransitiveReduction,
+		/**
+		 * Remove transitional etymons, just remember the most basic.
+		 */
+		Radical; // Careful when ensuring consistency.
+
+		public Node export(Node node) {
+			Node ret = new Node();
+			ret.character = node.character;
+			ret.idc = node.idc;
+			ret.leaves = new ArrayList<Node>();
+			switch (this) {
+			case Radical:
+				ArrayList<Node> radicals = new ArrayList<Node>();
+				for (Node n : node.leaves) {
+					if (n.getLeaves().size() == 0 && n.getCharacter() != null) {
+						radicals.add(n);
+					}
+					if (n.getLeaves().size() != 0) {
+						radicals.addAll(n.getFinalLeaves());
+					}
+				}
+				ret.leaves = radicals;
+				break;
+			case TransitiveReduction:
+				break;
+			default:
+			case Parsed:
+				ret.leaves = node.leaves;
+			}
+			return ret;
+		}
+	}
+
+	public String character;
+	public IDC idc;
+	public ArrayList<Node> leaves;
 
 	public int getId() {
 		String ids = getIDS();
 		return ids == null ? 0 : ids.hashCode();
+	}
+
+	/**
+	 * Tous, lui inclus
+	 * 
+	 * @return
+	 */
+	public Set<Node> getAllNodes() {
+		HashSet<Node> set = new HashSet();
+		set.add(this);
+		for (Node n : leaves) {
+			set.addAll(n.getAllNodes());
+		}
+		return set;
+	}
+
+	/**
+	 * Don't use exact object but IDS
+	 * 
+	 * @param node
+	 * @return
+	 */
+	public boolean contains(Node node) {
+		for (Node n : getAllNodes()) {
+			if (n.getId() == node.getId()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public ArrayList<Node> getFinalLeaves() {
@@ -53,7 +129,7 @@ public class Node {
 	}
 
 	public IDC getType() {
-		return type;
+		return idc;
 	}
 
 	public ArrayList<Node> getLeaves() {
@@ -67,7 +143,7 @@ public class Node {
 		if (leaves.size() == 0) {
 			return character;
 		} else {
-			String retour = type.toString();
+			String retour = idc.toString();
 			for (int i = 0; i < leaves.size(); i++) {
 				retour += leaves.get(i).toString();
 			}
@@ -79,7 +155,7 @@ public class Node {
 		if (leaves.size() == 0) {
 			return this.getId() + character;
 		} else {
-			String retour = this.getId() + type.toString() + "(";
+			String retour = this.getId() + idc.toString() + "(";
 			for (int i = 0; i < leaves.size(); i++) {
 				Node vanish = leaves.get(i);
 				retour += vanish.getId() + vanish.toString();
@@ -97,7 +173,7 @@ public class Node {
 		if (leaves.size() == 0) {
 			return character;
 		} else {
-			String retour = type.toString() + "(";
+			String retour = idc.toString() + "(";
 			for (int i = 0; i < leaves.size(); i++) {
 				retour += leaves.get(i).toString();
 				if (i < leaves.size() - 1) {
@@ -109,7 +185,11 @@ public class Node {
 		}
 	}
 
-	private Node() {
+	// should be private
+	public Node() {
+		this.character = null;
+		this.idc = null;
+		this.leaves = new ArrayList<>();
 	}
 
 	/***
@@ -127,15 +207,20 @@ public class Node {
 			Main.errorType1++;
 		}
 
-		Node node = parse(seq, new ArrayDeque<>());
+		Node node = Node.parse(seq, new ArrayDeque<>());
 
 		this.character = character;
 		this.leaves = node.leaves;
-		this.type = node.type;
+		this.idc = node.idc;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		return (o == null || !o.getClass().isAssignableFrom(Node.class)) ? false : ((Node) o).getId() == this.getId();
 	}
 
 	// Non recursive method, use a stack instead.
-	public static Deque<String> split(String sequence) {
+	protected static Deque<String> split(String sequence) {
 
 		Deque<String> queue = new ArrayDeque<String>();
 
@@ -170,7 +255,7 @@ public class Node {
 		return validate;
 	}
 
-	public Node parse(Deque<String> sequence, Deque<Node> stack) {
+	public static Node parse(Deque<String> sequence, Deque<Node> stack) {
 		String current = sequence.removeLast();
 
 		// Is it a control character or a basic sinogram?
@@ -181,7 +266,7 @@ public class Node {
 
 			Node node = new Node();
 			node.leaves = new ArrayList<Node>();
-			node.type = idc;
+			node.idc = idc;
 
 			for (int j = 0; j < idc.getArity(); j++) {
 				try {
@@ -192,21 +277,22 @@ public class Node {
 					Main.errorType4++;
 				}
 			}
-			// Ici on crée tous les nœuds : celui que l'on renvoit et ceux qu'il
-			// contient.
-			try {
-				// if (Main.dictionary.containsKey(node.getId())) {
-				if (Main.aliasMap.containsKey(node.getId())) {
-					node = Main.aliasMap.get(node.getId());
-				} else {
-					Main.aliasMap.put(node.getId(), node);
-				}
-			} catch (NullPointerException e) {
-				Main.parserError++;
-				Main.errorType3++;
-			} catch (UndefinedAliasException e) {
-				e.printStackTrace();
-			}
+			// // Ici on crée tous les nœuds : celui que l'on renvoit et ceux
+			// qu'il
+			// // contient.
+			// try {
+			// // if (Main.dictionary.containsKey(node.getId())) {
+			// if (Main.aliasMap.containsKey(node.getId())) {
+			// node = Main.aliasMap.get(node.getId());
+			// } else {
+			// Main.aliasMap.put(node.getId(), node);
+			// }
+			// } catch (NullPointerException e) {
+			// Main.parserError++;
+			// Main.errorType3++;
+			// } catch (UndefinedAliasException e) {
+			// e.printStackTrace();
+			// }
 
 			Main.induced++;
 
@@ -216,25 +302,26 @@ public class Node {
 		{
 			Node leaf = new Node();
 			leaf.character = current;
-			leaf.type = null;
+			leaf.idc = null;
 			leaf.leaves = new ArrayList<>();
 
-			if (Main.aliasMap.containsKey(leaf.getCharacter())) {
-				leaf = Main.aliasMap.get(leaf.getCharacter());
-			} else
-			// I feel like this may better seldom occur (just for radicals):
-			// it
-			// means that use an character (that leaf) which has never been
-			// described before.
-			{
-				// It's not perfect : Main should not be modified outside of
-				// itself.
-				try {
-					Main.aliasMap.put(new Alias<Integer, String>(leaf.getId(), leaf.getCharacter()), leaf);
-				} catch (UndefinedAliasException e) {
-					e.printStackTrace();
-				}
-			}
+			// if (Main.aliasMap.containsKey(leaf.getCharacter())) {
+			// leaf = Main.aliasMap.get(leaf.getCharacter());
+			// } else
+			// // I feel like this may better seldom occur (just for radicals):
+			// // it
+			// // means that use an character (that leaf) which has never been
+			// // described before.
+			// {
+			// // It's not perfect : Main should not be modified outside of
+			// // itself.
+			// try {
+			// Main.aliasMap.put(new Alias<Integer, String>(leaf.getId(),
+			// leaf.getCharacter()), leaf);
+			// } catch (UndefinedAliasException e) {
+			// e.printStackTrace();
+			// }
+			// }
 
 			stack.addLast(leaf);
 		}

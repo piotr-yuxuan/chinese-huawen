@@ -1,8 +1,10 @@
 package com.piotr2b.chinesehuawen.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.UnsupportedEncodingException;
@@ -19,9 +21,11 @@ import net.sf.jsefa.csv.config.CsvConfiguration;
  * 
  * @author caocoa
  *
- * @param <S> How to parse? String to export to 
+ * @param <S>
+ *            How to parse? String to export to
  * @param <T>
  */
+@Deprecated
 public class Parser<S, T extends Row> implements Iterable<T> {
 
 	private ArrayDeque<File> files;

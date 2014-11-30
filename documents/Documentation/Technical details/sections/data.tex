@@ -114,4 +114,77 @@ Je veux absolument de la généricité par exemple la fonction get : si on a K1 
 
 
 
-Si on fait un champ de type K1 on ne peut pas récupérer son type. Une solution communément conseillée (parameterizedtype) ne marche que pour les classes abstraites\dots{} type erasure est très fort \^\^ ah ah
+Si on fait un champ de type K1 on ne peut pas récupérer son type. Une solution communément conseillée (parameterizedtype) ne marche que pour les classes abstraites\dots{} type erasure est très fort ah ah
+
+\section{Evolution du paradigme de programmation}
+Introduction du paradigme fonctionnel.
+
+On remarque dans le premier listing que l'exécution est purement séquentielle. On pourrait cependant parcourir séquentiellement le tableau et lancer un \texttt{Thread} pour analyser chaque ligne mais on se heurterait à des problèmes de cohérence. Ici, \texttt{AliasMap} est remplacé par deux dictionnaires : le dictionnaire principal \texttt{dictionary} et le dictionnaire des alias \texttt{alias}.
+\begin{lstlisting}[caption={Impératif pur. Premier jet sans \texttt{AliasMap}}]
+Parser<Node, RowChise> parser;
+parser = new Parser<>(files, 25000);
+Iterator<RowChise> iterator = parser.iterator();
+
+while (iterator.hasNext()) {
+	RowChise row = iterator.next();
+
+	if (row.getCharacter().contains("灣") || row.getCharacter().contains("䜌")) {
+		System.out.print("");
+	}
+
+	Node node = new Node(row.getCharacter(), row.getSequence());
+
+	alias.put(node.getCharacter(), node.getId());
+	dictionary.put(node.getId(), node);
+
+	main++;
+}
+\end{lstlisting}
+
+On utilise maintenant \texttt{AliasMap}. Le fonctionnel est sous-jacent mais pas encore directement visible puisque caché dans \texttt{AliasMap}.
+\begin{lstlisting}[caption={Impératif pur. Avec \texttt{AliasMap}}]
+Parser<Node, RowChise> parser;
+parser = new Parser<>(files, 25000);
+Iterator<RowChise> iterator = parser.iterator();
+
+while (iterator.hasNext()) {
+	RowChise row = iterator.next();
+
+	if (row.getCharacter().contains("灣") || row.getCharacter().contains("䜌")) {
+		System.out.print("");
+	}
+
+	Node node = new Node(row.getCharacter(), row.getSequence());
+
+	try {
+		aliasMap.put(new Alias<Integer, String>(node.getId(), node.getCharacter()), node);
+	} catch (UndefinedAliasException e) {
+		e.printStackTrace();
+	}
+
+	main++;
+}
+\end{lstlisting}
+
+L'extrait de code suivant correspond à changer la forme sans toucher au fond. On utilise bien un itérateur mais on applique une action sur chacun de ses éléments en utilisant une syntaxe fonctionnelle. C'est un premier pas qui ne révolutionne cependant pas grand'chose.
+\begin{lstlisting}[caption={Premier pas de fonctionnel}]
+Parser<Node, RowChise> parser;
+parser = new Parser<>(files, 25000);
+Iterator<RowChise> iterator = parser.iterator();
+
+iterator.forEachRemaining(x -> {
+
+	if (x.getCharacter().contains("灣") || x.getCharacter().contains("䜌")) {
+		System.out.print("");
+	}
+
+	Node node = new Node(x.getCharacter(), x.getSequence());
+
+	try {
+		aliasMap.put(new Alias<Integer, String>(node.getId(), node.getCharacter()), node);
+	} catch (UndefinedAliasException e) {
+		e.printStackTrace();
+	}
+	main++;
+});
+\end{lstlisting}
