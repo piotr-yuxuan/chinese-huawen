@@ -6,6 +6,8 @@ import java.util.Deque;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
+
 public class Node {
 
 	private String character;
@@ -176,7 +178,7 @@ public class Node {
 		// It's a control character which belongs to IDC.
 		{
 			IDC idc = new IDC(current.charAt(0));
-			
+
 			Node node = new Node();
 			node.leaves = new ArrayList<Node>();
 			node.type = idc;
@@ -193,14 +195,17 @@ public class Node {
 			// Ici on crée tous les nœuds : celui que l'on renvoit et ceux qu'il
 			// contient.
 			try {
-				if (Main.dictionary.containsKey(node.getId())) {
-					node = Main.dictionary.get(node.getId());
+				// if (Main.dictionary.containsKey(node.getId())) {
+				if (Main.aliasMap.containsKey(node.getId())) {
+					node = Main.aliasMap.get(node.getId());
 				} else {
-					Main.dictionary.put(node.getId(), node);
+					Main.aliasMap.put(node.getId(), node);
 				}
 			} catch (NullPointerException e) {
 				Main.parserError++;
 				Main.errorType3++;
+			} catch (UndefinedAliasException e) {
+				e.printStackTrace();
 			}
 
 			Main.induced++;
@@ -214,9 +219,8 @@ public class Node {
 			leaf.type = null;
 			leaf.leaves = new ArrayList<>();
 
-			if (Main.alias.containsKey(leaf.getCharacter())) {
-				int id = Main.alias.get(leaf.getCharacter());
-				leaf = Main.dictionary.get(id);
+			if (Main.aliasMap.containsKey(leaf.getCharacter())) {
+				leaf = Main.aliasMap.get(leaf.getCharacter());
 			} else
 			// I feel like this may better seldom occur (just for radicals):
 			// it
@@ -225,8 +229,11 @@ public class Node {
 			{
 				// It's not perfect : Main should not be modified outside of
 				// itself.
-				Main.alias.put(leaf.getCharacter(), leaf.getId());
-				Main.dictionary.put(leaf.getId(), leaf);
+				try {
+					Main.aliasMap.put(new Alias<Integer, String>(leaf.getId(), leaf.getCharacter()), leaf);
+				} catch (UndefinedAliasException e) {
+					e.printStackTrace();
+				}
 			}
 
 			stack.addLast(leaf);

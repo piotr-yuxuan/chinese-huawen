@@ -1,55 +1,55 @@
 package com.piotr2b.chinesehuawen.parser;
 
-public class Alias<K1, K2> {
-	private K1 k1;
-	private K2 k2;
+public class Alias<Kmain, Kalias> {
+	private Kmain kMain;
+	private Kalias kAlias;
 
 	public Alias() {
-		k1 = null;
-		k2 = null;
+		kMain = null;
+		kAlias = null;
 	}
 
-	public Alias(K1 k1) {
-		this.k1 = k1;
-		k2 = null;
+	public Alias(Kmain kMain) {
+		this.kMain = kMain;
+		kAlias = null;
 	}
 
-	public Alias(K1 k1, K2 k2) throws UndefinedAliasException {
-		if (k1 == null && k2 != null) {
+	public Alias(Kmain kMain, Kalias kAlias) throws UndefinedAliasException {
+		if (kMain == null && kAlias != null) {
 			throw new UndefinedAliasException();
 		}
-		this.k1 = k1;
-		this.k2 = k2; // Can be null
+		this.kMain = kMain;
+		this.kAlias = kAlias; // Can be null
 	}
 
-	public K1 getK1() {
-		return k1;
+	public Kmain getKMain() {
+		return kMain;
 	}
 
-	public void setK1(K1 k1) throws UndefinedAliasException {
-		if (k1 == null && this.k2 != null) {
+	public void setKMain(Kmain kMain) throws UndefinedAliasException {
+		if (kMain == null && this.kAlias != null) {
 			throw new UndefinedAliasException();
 		}
-		this.k1 = k1;
+		this.kMain = kMain;
 	}
 
-	public K2 getK2() {
-		return k2;
+	public Kalias getKAlias() {
+		return kAlias;
 	}
 
-	public void setK2(K2 k2) {
-		this.k2 = k2;
+	public void setKAlias(Kalias kAlias) {
+		this.kAlias = kAlias;
 	}
 
 	@Override
 	public String toString() {
-		return "(" + k1.toString() + ", " + k2.toString() + ")";
+		return "(" + kMain.toString() + ", " + kAlias.toString() + ")";
 	}
 
 	public boolean equals(Object o) {
-		return (o != null && o.getClass().isAssignableFrom(this.getClass())) ? ((((Alias<?, ?>) o).getK1() == null ? this.getK1() == null
-				: ((Alias<?, ?>) o).getK1().equals(this.getK1())) && (((Alias<?, ?>) o).getK2() == null ? this.getK2() == null : ((Alias<?, ?>) o)
-				.getK2().equals(this.getK2()))) : false;
+		return (o != null && o.getClass().isAssignableFrom(this.getClass())) ? ((((Alias<?, ?>) o).getKMain() == null ? this.getKMain() == null
+				: ((Alias<?, ?>) o).getKMain().equals(this.getKMain())) && (((Alias<?, ?>) o).getKAlias() == null ? this.getKAlias() == null
+				: ((Alias<?, ?>) o).getKAlias().equals(this.getKAlias()))) : false;
 	}
 
 	public static class UndefinedAliasException extends Exception {

@@ -28,6 +28,7 @@ import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
 import com.piotr2b.chinesehuawen.entities.tables.Sinogram;
+import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
 
 public class Main {
 
@@ -40,8 +41,9 @@ public class Main {
 	 * and its sequence are equivalent. We have the chain String → Integer →
 	 * Node so we can query a Node by Integer or by String.
 	 */
-	public static HashMap<String, Integer> alias = new HashMap<>();
-	public static HashMap<Integer, Node> dictionary = new HashMap<>();
+	// public static HashMap<String, Integer> alias = new HashMap<>();
+	// public static HashMap<Integer, Node> dictionary = new HashMap<>();
+	public static AliasMap<Integer, String, Node> aliasMap = new AliasMap<>(Integer.class, String.class, Node.class);
 	public static int errorType1 = 0;
 	public static int errorType2 = 0;
 	public static int errorType3 = 0;
@@ -179,13 +181,18 @@ public class Main {
 
 			Node node = new Node(row.getCharacter(), row.getSequence());
 
-			alias.put(node.getCharacter(), node.getId());
-			dictionary.put(node.getId(), node);
+			// alias.put(node.getCharacter(), node.getId());
+			// dictionary.put(node.getId(), node);
+			try {
+				aliasMap.put(new Alias<Integer, String>(node.getId(), node.getCharacter()), node);
+			} catch (UndefinedAliasException e) {
+				e.printStackTrace();
+			}
 			main++;
 		}
 
 		int cardinality = 0;
-		for (Node n : dictionary.values()) {
+		for (Node n : aliasMap.values()) {
 			cardinality += n.getCardinality();
 		}
 
@@ -194,15 +201,14 @@ public class Main {
 
 		System.out.println();
 		System.out.println(format("Main nodes  ", Main.main, Main.main));
-		System.out.println(format("Set size    ", Main.dictionary.size(), Main.main));
-		System.out.println(format("Cardinalité ", cardinality, Main.dictionary.size()));
+		System.out.println(format("Set size    ", Main.aliasMap.size(), Main.main));
+		System.out.println(format("Cardinalité ", cardinality, Main.aliasMap.size()));
 		System.out.println(format("Exception   ", Main.parserError, Main.main));
 		System.out.println(format("    Type 1  ", Main.errorType1, Main.parserError));
 		System.out.println(format("    Type 2  ", Main.errorType2, Main.parserError));
 		System.out.println(format("    Type 3  ", Main.errorType3, Main.parserError));
 		System.out.println(format("    Type 4  ", Main.errorType4, Main.parserError));
 
-		AliasMap<Integer, String, Node> pairMap = new AliasMap<>(Integer.class, String.class, Node.class);
 		// On prend un cas simple avec K1 puis Pair<K1, K2>.
 		// Sans fonctionnel
 		// for (Map.Entry<Integer, Node> entry : dictionary.entrySet()) {
@@ -212,49 +218,23 @@ public class Main {
 		// }
 
 		// Avec fonctionnel
-		dictionary.entrySet().stream().forEach(entry -> {
-			try {
-				pairMap.put(entry.getKey(), entry.getValue());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-
-		// check
-		pairMap.entrySet().stream().forEach(entry -> System.out.println(Integer.toString(entry.getKey().getK1()) + " " + entry.getValue().getIDS()));
+		// dictionary.entrySet().stream().forEach(entry -> {
+		// try {
+		// aliasMap.put(entry.getKey(), entry.getValue());
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		// });
+		//
+		// // check
+		// aliasMap.entrySet().stream().forEach(entry ->
+		// System.out.println(Integer.toString(entry.getKey().getK1()) + " " +
+		// entry.getValue().getIDS()));
 
 		// printDictionaries();
 		exportFinalGraph(exportPath);
 
 		System.exit(0);
-	}
-
-	// Should be polymorph
-	public static void printDictionariesId() {
-		System.out.println(" — Alias — ");
-		for (Map.Entry<String, Integer> g : alias.entrySet()) {
-			System.out.println(g.getKey() + "\t" + g.getValue());
-		}
-		System.out.println(" — Dico — ");
-		for (Map.Entry<Integer, Node> g : dictionary.entrySet()) {
-			System.out.println(g.getKey() + "\t" + g.getValue().getLink());
-			System.out.println("");
-		}
-	}
-
-	public static void printDictionaries() {
-		System.out.println(" — Alias — ");
-		for (Map.Entry<String, Integer> g : alias.entrySet()) {
-			System.out.println(g.getKey() + "\t" + g.getValue());
-		}
-		System.out.println(" — Dico — ");
-		for (Map.Entry<Integer, Node> g : dictionary.entrySet()) {
-			System.out.println(g.getValue().getCharacter() + "\t" + g.getValue().getIDS());
-		}
-		System.out.println(" — Final leaves — ");
-		for (Map.Entry<Integer, Node> g : dictionary.entrySet()) {
-			System.out.println(g.getValue().getCharacter() + "\t" + g.getValue().getFinalLeaves());
-		}
 	}
 
 	public static void exportFinalGraph(String path) {
@@ -277,7 +257,7 @@ public class Main {
 		printerEdge.write("Source" + sep + "Target" + sep + "Type" + sep + "Weight\n");
 		printerNode.write("Id" + sep + "Label" + "\n");
 
-		Object[] graph = dictionary.entrySet().toArray();
+		Object[] graph = aliasMap.entryKMainSet().toArray();
 		HashMap<Integer, Integer> indexTranslation = new HashMap<Integer, Integer>(); // translation
 
 		for (Object root : graph) {
