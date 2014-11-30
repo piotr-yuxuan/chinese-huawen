@@ -14,7 +14,9 @@ import java.util.stream.Stream;
 import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
 
 /***
- * Warning: this is still a draft
+ * Warning: this is still a draft. La fonction performLinkage n'est pas possible
+ * rapidement avec cette conception. Il faut se rappeler que Java passe ses
+ * références d'objet par copie…
  *
  * @param <Kmain>
  * @param <Kalias>
