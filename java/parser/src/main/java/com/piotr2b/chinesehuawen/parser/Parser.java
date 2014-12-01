@@ -6,125 +6,47 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.InvocationTargetException;
+import java.io.SequenceInputStream;
 import java.util.ArrayDeque;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import java.util.EmptyStackException;
+import java.util.stream.Stream;
 
-import net.sf.jsefa.Deserializer;
-import net.sf.jsefa.csv.CsvIOFactory;
-import net.sf.jsefa.csv.config.CsvConfiguration;
-
-/***
+/**
+ * On se cantonne à un analyseur pour Chise qui sort un Node.
  * 
  * @author caocoa
  *
- * @param <S>
- *            How to parse? String to export to
- * @param <T>
  */
-@Deprecated
-public class Parser<S, T extends Row> implements Iterable<T> {
+public class Parser {
+	private BufferedReader br;
+	private Integer limit;
 
-	private ArrayDeque<File> files;
-
-	public final int maxParsedLineNumber;
-	private int currentParsedLineNumber;
-
-	private CsvConfiguration conf;
-	private Deserializer deserializer;
-
-	Parser(ArrayDeque<File> files) {
-
-		this.maxParsedLineNumber = (int) Double.POSITIVE_INFINITY;
-		coreConstructor(files);
+	private Parser() {
 	}
 
-	Parser(ArrayDeque<File> files, int maxParsedLineNumber) {
-
-		this.maxParsedLineNumber = maxParsedLineNumber;
-		coreConstructor(files);
-	}
-
-	private void coreConstructor(ArrayDeque<File> files) {
-		this.currentParsedLineNumber = 0;
-		this.files = files;
-
-		@SuppressWarnings("unchecked")
-		Class<T> classT = (Class<T>) (new RowChise()).getClass();
-		try {
-			this.conf = (CsvConfiguration) classT.getMethod("getConfiguration").invoke(null);
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			e.printStackTrace();
-		} catch (SecurityException e) {
-			e.printStackTrace();
-		}
-
-		this.deserializer = CsvIOFactory.createFactory(conf, classT).createDeserializer();
-	}
-
-	@Override
-	public Iterator<T> iterator() {
-		return new ParserIterator<T>();
-	}
-
-	private class ParserIterator<U extends T> implements Iterator<U> {
-
-		Reader reader;
-
-		ParserIterator() {
-		}
-
-		@Override
-		public U next() {
-			if (reader == null) {
-				if (files.size() == 0) {
-					throw new NoSuchElementException();
-				} else {
-					setReader();
-					deserializer.open(reader);
-					return deserializer.next();
-				}
-			} else {
-				if (deserializer.hasNext()) {
-					return deserializer.next();
-				} else {
-					deserializer.close(true);
-					reader = null;
-					return next();
-				}
+	public Parser(ArrayDeque<File> files, Integer limit) throws FileNotFoundException {
+		InputStream is;
+		switch (files.size()) {
+		case 0:
+			throw new EmptyStackException();
+		case 1:
+			is = new FileInputStream(files.removeFirst());
+			break;
+		default:
+			InputStream is1 = new FileInputStream(files.removeFirst());
+			SequenceInputStream sis = new SequenceInputStream(is1, new FileInputStream(files.removeFirst()));
+			while (!(files.size() < 1)) {
+				sis = new SequenceInputStream(sis, new FileInputStream(files.removeFirst()));
 			}
+			is = sis;
+			break;
 		}
+		this.br = new BufferedReader(new InputStreamReader(is));
+		this.limit = limit;
+	}
 
-		private void setReader() {
-			try {
-				reader = new InputStreamReader(new FileInputStream(files.removeFirst()), "UTF-8");
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-		}
-
-		@Override
-		public boolean hasNext() {
-			if (currentParsedLineNumber++ < maxParsedLineNumber) {
-				if (files.size() != 0) {
-					return true;
-				} else {
-					return deserializer.hasNext();
-				}
-			} else {
-				return false;
-			}
-		}
+	@SuppressWarnings("unchecked")
+	public Stream<RowChise> lines() {
+		return br.lines().filter(x -> x.split("\t").length == 3).limit(limit).map(x -> new RowChise(x.split("\t")));
 	}
 }

@@ -10,7 +10,7 @@ import java.util.Set;
 
 import javax.print.attribute.HashAttributeSet;
 
-import com.piotr2b.chinesehuawen.parser.Alias.UndefinedAliasException;
+import com.piotr2b.chinesehuawen.parser.Pair.UndefinedAliasException;
 
 public class Node {
 
@@ -25,7 +25,7 @@ public class Node {
 		 */
 		TransitiveReduction,
 		/**
-		 * Remove transitional etymons, just remember the most basic.
+		 * Remove transitional etymons, just keep the radicals.
 		 */
 		Radical; // Careful when ensuring consistency.
 
@@ -71,11 +71,24 @@ public class Node {
 	 * 
 	 * @return
 	 */
-	public Set<Node> getAllNodes() {
+	public Set<Node> getNodeSet() {
 		HashSet<Node> set = new HashSet();
 		set.add(this);
 		for (Node n : leaves) {
-			set.addAll(n.getAllNodes());
+			set.addAll(n.getNodeSet());
+		}
+		return set;
+	}
+
+	public Set<Pair<Node, Node>> getEdgeSet() {
+		HashSet<Pair<Node, Node>> set = new HashSet<>();
+		try {
+			for (Node n : leaves) {
+				set.add(new Pair<Node, Node>(this, n));
+				set.addAll(n.getEdgeSet());
+			}
+		} catch (UndefinedAliasException e) {
+			e.printStackTrace();
 		}
 		return set;
 	}
@@ -87,7 +100,7 @@ public class Node {
 	 * @return
 	 */
 	public boolean contains(Node node) {
-		for (Node n : getAllNodes()) {
+		for (Node n : getNodeSet()) {
 			if (n.getId() == node.getId()) {
 				return true;
 			}
@@ -170,7 +183,7 @@ public class Node {
 
 	@Override
 	public String toString() {
-		if (leaves.size() == 0) {
+		if (this.character != null && !this.character.equals("")) {
 			return character;
 		} else {
 			String retour = idc.toString() + "(";
@@ -195,7 +208,7 @@ public class Node {
 	/***
 	 * 
 	 * @param character
-	 *            If it's a anonymous character
+	 *            Null if it's a anonymous character
 	 * @param sequence
 	 *            If character is a radical, repeat character in the sequence.
 	 */

@@ -11,10 +11,10 @@ package com.piotr2b.chinesehuawen.entities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sinogram extends org.jooq.impl.TableImpl<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord> {
 
-	private static final long serialVersionUID = 1973408152;
+	private static final long serialVersionUID = -889452616;
 
 	/**
-	 * The singleton instance of <code>chinese.sinogram</code>
+	 * The singleton instance of <code>huawen.sinogram</code>
 	 */
 	public static final com.piotr2b.chinesehuawen.entities.tables.Sinogram SINOGRAM = new com.piotr2b.chinesehuawen.entities.tables.Sinogram();
 
@@ -27,49 +27,24 @@ public class Sinogram extends org.jooq.impl.TableImpl<com.piotr2b.chinesehuawen.
 	}
 
 	/**
-	 * The column <code>chinese.sinogram.cp</code>.
+	 * The column <code>huawen.sinogram.hash</code>.
 	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> CP = createField("cp", org.jooq.impl.SQLDataType.VARCHAR.length(12).nullable(false), this, "");
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> HASH = createField("hash", org.jooq.impl.SQLDataType.VARCHAR.length(12).nullable(false), this, "");
 
 	/**
-	 * The column <code>chinese.sinogram.semantics</code>.
+	 * The column <code>huawen.sinogram.ids</code>.
 	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> SEMANTICS = createField("semantics", org.jooq.impl.SQLDataType.VARCHAR.length(256), this, "");
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> IDS = createField("ids", org.jooq.impl.SQLDataType.VARCHAR.length(256), this, "");
 
 	/**
-	 * The column <code>chinese.sinogram.consonants</code>.
-	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> CONSONANTS = createField("consonants", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
-
-	/**
-	 * The column <code>chinese.sinogram.rhyme</code>.
-	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> RHYME = createField("rhyme", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
-
-	/**
-	 * The column <code>chinese.sinogram.tone</code>.
-	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Integer> TONE = createField("tone", org.jooq.impl.SQLDataType.INTEGER, this, "");
-
-	/**
-	 * The column <code>chinese.sinogram.stroke</code>.
-	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Byte> STROKE = createField("stroke", org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-	/**
-	 * The column <code>chinese.sinogram.frequency</code>.
-	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Byte> FREQUENCY = createField("frequency", org.jooq.impl.SQLDataType.TINYINT, this, "");
-
-	/**
-	 * Create a <code>chinese.sinogram</code> table reference
+	 * Create a <code>huawen.sinogram</code> table reference
 	 */
 	public Sinogram() {
 		this("sinogram", null);
 	}
 
 	/**
-	 * Create an aliased <code>chinese.sinogram</code> table reference
+	 * Create an aliased <code>huawen.sinogram</code> table reference
 	 */
 	public Sinogram(java.lang.String alias) {
 		this(alias, com.piotr2b.chinesehuawen.entities.tables.Sinogram.SINOGRAM);
@@ -80,7 +55,7 @@ public class Sinogram extends org.jooq.impl.TableImpl<com.piotr2b.chinesehuawen.
 	}
 
 	private Sinogram(java.lang.String alias, org.jooq.Table<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord> aliased, org.jooq.Field<?>[] parameters) {
-		super(alias, com.piotr2b.chinesehuawen.entities.Chinese.CHINESE, aliased, parameters, "");
+		super(alias, com.piotr2b.chinesehuawen.entities.Huawen.HUAWEN, aliased, parameters, "");
 	}
 
 	/**

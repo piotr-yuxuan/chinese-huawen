@@ -1,17 +1,42 @@
 package com.piotr2b.chinesehuawen.parser;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import org.gephi.graph.api.DirectedGraph;
+import org.gephi.graph.api.GraphController;
+import org.gephi.graph.api.GraphModel;
+import org.gephi.io.exporter.api.ExportController;
+import org.gephi.io.exporter.preview.PDFExporter;
+import org.gephi.preview.api.PreviewController;
+import org.gephi.preview.api.PreviewModel;
+import org.gephi.preview.api.PreviewProperties;
+import org.gephi.preview.api.PreviewProperty;
+import org.gephi.project.api.ProjectController;
+import org.gephi.project.api.Workspace;
+import org.openide.util.Lookup;
+
+import com.itextpdf.text.PageSize;
+
 public class Substrate {
 
-	private ConcurrentHashMap<Integer, Node> in;
+	public static Node mingle(Node node) {
+		return (new Substrate()).flatten(node);
+	}
+
+	private ConcurrentHashMap<Integer, Node> in; // main map
 	private ConcurrentHashMap<String, Integer> si;
 	private ConcurrentHashMap<Integer, String> is;
 
@@ -21,10 +46,7 @@ public class Substrate {
 		is = new ConcurrentHashMap<>();
 	}
 
-	public boolean flatten(Node node) {
-		if (node.character != null && node.character.equals("敹")) {
-			System.out.print("");
-		}
+	public Node flatten(Node node) {
 		Node flattened = new Node();
 		flattened.idc = node.idc;
 		flattened.character = node.character;
@@ -48,9 +70,8 @@ public class Substrate {
 				is.put(flattened.getId(), flattened.getCharacter());
 			} else if (!(node.getCharacter() == null || in.get(node.getId()).getCharacter().equals(node.getCharacter()))) {
 				// Ce sinograme se fait redéfinir, il s'agit d'une incohérence.
-				System.out.println("Incohérence");
+				// System.out.println("Incohérence");
 			}
-			return true;
 		} else {
 			// C'est un nouveau nœud.
 			in.put(flattened.getId(), flattened);
@@ -58,12 +79,8 @@ public class Substrate {
 				si.put(flattened.getCharacter(), flattened.getId());
 				is.put(flattened.getId(), flattened.getCharacter());
 			}
-			return false;
 		}
-	}
-
-	public Set<Node> export(Node.TreeType type) {
-		return in.values().stream().map(x -> type.export(x)).collect(Collectors.toCollection(HashSet<Node>::new));
+		return flattened;
 	}
 
 	public List<Node> getCompounds(Node node) {
@@ -73,6 +90,112 @@ public class Substrate {
 			// Sinogramme inconnu, renvoie 0.
 			return new ArrayList<Node>();
 		}
+	}
+
+	public void exportGephi(String outputPath, Node.TreeType type) throws FileNotFoundException {
+
+		File outputNode = new File(outputPath + "graphNode.txt");
+		File outputEdge = new File(outputPath + "graphEdge.txt");
+		final PrintWriter printerNode = new PrintWriter(outputNode);
+		final PrintWriter printerEdge = new PrintWriter(outputEdge);
+		// final PrintWriter printerNode = new PrintWriter(System.out);
+		// final PrintWriter printerEdge = new PrintWriter(System.out);
+
+		String split = "\t";
+
+		// Ecriture des en-têtes
+		System.out.println(" — Graph — ");
+		printerEdge.write("Source" + split + "Target" + split + "Type" + split + "Weight\n");
+		printerNode.write("Id" + split + "Label\n");
+
+		HashMap<Integer, Integer> indexTranslation = new HashMap<Integer, Integer>(); // translation
+
+		in.values().stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
+			System.out.println(" Sinogram " + x);
+			if (!indexTranslation.containsKey(x.getId())) {
+				indexTranslation.put(x.getId(), indexTranslation.size());
+				printerNode.write(indexTranslation.get(x.getId()) + split + x + "\n");
+			}
+			x.leaves.forEach(y -> {
+				if (!indexTranslation.containsKey(y.getId())) {
+					indexTranslation.put(y.getId(), indexTranslation.size());
+					printerNode.write(indexTranslation.get(y.getId()) + split + y + "\n");
+				}
+				String printedEdge = indexTranslation.get(x.getId()) + split // Source
+						+ indexTranslation.get(y.getId()) + split// Target
+						+ "Directed" + split// Type
+						+ "1"// Weight
+						+ "\n";
+				printerEdge.write(printedEdge);
+			});
+		});
+
+		System.out.println(" — Done — ");
+		printerEdge.flush();
+		printerNode.flush();
+		printerNode.close();
+		printerEdge.close();
+	}
+
+	public void exportPdf(String outputPath, Node.TreeType type) {
+		// Init a project - and therefore a workspace
+		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
+		pc.newProject();
+		Workspace workspace = pc.getCurrentWorkspace();
+
+		// Get a graph model - it exists because we have a workspace
+		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
+
+		HashMap<Integer, org.gephi.graph.api.Node> indexTranslation = new HashMap<Integer, org.gephi.graph.api.Node>(); // translation
+		DirectedGraph directedGraph = graphModel.getDirectedGraph();
+
+		in.values().stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
+			System.out.println(" Sinogram " + x);
+			if (!indexTranslation.containsKey(x.getId())) {
+				org.gephi.graph.api.Node n = graphModel.factory().newNode(Integer.toString(x.getId()));
+				n.getNodeData().setLabel(x.toString());
+				indexTranslation.put(x.getId(), n);
+				directedGraph.addNode(n);
+			}
+			x.leaves.forEach(y -> {
+				if (!indexTranslation.containsKey(y.getId())) {
+					org.gephi.graph.api.Node n = graphModel.factory().newNode(Integer.toString(y.getId()));
+					n.getNodeData().setLabel(y.toString());
+					indexTranslation.put(y.getId(), n);
+					directedGraph.addNode(n);
+				}
+
+				org.gephi.graph.api.Node n1 = indexTranslation.get(x.getId());
+				org.gephi.graph.api.Node n2 = indexTranslation.get(y.getId());
+				org.gephi.graph.api.Edge e = graphModel.factory().newEdge(n1, n2, 1f, true);
+				directedGraph.addEdge(e);
+			});
+		});
+
+		PreviewProperties prop = Lookup.getDefault().lookup(PreviewController.class).getModel().getProperties();
+		prop.putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
+		prop.putValue(PreviewProperty.NODE_LABEL_PROPORTIONAL_SIZE, Boolean.FALSE);
+		prop.putValue(PreviewProperty.NODE_LABEL_FONT, prop.getFontValue(PreviewProperty.NODE_LABEL_FONT).deriveFont(8));
+
+		// Export full graph
+		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
+		try {
+			ec.exportFile(new File("../../gephi/" + "parse.pdf"));
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return;
+		}
+
+		// PDF Exporter config and export to Byte array
+		PDFExporter pdfExporter = (PDFExporter) ec.getExporter("pdf");
+		pdfExporter.setPageSize(PageSize.A0);
+		pdfExporter.setWorkspace(workspace);
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ec.exportStream(baos, pdfExporter);
+	}
+
+	public Set<Node> exportSet(Node.TreeType type) {
+		return in.values().stream().map(x -> type.export(x)).collect(Collectors.toCollection(HashSet<Node>::new));
 	}
 
 	public Collection<Node> values() {
