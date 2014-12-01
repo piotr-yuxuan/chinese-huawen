@@ -110,7 +110,7 @@ sympy-plots-for-*.tex/
 .mtj.tmp/
 
 # Package Files #
-*.jar
+# *.jar
 *.war
 *.ear
 
