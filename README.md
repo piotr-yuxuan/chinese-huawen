@@ -35,15 +35,13 @@ Just execute the following command line.
 ```
 git clone https://github.com/piotr2b/chinese-huawen chinese-huawen
 ```
-## 2. Retrieve updates
-It's also a one-line operation to perform in the root folder of your local copy.
+When you want to retrieve upadtes, it's also a one-line operation to perform in the root folder of your local copy.
 ```
 git pull
 ```
-## 3. Propose upgrades
-Oh really? That would be awesome! Use GitHub dedicated « Pull Requests » tool and send me a mail.
+Oh really you'd like to propose upgrades? That would be awesome! Use GitHub dedicated « Pull Requests » tool and send me a mail.
 
-## 4. Construct the database
+## 2. Construct the database and generate entities classes
 Go in root folder then execute [`huawen.sql`](data/db/huawen.sql) in your MariaDB client to create a new database names `huawen`.
 ```
 mysql -u root -p < huawen.sql
@@ -53,5 +51,20 @@ Then create a new user and grant them select and insert rights over `huawen`.
 create user 'huawen'@'localhost' identified by 'huawen';
 grant select, insert on huawen.* to 'huawen'@'localhost';
 ```
-
-## 5. Generate database entities
+Stay in root directory and unleash jOOQ mighty magic:
+```
+mvn exec:java -Dexec.mainClass="org.jooq.util.GenerationTool" -Dexec.args="/huawen.xml"
+```
+## 3. Fix `gephi-toolkit` dependency
+Just before launching our first build, let's fix a little annoying problem with that dependency. I use a deprecated version (my fault) so you need to put `gephi-toolkit-0.8.7.jar` manually in your repository. Get inspiration from the following command:
+```
+touch ~/.m2/repository/org/gephi/gephi-toolkit/0.8.7
+cp ./chinese-huawen/java/lib/gephi-toolkit-0.8.7.jar ~/.m2/repository/org/gephi/gephi-toolkit/0.8.7
+```
+## 4. Enjoy the first build
+All should be fine now and you'd just have to rely on your internet connection bandwidth to download maven dependencies in a fast way.
+```
+mvn package
+```
+This should produce two executable Java packages in your `target` folder amongst which `parser-0.0.1-SNAPSHOT.jar` should embed full dependencies then would be executable everywhere. Notice that although I use Java 8 features, methinks it'd run smooth on a Java 7 virtual machine.
+```
