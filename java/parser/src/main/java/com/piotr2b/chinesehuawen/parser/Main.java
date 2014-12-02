@@ -13,8 +13,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		JCommanderParser arguments = new JCommanderParser();
-		String[] argv = { "-files", "./test.txt", "-output", "terminal" };
-		new JCommander(arguments, argv);
+		new JCommander(arguments, args);
 
 		Substrate substrate = new Substrate();
 
