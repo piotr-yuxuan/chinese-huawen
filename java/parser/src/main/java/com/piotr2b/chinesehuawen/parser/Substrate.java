@@ -17,7 +17,6 @@ import org.gephi.graph.api.DirectedGraph;
 import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
 import org.gephi.project.api.ProjectController;
-import org.gephi.project.api.Workspace;
 import org.openide.util.Lookup;
 
 public class Substrate {

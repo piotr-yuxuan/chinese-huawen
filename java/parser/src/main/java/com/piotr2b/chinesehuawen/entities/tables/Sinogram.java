@@ -11,7 +11,7 @@ package com.piotr2b.chinesehuawen.entities.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Sinogram extends org.jooq.impl.TableImpl<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord> {
 
-	private static final long serialVersionUID = -889452616;
+	private static final long serialVersionUID = -270138461;
 
 	/**
 	 * The singleton instance of <code>huawen.sinogram</code>
@@ -27,14 +27,44 @@ public class Sinogram extends org.jooq.impl.TableImpl<com.piotr2b.chinesehuawen.
 	}
 
 	/**
-	 * The column <code>huawen.sinogram.hash</code>.
+	 * The column <code>huawen.sinogram.cp</code>.
 	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> HASH = createField("hash", org.jooq.impl.SQLDataType.VARCHAR.length(12).nullable(false), this, "");
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> CP = createField("cp", org.jooq.impl.SQLDataType.VARCHAR.length(12).nullable(false), this, "");
 
 	/**
-	 * The column <code>huawen.sinogram.ids</code>.
+	 * The column <code>huawen.sinogram.semantics</code>.
 	 */
-	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> IDS = createField("ids", org.jooq.impl.SQLDataType.VARCHAR.length(256), this, "");
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> SEMANTICS = createField("semantics", org.jooq.impl.SQLDataType.VARCHAR.length(256), this, "");
+
+	/**
+	 * The column <code>huawen.sinogram.consonants</code>.
+	 */
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> CONSONANTS = createField("consonants", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
+
+	/**
+	 * The column <code>huawen.sinogram.rhyme</code>.
+	 */
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.String> RHYME = createField("rhyme", org.jooq.impl.SQLDataType.CHAR.length(1), this, "");
+
+	/**
+	 * The column <code>huawen.sinogram.tone</code>.
+	 */
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Integer> TONE = createField("tone", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>huawen.sinogram.stroke</code>.
+	 */
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Byte> STROKE = createField("stroke", org.jooq.impl.SQLDataType.TINYINT, this, "");
+
+	/**
+	 * The column <code>huawen.sinogram.frequency</code>.
+	 */
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Byte> FREQUENCY = createField("frequency", org.jooq.impl.SQLDataType.TINYINT, this, "");
+
+	/**
+	 * The column <code>huawen.sinogram.induced</code>.
+	 */
+	public final org.jooq.TableField<com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord, java.lang.Byte> INDUCED = createField("induced", org.jooq.impl.SQLDataType.TINYINT.nullable(false), this, "");
 
 	/**
 	 * Create a <code>huawen.sinogram</code> table reference

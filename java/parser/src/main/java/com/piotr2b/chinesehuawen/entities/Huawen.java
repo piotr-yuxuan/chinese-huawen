@@ -11,7 +11,7 @@ package com.piotr2b.chinesehuawen.entities;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Huawen extends org.jooq.impl.SchemaImpl {
 
-	private static final long serialVersionUID = -1122532891;
+	private static final long serialVersionUID = 100660773;
 
 	/**
 	 * The singleton instance of <code>huawen</code>
@@ -34,6 +34,8 @@ public class Huawen extends org.jooq.impl.SchemaImpl {
 
 	private final java.util.List<org.jooq.Table<?>> getTables0() {
 		return java.util.Arrays.<org.jooq.Table<?>>asList(
-			com.piotr2b.chinesehuawen.entities.tables.Sinogram.SINOGRAM);
+			com.piotr2b.chinesehuawen.entities.tables.Allography.ALLOGRAPHY,
+			com.piotr2b.chinesehuawen.entities.tables.Sinogram.SINOGRAM,
+			com.piotr2b.chinesehuawen.entities.tables.Structure.STRUCTURE);
 	}
 }

@@ -228,7 +228,7 @@ public class Node {
 	}
 
 	// Non recursive method, use a stack instead.
-	protected static Deque<String> split(String sequence) {
+	public static Deque<String> split(String sequence) {
 
 		Deque<String> queue = new ArrayDeque<String>();
 

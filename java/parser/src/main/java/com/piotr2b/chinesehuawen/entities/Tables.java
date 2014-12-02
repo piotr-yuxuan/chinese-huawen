@@ -14,7 +14,17 @@ package com.piotr2b.chinesehuawen.entities;
 public class Tables {
 
 	/**
+	 * The table huawen.allography
+	 */
+	public static final com.piotr2b.chinesehuawen.entities.tables.Allography ALLOGRAPHY = com.piotr2b.chinesehuawen.entities.tables.Allography.ALLOGRAPHY;
+
+	/**
 	 * The table huawen.sinogram
 	 */
 	public static final com.piotr2b.chinesehuawen.entities.tables.Sinogram SINOGRAM = com.piotr2b.chinesehuawen.entities.tables.Sinogram.SINOGRAM;
+
+	/**
+	 * The table huawen.structure
+	 */
+	public static final com.piotr2b.chinesehuawen.entities.tables.Structure STRUCTURE = com.piotr2b.chinesehuawen.entities.tables.Structure.STRUCTURE;
 }
