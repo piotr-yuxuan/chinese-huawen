@@ -2,12 +2,9 @@ package com.piotr2b.chinesehuawen.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
 
@@ -30,8 +27,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		// Jcommander
-
-		parseNode("⿱一⿰⿵冂丶⿵冂丶");
 
 		if (args.length >= 2) {
 			switch (args[1]) {
@@ -88,9 +83,10 @@ public class Main {
 
 		System.out.print("");
 
+		substrate.exportVisual(Node.TreeType.Parsed);
+
 		try {
-			substrate.exportGephi(exportPath, Node.TreeType.Parsed);
-			substrate.exportPdf(exportPath, Node.TreeType.Parsed);
+			substrate.exportFiles(exportPath, Node.TreeType.Parsed);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -113,6 +109,8 @@ public class Main {
 		System.out.println(format("    Type 3  ", Main.errorType3, Main.parserError));
 		System.out.println(format("    Type 4  ", Main.errorType4, Main.parserError));
 
+		Scanner s = new Scanner(System.in);
+		s.nextLine();
 		System.exit(0);
 	}
 
@@ -122,8 +120,7 @@ public class Main {
 		System.out.println(node);
 
 		try {
-			s.exportGephi("../../gephi/files/", Node.TreeType.Parsed);
-			s.exportPdf("../../gephi/files/", Node.TreeType.Parsed);
+			s.exportFiles("../../gephi/files/", Node.TreeType.Parsed);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}

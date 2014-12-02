@@ -21,7 +21,6 @@ import org.gephi.graph.api.GraphModel;
 import org.gephi.io.exporter.api.ExportController;
 import org.gephi.io.exporter.preview.PDFExporter;
 import org.gephi.preview.api.PreviewController;
-import org.gephi.preview.api.PreviewModel;
 import org.gephi.preview.api.PreviewProperties;
 import org.gephi.preview.api.PreviewProperty;
 import org.gephi.project.api.ProjectController;
@@ -92,7 +91,7 @@ public class Substrate {
 		}
 	}
 
-	public void exportGephi(String outputPath, Node.TreeType type) throws FileNotFoundException {
+	public void exportFiles(String outputPath, Node.TreeType type) throws FileNotFoundException {
 
 		File outputNode = new File(outputPath + "graphNode.txt");
 		File outputEdge = new File(outputPath + "graphEdge.txt");
@@ -137,7 +136,12 @@ public class Substrate {
 		printerEdge.close();
 	}
 
-	public void exportPdf(String outputPath, Node.TreeType type) {
+	public void exportVisual(Node.TreeType type) {
+		PreviewJFrame previewJFrame = new PreviewJFrame(exportSet(type));
+		previewJFrame.script();
+	}
+
+	public DirectedGraph exportGraph(/* String outputPath, */Node.TreeType type) {
 		// Init a project - and therefore a workspace
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
 		pc.newProject();
@@ -172,26 +176,31 @@ public class Substrate {
 			});
 		});
 
-		PreviewProperties prop = Lookup.getDefault().lookup(PreviewController.class).getModel().getProperties();
-		prop.putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
-		prop.putValue(PreviewProperty.NODE_LABEL_PROPORTIONAL_SIZE, Boolean.FALSE);
-		prop.putValue(PreviewProperty.NODE_LABEL_FONT, prop.getFontValue(PreviewProperty.NODE_LABEL_FONT).deriveFont(8));
+		return directedGraph;
 
-		// Export full graph
-		ExportController ec = Lookup.getDefault().lookup(ExportController.class);
-		try {
-			ec.exportFile(new File("../../gephi/" + "parse.pdf"));
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			return;
-		}
-
-		// PDF Exporter config and export to Byte array
-		PDFExporter pdfExporter = (PDFExporter) ec.getExporter("pdf");
-		pdfExporter.setPageSize(PageSize.A0);
-		pdfExporter.setWorkspace(workspace);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		ec.exportStream(baos, pdfExporter);
+		// PreviewProperties prop =
+		// Lookup.getDefault().lookup(PreviewController.class).getModel().getProperties();
+		// prop.putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
+		// prop.putValue(PreviewProperty.NODE_LABEL_PROPORTIONAL_SIZE,
+		// Boolean.FALSE);
+		// prop.putValue(PreviewProperty.NODE_LABEL_FONT,
+		// prop.getFontValue(PreviewProperty.NODE_LABEL_FONT).deriveFont(8));
+		// // Export full graph
+		// ExportController ec =
+		// Lookup.getDefault().lookup(ExportController.class);
+		// try {
+		// ec.exportFile(new File("../../gephi/" + "parse.pdf"));
+		// } catch (IOException ex) {
+		// ex.printStackTrace();
+		// return;
+		// }
+		//
+		// // PDF Exporter config and export to Byte array
+		// PDFExporter pdfExporter = (PDFExporter) ec.getExporter("pdf");
+		// pdfExporter.setPageSize(PageSize.A0);
+		// pdfExporter.setWorkspace(workspace);
+		// ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		// ec.exportStream(baos, pdfExporter);
 	}
 
 	public Set<Node> exportSet(Node.TreeType type) {

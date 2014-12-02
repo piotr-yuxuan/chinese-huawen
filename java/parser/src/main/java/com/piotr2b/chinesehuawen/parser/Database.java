@@ -1,7 +1,5 @@
 package com.piotr2b.chinesehuawen.parser;
 
-import static com.piotr2b.chinesehuawen.entities.Tables.SINOGRAM;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -13,11 +11,7 @@ import org.jooq.DSLContext;
 import org.jooq.Record;
 import org.jooq.Result;
 import org.jooq.SQLDialect;
-import org.jooq.Table;
 import org.jooq.impl.DSL;
-
-import com.piotr2b.chinesehuawen.entities.Tables;
-import com.piotr2b.chinesehuawen.entities.tables.Sinogram;
 
 /**
  * Il n'y a qu'une base de données qui ne change pas donc cet objet simpliste
