@@ -30,6 +30,19 @@ This repository has been used in different ways. It initially hosted a [article 
  * *Maven* You must ensure [Maven 3](http://maven.apache.org/download.cgi) is available to build java projects.
  * *MariaDB* I use this [database management system](https://mariadb.com/). It's a GPL-licenced drop-in replacement for MySQL so it can be installed very easily.
 
+### Installer Maven 3 et Java 8 avec son compte Eole
+
+Il est possible de compiler et de lancer ce projet à partir d'une machine même si maven n'est pas présent dessus et que Java 8 n'y est pas installé. Il faut tout d'abord récuper le JDK 8 qui convient sur [openJDK](https://jdk8.java.net/download.html) et Maven 3 à [cette adresse](http://maven.apache.org/download.cgi). On décompressera ensuite l'archive de maven dans `~/.apache-maven-3.2.3` et celle de Java là : `~/.javahome/jdk1.8.0_25` avant de définir les variables de contextes nécessaires :
+
+```
+export M2_HOME=/cal/homes/identifiant/.apache-maven-3.2.3
+export M2=$M2_HOME/bin
+export JAVA_HOME=/cal/homes/identifiant/.javahome/jdk1.8.0_25
+export PATH=$M2:$JAVA_HOME/bin:$PATH
+```
+
+On peut vérifier que tout va bien si la commande `mvn -help` ne provoque pas une erreur.
+
 ## 1. Get that repository local
 Just execute the following command line.
 ```
@@ -67,4 +80,6 @@ All should be fine now and you'd just have to rely on your internet connection b
 mvn package
 ```
 This should produce two executable Java packages in your `target` folder amongst which `parser-0.0.1-SNAPSHOT.jar` should embed full dependencies then would be executable everywhere. Notice that although I use Java 8 features, methinks it'd run smooth on a Java 7 virtual machine.
+```
+java -jar parser-0.0.1-SNAPSHOT.jar -direct ⿱⿱⿱ABC⿱BC -output visual
 ```
