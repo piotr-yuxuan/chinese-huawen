@@ -1,7 +1,7 @@
 *.*~
 *.pvt
 pvt
-## java/parser/src/main/java/com/piotr2b/chinesehuawen/entities
+java/parser/src/main/java/com/piotr2b/chinesehuawen/entities
 
 ## Core latex/pdflatex auxiliary files:
 *.aux

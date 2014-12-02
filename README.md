@@ -53,3 +53,5 @@ Then create a new user and grant them select and insert rights over `huawen`.
 create user 'huawen'@'localhost' identified by 'huawen';
 grant select, insert on huawen.* to 'huawen'@'localhost';
 ```
+
+## 5. Generate database entities
