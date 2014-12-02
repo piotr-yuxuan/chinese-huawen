@@ -24,9 +24,12 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -79,7 +82,6 @@ public class PreviewJFrame {
 		HashMap<Integer, org.gephi.graph.api.Node> indexTranslation = new HashMap<Integer, org.gephi.graph.api.Node>(); // translation
 
 		set.stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
-			System.out.println(" Sinogram " + x);
 			if (!indexTranslation.containsKey(x.getId())) {
 				org.gephi.graph.api.Node n = graphModel.factory().newNode(Integer.toString(x.getId()));
 				n.getNodeData().setLabel(x.toString());
@@ -100,17 +102,6 @@ public class PreviewJFrame {
 				directedGraph.addEdge(e);
 			});
 		});
-
-		InputStream istream = Main.class.getResourceAsStream("/Unifont.ttf");
-		Font font = null;
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, istream);
-		} catch (FontFormatException e1) {
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		font = font.deriveFont(75f);
 
 		YifanHuLayout yifanHuLayout = new YifanHuLayout(null, new StepDisplacement(1f));
 		yifanHuLayout.setGraphModel(graphModel);
@@ -133,6 +124,19 @@ public class PreviewJFrame {
 		}
 		layout.endAlgo();
 
+		File file = new File("ukai.ttc");
+		Font font = null;
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, file);
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		GraphicsEnvironment.getLocalGraphicsEnvironment().registerFont(font);
+
 		// Preview configuration
 		PreviewController previewController = Lookup.getDefault().lookup(PreviewController.class);
 		PreviewModel previewModel = previewController.getModel();
@@ -144,7 +148,7 @@ public class PreviewJFrame {
 		previewModel.getProperties().putValue(PreviewProperty.BACKGROUND_COLOR, Color.BLACK);
 		// previewModel.getProperties().putValue(PreviewProperty.NODE_LABEL_OUTLINE_SIZE,
 		// 12f);
-		previewModel.getProperties().putValue(PreviewProperty.NODE_LABEL_FONT, font);
+		previewModel.getProperties().putValue(PreviewProperty.NODE_LABEL_FONT, font.deriveFont(Font.PLAIN, 75f));
 		previewController.refreshPreview();
 
 		// New Processing target, get the PApplet

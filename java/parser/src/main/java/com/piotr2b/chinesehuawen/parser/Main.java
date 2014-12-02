@@ -76,12 +76,9 @@ public class Main {
 		fparser.lines().forEach(row -> {
 			Node node = new Node(row.getCharacter(), row.getSequence());
 			Main.main++;
-			System.out.print(Main.main + ", ");
 			substrate.flatten(node);
 			Database.insert(node);
 		});
-
-		System.out.print("");
 
 		substrate.exportVisual(Node.TreeType.Parsed);
 
@@ -98,16 +95,6 @@ public class Main {
 
 		// 灣 is used as example in README.md but currently seems not correctly
 		// processed. To be investigated ~
-
-		System.out.println();
-		System.out.println(format("Main nodes  ", Main.main, Main.main));
-		System.out.println(format("Set size    ", substrate.size(), Main.main));
-		System.out.println(format("Cardinalité ", cardinality, substrate.size()));
-		System.out.println(format("Exception   ", Main.parserError, Main.main));
-		System.out.println(format("    Type 1  ", Main.errorType1, Main.parserError));
-		System.out.println(format("    Type 2  ", Main.errorType2, Main.parserError));
-		System.out.println(format("    Type 3  ", Main.errorType3, Main.parserError));
-		System.out.println(format("    Type 4  ", Main.errorType4, Main.parserError));
 
 		Scanner s = new Scanner(System.in);
 		s.nextLine();

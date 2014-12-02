@@ -52,9 +52,7 @@ public class Substrate {
 		for (int i = 0; i < node.leaves.size(); i++) {
 			Node n = node.leaves.get(i);
 			flatten(n);
-			if (in.get(n.getId()) == null) {
-				System.out.print("");
-			} else {
+			if (!(in.get(n.getId()) == null)) {
 				flattened.leaves.add(in.get(n.getId()));
 			}
 		}
@@ -69,7 +67,6 @@ public class Substrate {
 				is.put(flattened.getId(), flattened.getCharacter());
 			} else if (!(node.getCharacter() == null || in.get(node.getId()).getCharacter().equals(node.getCharacter()))) {
 				// Ce sinograme se fait redéfinir, il s'agit d'une incohérence.
-				// System.out.println("Incohérence");
 			}
 		} else {
 			// C'est un nouveau nœud.
@@ -97,8 +94,6 @@ public class Substrate {
 		File outputEdge = new File(outputPath + "graphEdge.txt");
 		final PrintWriter printerNode = new PrintWriter(outputNode);
 		final PrintWriter printerEdge = new PrintWriter(outputEdge);
-		// final PrintWriter printerNode = new PrintWriter(System.out);
-		// final PrintWriter printerEdge = new PrintWriter(System.out);
 
 		String split = "\t";
 
@@ -129,7 +124,6 @@ public class Substrate {
 			});
 		});
 
-		System.out.println(" — Done — ");
 		printerEdge.flush();
 		printerNode.flush();
 		printerNode.close();
