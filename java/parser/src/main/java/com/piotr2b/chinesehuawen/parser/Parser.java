@@ -21,6 +21,7 @@ public class Parser {
 	private BufferedReader br;
 	private Integer limit;
 
+	@SuppressWarnings("unused")
 	private Parser() {
 	}
 
@@ -45,7 +46,6 @@ public class Parser {
 		this.limit = limit;
 	}
 
-	@SuppressWarnings("unchecked")
 	public Stream<RowChise> lines() {
 		return br.lines().filter(x -> x.split("\t").length == 3).limit(limit).map(x -> new RowChise(x.split("\t")));
 	}

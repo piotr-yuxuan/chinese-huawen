@@ -79,7 +79,7 @@ public abstract class Database {
 			String connectionPassword = "huawen";
 			conn = DriverManager.getConnection(connectionUrl, connectionUser, connectionPassword);
 
-			DSLContext create = DSL.using(conn, SQLDialect.MARIADB);
+			// DSLContext create = DSL.using(conn, SQLDialect.MARIADB);
 
 			// create.insertInto(SINOGRAM)//
 			// .set(SINOGRAM.CP, Integer.toString(node.getId())) //

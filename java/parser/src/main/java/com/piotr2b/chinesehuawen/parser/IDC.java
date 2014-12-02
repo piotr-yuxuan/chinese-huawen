@@ -27,8 +27,7 @@ public final class IDC {
 
 	public static final char OVERLAID = '⿻';
 
-	public static final char[] IDC = { '⿰', '⿱', '⿲', '⿳', '⿴', '⿵', '⿶', '⿷',
-			'⿸', '⿹', '⿺', '⿻' };
+	public static final char[] IDC = { '⿰', '⿱', '⿲', '⿳', '⿴', '⿵', '⿶', '⿷', '⿸', '⿹', '⿺', '⿻' };
 
 	public static final boolean contains(char c) {
 		for (char d : IDC) {
@@ -38,6 +37,7 @@ public final class IDC {
 		return false;
 	}
 
+	@SuppressWarnings("unused")
 	private IDC() {
 	}
 

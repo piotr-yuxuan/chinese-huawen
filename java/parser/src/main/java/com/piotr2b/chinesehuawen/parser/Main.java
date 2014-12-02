@@ -2,72 +2,54 @@ package com.piotr2b.chinesehuawen.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.text.DecimalFormat;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
+import com.beust.jcommander.JCommander;
+import com.piotr2b.chinesehuawen.parser.Node.TreeType;
+
 public class Main {
-
-	public static int main = 0;
-	public static int induced = 0;
-	public static int parserError = 0;
-
-	/***
-	 * Implements double-keyed dictionary. I need to consider that a character
-	 * and its sequence are equivalent. We have the chain String → Integer →
-	 * Node so we can query a Node by Integer or by String.
-	 */
-	// public static HashMap<String, Integer> alias = new HashMap<>();
-	// public static HashMap<Integer, Node> dictionary = new HashMap<>();
-	public static int errorType1 = 0;
-	public static int errorType2 = 0;
-	public static int errorType3 = 0;
-	public static int errorType4 = 0;
 
 	public static void main(String[] args) {
 
-		// Jcommander
-
-		if (args.length >= 2) {
-			switch (args[1]) {
-			case "node":
-				// We could use knowledge of local database
-				break;
-			case "network":
-				// Main case
-				break;
-			default:
-				break;
-			}
-		}
+		JCommanderParser arguments = new JCommanderParser();
+		new JCommander(arguments, args);
 
 		Substrate substrate = new Substrate();
-		String idsPath = "../../data/ids/chise/ids/";
-		String exportPath = "../../gephi/files/";
 
-		ArrayDeque<File> files = new ArrayDeque<File>();
+		if (arguments.getDirect() != null && !arguments.getDirect().contentEquals("")) {
+			getDirect(substrate, arguments.getDirect());
+		} else if (arguments.getFiles() != null && !arguments.getFiles().contentEquals("")) {
+			getDirect(substrate, arguments.getFiles());
+		}
 
-		// More to be found here: http://www.chise.org/ids/index.html or here
-		// http://git.chise.org/gitweb/?p=chise/ids.git;a=tree
-		// Order should better not matter ~
-		files.addLast(new File("test.txt"));
+		if (arguments.getOutput() != null && arguments.getOutput().contentEquals("files")) {
+			outFiles(substrate);
+		} else if (arguments.getOutput() != null && arguments.getOutput().contentEquals("visual")) {
+			outVisual(substrate);
+		} else if (arguments.getOutput() != null && arguments.getOutput().contentEquals("terminal")) {
+			outTerminal(substrate);
+		}
 
-		// files.addLast(new File(idsPath + "IDS-UCS-Basic.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-A.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Compat.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-1.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-2.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-3.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-4.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-5.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-B-6.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-C.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-D.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Ext-E.txt"));
-		// files.addLast(new File(idsPath + "IDS-UCS-Compat-Supplement.txt"));
+		Scanner sc = new Scanner(System.in);
+		sc.nextLine();
+		sc.close();
+		System.exit(0);
+	}
 
+	public static void getDirect(Substrate s, String input) {
+		s.flatten(new Node(null, input));
+	}
+
+	public static void getFiles(Substrate s, String input) {
 		Parser fparser = null;
 		try {
+			ArrayDeque<File> files = new ArrayDeque<File>();
+			String[] array = input.split(",");
+			for (String st : array) {
+				files.addLast(new File(st));
+			}
+
 			fparser = new Parser(files, 50);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -75,46 +57,23 @@ public class Main {
 
 		fparser.lines().forEach(row -> {
 			Node node = new Node(row.getCharacter(), row.getSequence());
-			Main.main++;
-			substrate.flatten(node);
-			Database.insert(node);
+			s.flatten(node);
 		});
-
-		substrate.exportVisual(Node.TreeType.Parsed);
-
-		try {
-			substrate.exportFiles(exportPath, Node.TreeType.Parsed);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-
-		int cardinality = 0;
-		for (Node n : substrate.values()) {
-			cardinality += n.getCardinality();
-		}
-
-		// 灣 is used as example in README.md but currently seems not correctly
-		// processed. To be investigated ~
-
-		Scanner s = new Scanner(System.in);
-		s.nextLine();
-		System.exit(0);
 	}
 
-	private static void parseNode(String ids) {
-		Substrate s = new Substrate();
-		Node node = s.flatten(new Node(null, ids));
-		System.out.println(node);
-
+	public static void outFiles(Substrate s) {
 		try {
-			s.exportFiles("../../gephi/files/", Node.TreeType.Parsed);
+			s.exportFiles(".", TreeType.Parsed);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static String format(String label, int field, int total) {
-		Double percentage = 100 * field / (double) total;
-		return label + ": " + field + " (" + (new DecimalFormat("#.##")).format(percentage) + " %)";
+	public static void outVisual(Substrate s) {
+		s.exportVisual(TreeType.Parsed);
+	}
+
+	public static void outTerminal(Substrate s) {
+		s.exportSet(TreeType.Parsed).stream().forEach(x -> System.out.println(x));
 	}
 }

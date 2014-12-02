@@ -4,11 +4,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashSet;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
-
-import javax.print.attribute.HashAttributeSet;
 
 import com.piotr2b.chinesehuawen.parser.Pair.UndefinedAliasException;
 
@@ -72,7 +69,7 @@ public class Node {
 	 * @return
 	 */
 	public Set<Node> getNodeSet() {
-		HashSet<Node> set = new HashSet();
+		HashSet<Node> set = new HashSet<Node>();
 		set.add(this);
 		for (Node n : leaves) {
 			set.addAll(n.getNodeSet());
@@ -216,8 +213,6 @@ public class Node {
 
 		Deque<String> seq = Node.split(sequence);
 		if (!validate(seq)) {
-			Main.parserError++;
-			Main.errorType1++;
 		}
 
 		Node node = Node.parse(seq, new ArrayDeque<>());
@@ -286,29 +281,8 @@ public class Node {
 					Node leaf = stack.removeLast();
 					node.leaves.add(leaf);
 				} catch (NoSuchElementException e) {
-					Main.parserError++;
-					Main.errorType4++;
 				}
 			}
-			// // Ici on crée tous les nœuds : celui que l'on renvoit et ceux
-			// qu'il
-			// // contient.
-			// try {
-			// // if (Main.dictionary.containsKey(node.getId())) {
-			// if (Main.aliasMap.containsKey(node.getId())) {
-			// node = Main.aliasMap.get(node.getId());
-			// } else {
-			// Main.aliasMap.put(node.getId(), node);
-			// }
-			// } catch (NullPointerException e) {
-			// Main.parserError++;
-			// Main.errorType3++;
-			// } catch (UndefinedAliasException e) {
-			// e.printStackTrace();
-			// }
-
-			Main.induced++;
-
 			stack.addLast(node);
 		} else
 		// It's a sinogram.
@@ -318,31 +292,11 @@ public class Node {
 			leaf.idc = null;
 			leaf.leaves = new ArrayList<>();
 
-			// if (Main.aliasMap.containsKey(leaf.getCharacter())) {
-			// leaf = Main.aliasMap.get(leaf.getCharacter());
-			// } else
-			// // I feel like this may better seldom occur (just for radicals):
-			// // it
-			// // means that use an character (that leaf) which has never been
-			// // described before.
-			// {
-			// // It's not perfect : Main should not be modified outside of
-			// // itself.
-			// try {
-			// Main.aliasMap.put(new Alias<Integer, String>(leaf.getId(),
-			// leaf.getCharacter()), leaf);
-			// } catch (UndefinedAliasException e) {
-			// e.printStackTrace();
-			// }
-			// }
-
 			stack.addLast(leaf);
 		}
 
 		if (sequence.size() == 0) {
 			if (stack.size() != 1) {
-				Main.parserError++;
-				Main.errorType2++;
 			}
 			return stack.removeLast();
 		} else {

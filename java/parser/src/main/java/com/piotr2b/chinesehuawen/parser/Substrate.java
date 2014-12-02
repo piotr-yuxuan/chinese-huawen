@@ -1,9 +1,7 @@
 package com.piotr2b.chinesehuawen.parser;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -18,16 +16,9 @@ import java.util.stream.Collectors;
 import org.gephi.graph.api.DirectedGraph;
 import org.gephi.graph.api.GraphController;
 import org.gephi.graph.api.GraphModel;
-import org.gephi.io.exporter.api.ExportController;
-import org.gephi.io.exporter.preview.PDFExporter;
-import org.gephi.preview.api.PreviewController;
-import org.gephi.preview.api.PreviewProperties;
-import org.gephi.preview.api.PreviewProperty;
 import org.gephi.project.api.ProjectController;
 import org.gephi.project.api.Workspace;
 import org.openide.util.Lookup;
-
-import com.itextpdf.text.PageSize;
 
 public class Substrate {
 
@@ -98,14 +89,12 @@ public class Substrate {
 		String split = "\t";
 
 		// Ecriture des en-têtes
-		System.out.println(" — Graph — ");
 		printerEdge.write("Source" + split + "Target" + split + "Type" + split + "Weight\n");
 		printerNode.write("Id" + split + "Label\n");
 
 		HashMap<Integer, Integer> indexTranslation = new HashMap<Integer, Integer>(); // translation
 
 		in.values().stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
-			System.out.println(" Sinogram " + x);
 			if (!indexTranslation.containsKey(x.getId())) {
 				indexTranslation.put(x.getId(), indexTranslation.size());
 				printerNode.write(indexTranslation.get(x.getId()) + split + x + "\n");
@@ -139,7 +128,6 @@ public class Substrate {
 		// Init a project - and therefore a workspace
 		ProjectController pc = Lookup.getDefault().lookup(ProjectController.class);
 		pc.newProject();
-		Workspace workspace = pc.getCurrentWorkspace();
 
 		// Get a graph model - it exists because we have a workspace
 		GraphModel graphModel = Lookup.getDefault().lookup(GraphController.class).getModel();
@@ -148,7 +136,6 @@ public class Substrate {
 		DirectedGraph directedGraph = graphModel.getDirectedGraph();
 
 		in.values().stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
-			System.out.println(" Sinogram " + x);
 			if (!indexTranslation.containsKey(x.getId())) {
 				org.gephi.graph.api.Node n = graphModel.factory().newNode(Integer.toString(x.getId()));
 				n.getNodeData().setLabel(x.toString());

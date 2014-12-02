@@ -26,10 +26,7 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -61,6 +58,7 @@ public class PreviewJFrame {
 
 	private Set<Node> set;
 
+	@SuppressWarnings("unused")
 	private PreviewJFrame() {
 	}
 
