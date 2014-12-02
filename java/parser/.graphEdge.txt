@@ -1,7 +1,0 @@
-Source	Target	Type	Weight
-3	0	Directed	1
-3	4	Directed	1
-4	5	Directed	1
-4	5	Directed	1
-5	1	Directed	1
-5	2	Directed	1

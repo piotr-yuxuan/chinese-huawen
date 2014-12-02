@@ -195,7 +195,6 @@ public class Node {
 		}
 	}
 
-	// should be private
 	public Node() {
 		this.character = null;
 		this.idc = null;

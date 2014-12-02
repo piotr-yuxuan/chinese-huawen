@@ -13,14 +13,15 @@ public class Main {
 	public static void main(String[] args) {
 
 		JCommanderParser arguments = new JCommanderParser();
-		new JCommander(arguments, args);
+		String[] argv = { "-files", "./test.txt", "-output", "terminal" };
+		new JCommander(arguments, argv);
 
 		Substrate substrate = new Substrate();
 
 		if (arguments.getDirect() != null && !arguments.getDirect().contentEquals("")) {
 			getDirect(substrate, arguments.getDirect());
 		} else if (arguments.getFiles() != null && !arguments.getFiles().contentEquals("")) {
-			getDirect(substrate, arguments.getFiles());
+			getFiles(substrate, arguments.getFiles());
 		}
 
 		if (arguments.getOutput() != null && arguments.getOutput().contentEquals("files")) {
@@ -32,6 +33,7 @@ public class Main {
 		}
 
 		Scanner sc = new Scanner(System.in);
+		System.out.println("Appuyer sur entrée pour terminer");
 		sc.nextLine();
 		sc.close();
 		System.exit(0);
@@ -50,7 +52,7 @@ public class Main {
 				files.addLast(new File(st));
 			}
 
-			fparser = new Parser(files, 50);
+			fparser = new Parser(files, Integer.MAX_VALUE);
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}

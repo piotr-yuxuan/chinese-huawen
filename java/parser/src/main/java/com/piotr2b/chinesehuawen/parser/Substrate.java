@@ -80,8 +80,8 @@ public class Substrate {
 
 	public void exportFiles(String outputPath, Node.TreeType type) throws FileNotFoundException {
 
-		File outputNode = new File(outputPath + "graphNode.txt");
-		File outputEdge = new File(outputPath + "graphEdge.txt");
+		File outputNode = new File(outputPath + "/graphNode.txt");
+		File outputEdge = new File(outputPath + "/graphEdge.txt");
 		final PrintWriter printerNode = new PrintWriter(outputNode);
 		final PrintWriter printerEdge = new PrintWriter(outputEdge);
 

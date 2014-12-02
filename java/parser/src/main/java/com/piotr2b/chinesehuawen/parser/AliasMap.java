@@ -3,7 +3,6 @@ package com.piotr2b.chinesehuawen.parser;
 import java.util.AbstractMap;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -60,6 +59,7 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		return mv.isEmpty();
 	}
 
+	@SuppressWarnings("unused")
 	private AliasMap() {
 		KMAIN = null;
 		KALIAS = null;
@@ -164,7 +164,8 @@ public class AliasMap<Kmain, Kalias, V extends Node> implements Map<Alias<Kmain,
 		}
 
 		if (key.getClass().isAssignableFrom(KMAIN)) {
-			mv.put((Kmain) key, value);
+			@SuppressWarnings({ "unused", "unchecked" })
+			V put = mv.put((Kmain) key, value);
 			// k1k2.put((K1) key, null);
 		} else if (key.getClass().isAssignableFrom(KALIAS)) {
 			throw new Alias.UndefinedAliasException();
