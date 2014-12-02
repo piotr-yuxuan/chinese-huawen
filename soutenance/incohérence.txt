@@ -1,0 +1,5 @@
+;; -*- coding: utf-8-mcs-er -*-
+U+0000	A	B
+U+0000	B	⿲ABEG
+U+0000	C	⿲ABD
+U+0000	D	D
