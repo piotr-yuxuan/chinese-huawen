@@ -1,4 +1,10 @@
-# General background
+# Slide Show
+
+> La présentation de fin de projet est disponible à l'adresse suivante.
+
+> http://piotr2b.github.io/slides/index.html
+
+# General Background
 
 You may give give that [website](http://piotr2b.github.io) a glance as for a general, non programmatical introduction to this project.
 
@@ -20,7 +26,7 @@ This document shows neither [evolution](documents/Documentation/Work trail.md) o
 
 This repository has been used in different ways. It initially hosted a [article recension](documents/Articles recension) whose sources can be found in [bibliography](bibliography/). A state of the art was planned to be written but hasn't been born yet. However, you could find general introduction to Chinese language structure on the [project site](http://piotr2b.github.io/chinese-huawen/). [Documents](documents/) are placed into the eponym folder which also contains the [general documentation](documents/Documentation) of this repository. The folder [gephi](gephi/) contains output pictures and Gephi files and [data](data/) comprehends all what looks like a database. These two latter folders are used by Java projects stored in [java](java/). The folder [java/lib](java/lib/) is for hypothetical libraries which couldn't be handle with maven.
 
-# Getting started
+# Getting Started
 
 ## 0. Software prerequesite
  * `git` You obviously need [*git*](http://git-scm.com/downloads).
