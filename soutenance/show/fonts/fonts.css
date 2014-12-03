@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Libre Baskerville";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Libre Baskerville"), url("LibreBaskerville-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Architects Daughter";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Architects Daughter"), url("ArchitectsDaughter.woff") format("woff");
+}
+
+@font-face {
+  font-family: "AR PL UKai TW MBE";
+  font-style: normal;
+  font-weight: 400;
+  src: local("AR PL UKai TW MBE"), url("UKaiTWMBE.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Another Shabby";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Another Shabby"), url("anothershabby-webfont.ttf") format("truetype");
+}
