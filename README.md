@@ -1,6 +1,6 @@
 # Slide Show
 
-> La présentation de fin de projet est disponible à l'adresse suivante [`http://piotr2b.github.io/slides/index.html`](http://piotr2b.github.io/slides/index.html). Les fichiers utilisés pendant la soutenance sont dans le sous-répertoire [éponyme](soutenance/).
+> La présentation de fin de projet est disponible à l'adresse suivante [`http://piotr2b.github.io/slides/index.html`](http://piotr2b.github.io/slides/index.html). Les fichiers et lex exécutables utilisés pendant la soutenance sont dans le sous-répertoire [éponyme](soutenance/).
 
 # General Background
 
