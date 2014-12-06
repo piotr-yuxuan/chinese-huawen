@@ -1,7 +1,3 @@
-# Slide Show
-
-> La présentation de fin de projet est disponible à l'adresse suivante [`http://piotr2b.github.io/slides/index.html`](http://piotr2b.github.io/slides/index.html). Les fichiers et lex exécutables utilisés pendant la soutenance sont dans le sous-répertoire [éponyme](soutenance/).
-
 # General Background
 
 You may give give that [website](http://piotr2b.github.io) a glance as for a general, non programmatical introduction to this project.
@@ -18,11 +14,12 @@ The following is a technical document where it's first introduced the global str
 
 This document shows neither [evolution](documents/Documentation/Work trail.md) of available features and foreseen bugs to be added nor technical details which can be found both in folder [documentation](documents/Documentation).
 
-> Pour voir le dépôt à une date donnée, suivre ce [lien](https://github.com/piotr2b/chinese-huawen/commits/master) ou cliquer sur « commits » à gauche au dessus de la liste des fichiers.
-
 # Structure
 
-This repository has been used in different ways. It initially hosted a [article recension](documents/Articles recension) whose sources can be found in [bibliography](bibliography/). A state of the art was planned to be written but hasn't been born yet. However, you could find general introduction to Chinese language structure on the [project site](http://piotr2b.github.io/chinese-huawen/). [Documents](documents/) are placed into the eponym folder which also contains the [general documentation](documents/Documentation) of this repository. The folder [gephi](gephi/) contains output pictures and Gephi files and [data](data/) comprehends all what looks like a database. These two latter folders are used by Java projects stored in [java](java/). The folder [java/lib](java/lib/) is for hypothetical libraries which couldn't be handle with maven.
+This repository has been used in different ways. It initially hosted a [article recension](documents/Articles recension) whose sources can be found in [bibliography](bibliography/). A state of the art was planned to be written but hasn't been born yet. However, you could find general introduction to Chinese language structure on the [project site](http://piotr2b.github.io/chinese-huawen/).
+ * [Documents](documents/) are placed into the eponym folder which also contains the [general documentation](documents/Documentation) of this repository. Herein can be found roadmap.
+ * The folder [gephi](gephi/) contains output pictures and Gephi files and [data](data/) comprehends all what looks like a database.
+ * These two latter folders are used by Java projects stored in [java](java/). The folder [java/lib](java/lib/) is for hypothetical libraries which couldn't be handle with maven.
 
 # Getting Started
 
