@@ -24,4 +24,6 @@ Then, back to implementation. I feel like I could turn that project into a libra
   * Variant handling would allow us to integrate even more IDS from different datasources.
   * So we also need to arrange export methods to be able to say «export that substrate according to Chinese way with transitive reduction ».
 
- 3. Finally, integrate frequencies and return sinogram list.
+ 3. A very interesting part is querying the base through Java library to be able to answer questions like: « What are sinograms in traditionnal style which contain smaller sinograms A and B with B on the left side and always above A, with more than three strokes, sorted by speech frequency? »
+
+ 4. Finally, integrate frequencies and return sinogram list.

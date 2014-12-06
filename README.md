@@ -17,7 +17,7 @@ This document shows neither [evolution](documents/Documentation/Work trail.md) o
 # Structure
 
 This repository has been used in different ways. It initially hosted a [article recension](documents/Articles recension) whose sources can be found in [bibliography](bibliography/). A state of the art was planned to be written but hasn't been born yet. However, you could find general introduction to Chinese language structure on the [project site](http://piotr2b.github.io/chinese-huawen/).
- * [Documents](documents/) are placed into the eponym folder which also contains the [general documentation](documents/Documentation) of this repository. Herein can be found roadmap.
+ * [Documents](documents/) are placed into the eponym folder which also contains the [general documentation](documents/Documentation) of this repository. Herein can be found roadmap or plan for next improvements.
  * The folder [gephi](gephi/) contains output pictures and Gephi files and [data](data/) comprehends all what looks like a database.
  * These two latter folders are used by Java projects stored in [java](java/). The folder [java/lib](java/lib/) is for hypothetical libraries which couldn't be handle with maven.
 
