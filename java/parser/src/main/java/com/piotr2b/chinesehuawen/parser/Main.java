@@ -2,8 +2,19 @@ package com.piotr2b.chinesehuawen.parser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayDeque;
 import java.util.Scanner;
+
+import org.jooq.DSLContext;
+import org.jooq.Record;
+import org.jooq.Result;
+import org.jooq.SQLDialect;
+import org.jooq.impl.DSL;
 
 import com.beust.jcommander.JCommander;
 import com.piotr2b.chinesehuawen.parser.Node.TreeType;
@@ -11,6 +22,8 @@ import com.piotr2b.chinesehuawen.parser.Node.TreeType;
 public class Main {
 
 	public static void main(String[] args) {
+
+		database();
 
 		JCommanderParser arguments = new JCommanderParser();
 		new JCommander(arguments, args);
@@ -36,6 +49,31 @@ public class Main {
 		sc.nextLine();
 		sc.close();
 		System.exit(0);
+	}
+
+	private static void database() {
+
+		Connection conn = null;
+
+		String userName = "huawen";
+		String password = "huwaen";
+		String url = "jdbc:mysql://localhost:3306/huwaen";
+
+		try {
+			new org.mariadb.jdbc.Driver();
+			conn = DriverManager.getConnection(url, userName, password);
+		} catch (Exception e) {
+			// For the sake of this tutorial, let's keep exception handling
+			// simple
+			e.printStackTrace();
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException ignore) {
+				}
+			}
+		}
 	}
 
 	public static void getDirect(Substrate s, String input) {
