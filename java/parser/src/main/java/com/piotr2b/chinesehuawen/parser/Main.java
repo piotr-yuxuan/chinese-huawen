@@ -1,18 +1,18 @@
 package com.piotr2b.chinesehuawen.parser;
 
+import static com.piotr2b.chinesehuawen.entities.Tables.SINOGRAM;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import org.jooq.DSLContext;
-import org.jooq.Record;
-import org.jooq.Result;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
 
@@ -56,12 +56,27 @@ public class Main {
 		Connection conn = null;
 
 		String userName = "huawen";
-		String password = "huwaen";
-		String url = "jdbc:mysql://localhost:3306/huwaen";
+		String password = "huawen";
+		String url = "jdbc:mysql://localhost:3306/huawen";
 
 		try {
 			new org.mariadb.jdbc.Driver();
 			conn = DriverManager.getConnection(url, userName, password);
+			DSLContext create = DSL.using(conn, SQLDialect.MYSQL);
+
+			// create.insertInto(SINOGRAM, SINOGRAM.CP, SINOGRAM.INDUCED)//
+			// .values("U+0001", (byte) 1)//
+			// .values("U+0002", (byte) 2)//
+			// .execute();
+
+			// Use stream() not to use java 8-like jooq embedded methods.
+			ArrayList<Node> result = create.select().from(SINOGRAM).fetch().stream()//
+					.map(Node::new)//
+					.collect(Collectors.toCollection(ArrayList::new));
+
+			for (Node r : result) {
+				System.out.print(r);
+			}
 		} catch (Exception e) {
 			// For the sake of this tutorial, let's keep exception handling
 			// simple

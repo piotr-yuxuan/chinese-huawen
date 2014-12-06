@@ -79,7 +79,7 @@ public class PreviewJFrame {
 
 		HashMap<Integer, org.gephi.graph.api.Node> indexTranslation = new HashMap<Integer, org.gephi.graph.api.Node>(); // translation
 
-		set.stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
+		set.stream().flatMap(node -> node.getTSet().stream()).distinct().forEach(x -> {
 			if (!indexTranslation.containsKey(x.getId())) {
 				org.gephi.graph.api.Node n = graphModel.factory().newNode(Integer.toString(x.getId()));
 				n.getNodeData().setLabel(x.toString());

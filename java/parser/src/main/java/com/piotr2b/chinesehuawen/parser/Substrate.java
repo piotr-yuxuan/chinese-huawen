@@ -3,6 +3,7 @@ package com.piotr2b.chinesehuawen.parser;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -69,12 +70,12 @@ public class Substrate {
 		return flattened;
 	}
 
-	public List<Node> getCompounds(Node node) {
+	public Set<Node> getFSet(Node node) {
 		if (in.containsKey(node.getId())) {
-			return in.values().stream().filter(x -> x.contains(node)).collect(Collectors.toList());
+			return in.values().stream().filter(x -> x.contains(node)).collect(Collectors.toSet());
 		} else {
 			// Sinogramme inconnu, renvoie 0.
-			return new ArrayList<Node>();
+			return new HashSet<Node>();
 		}
 	}
 
@@ -93,7 +94,7 @@ public class Substrate {
 
 		HashMap<Integer, Integer> indexTranslation = new HashMap<Integer, Integer>(); // translation
 
-		in.values().stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
+		in.values().stream().flatMap(node -> node.getTSet().stream()).distinct().forEach(x -> {
 			if (!indexTranslation.containsKey(x.getId())) {
 				indexTranslation.put(x.getId(), indexTranslation.size());
 				printerNode.write(indexTranslation.get(x.getId()) + split + x + "\n");
@@ -134,7 +135,7 @@ public class Substrate {
 		HashMap<Integer, org.gephi.graph.api.Node> indexTranslation = new HashMap<Integer, org.gephi.graph.api.Node>(); // translation
 		DirectedGraph directedGraph = graphModel.getDirectedGraph();
 
-		in.values().stream().flatMap(node -> node.getNodeSet().stream()).distinct().forEach(x -> {
+		in.values().stream().flatMap(node -> node.getTSet().stream()).distinct().forEach(x -> {
 			if (!indexTranslation.containsKey(x.getId())) {
 				org.gephi.graph.api.Node n = graphModel.factory().newNode(Integer.toString(x.getId()));
 				n.getNodeData().setLabel(x.toString());
@@ -157,30 +158,6 @@ public class Substrate {
 		});
 
 		return directedGraph;
-
-		// PreviewProperties prop =
-		// Lookup.getDefault().lookup(PreviewController.class).getModel().getProperties();
-		// prop.putValue(PreviewProperty.SHOW_NODE_LABELS, Boolean.TRUE);
-		// prop.putValue(PreviewProperty.NODE_LABEL_PROPORTIONAL_SIZE,
-		// Boolean.FALSE);
-		// prop.putValue(PreviewProperty.NODE_LABEL_FONT,
-		// prop.getFontValue(PreviewProperty.NODE_LABEL_FONT).deriveFont(8));
-		// // Export full graph
-		// ExportController ec =
-		// Lookup.getDefault().lookup(ExportController.class);
-		// try {
-		// ec.exportFile(new File("../../gephi/" + "parse.pdf"));
-		// } catch (IOException ex) {
-		// ex.printStackTrace();
-		// return;
-		// }
-		//
-		// // PDF Exporter config and export to Byte array
-		// PDFExporter pdfExporter = (PDFExporter) ec.getExporter("pdf");
-		// pdfExporter.setPageSize(PageSize.A0);
-		// pdfExporter.setWorkspace(workspace);
-		// ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		// ec.exportStream(baos, pdfExporter);
 	}
 
 	public Set<Node> exportSet(Node.TreeType type) {
@@ -191,6 +168,17 @@ public class Substrate {
 		return in.values();
 	}
 
+	public Node getByCharacter(String character) {
+		if (si.get(character) != null) {
+			return in.get(si.get(character));
+		}
+		return null;
+	}
+
+	public Node getById(Integer id) {
+		return in.get(id);
+	}
+
 	public int size() {
 		return in.size();
 	}
@@ -199,7 +187,13 @@ public class Substrate {
 		return in.isEmpty();
 	}
 
-	public Set<Entry<Integer, Node>> entrySet() {
+	public Set<Entry<Integer, Node>> entrySetById() {
 		return in.entrySet();
+	}
+
+	public Set<Entry<String, Node>> entrySetByCharacter() {
+		return si.entrySet().stream().map(x -> {
+			return new AbstractMap.SimpleEntry<String, Node>(x.getKey(), in.get(x.getValue()));
+		}).collect(Collectors.toSet());
 	}
 }

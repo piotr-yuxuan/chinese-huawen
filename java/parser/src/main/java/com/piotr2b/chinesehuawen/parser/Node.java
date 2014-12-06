@@ -7,6 +7,10 @@ import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
+import org.jooq.Record;
+import org.jooq.exception.DataAccessException;
+
+import com.piotr2b.chinesehuawen.entities.tables.records.SinogramRecord;
 import com.piotr2b.chinesehuawen.parser.Pair.UndefinedAliasException;
 
 public class Node {
@@ -64,40 +68,33 @@ public class Node {
 	}
 
 	/**
-	 * Tous, lui inclus
+	 * Tous, lui inclus. T tree of this node is rooted in the node itself.
 	 * 
 	 * @return
 	 */
-	public Set<Node> getNodeSet() {
+	public Set<Node> getTSet() {
 		HashSet<Node> set = new HashSet<Node>();
 		set.add(this);
 		for (Node n : leaves) {
-			set.addAll(n.getNodeSet());
+			set.addAll(n.getTSet());
 		}
 		return set;
 	}
 
-	public Set<Pair<Node, Node>> getEdgeSet() {
-		HashSet<Pair<Node, Node>> set = new HashSet<>();
-		try {
-			for (Node n : leaves) {
-				set.add(new Pair<Node, Node>(this, n));
-				set.addAll(n.getEdgeSet());
-			}
-		} catch (UndefinedAliasException e) {
-			e.printStackTrace();
-		}
+	public Set<Node> getTTree() {
+		HashSet<Node> set = new HashSet<Node>();
+		set.add(this);
 		return set;
 	}
 
 	/**
-	 * Don't use exact object but IDS
+	 * Don't use exact object but IDS. A node contains itself.
 	 * 
 	 * @param node
 	 * @return
 	 */
 	public boolean contains(Node node) {
-		for (Node n : getNodeSet()) {
+		for (Node n : getTSet()) {
 			if (n.getId() == node.getId()) {
 				return true;
 			}
@@ -197,6 +194,18 @@ public class Node {
 
 	public Node() {
 		this.character = null;
+		this.idc = null;
+		this.leaves = new ArrayList<>();
+	}
+
+	public Node(Record record) {
+		if (!(record.getClass().isAssignableFrom(SinogramRecord.class))) {
+			throw new DataAccessException("SinogramRecord needed but not stumble upon.");
+		}
+
+		SinogramRecord sinogramRecord = (SinogramRecord) record;
+
+		this.character = sinogramRecord.getCp();
 		this.idc = null;
 		this.leaves = new ArrayList<>();
 	}
