@@ -22,7 +22,7 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 	public static final Ternary MIDDLE = new Ternary(VALUE.MIDDLE);
 
 	private static enum VALUE {
-		TRUE("true", 1), FALSE("false", -1), MIDDLE("unknown", 0);
+		TRUE("true", 1), FALSE("false", -1), MIDDLE(0);
 
 		private final String LITTERAL;
 		public final int NUMERIC;

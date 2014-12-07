@@ -21,9 +21,11 @@ import com.piotr2b.chinesehuawen.parser.Node.TreeType;
 
 public class Main {
 
+	public static int a = 0;
+
 	public static void main(String[] args) {
 
-		// database();
+		database();
 
 		JCommanderParser arguments = new JCommanderParser();
 		new JCommander(arguments, args);
