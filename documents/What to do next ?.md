@@ -26,4 +26,9 @@ Then, back to implementation. I feel like I could turn that project into a libra
 
  3. A very interesting part is querying the base through Java library to be able to answer questions like: « What are sinograms in traditionnal style which contain smaller sinograms A and B with B on the left side and always above A, with more than three strokes, sorted by speech frequency? »
 
- 4. Finally, integrate frequencies and return sinogram list.
+ 4. Finally, integrate frequencies and return sinogram lists.
+ 
+ 5. That project could be applicated to several other to extend their capabilities to Asian language.
+  * https://github.com/TheBerkin/Rant
+  * Or NLP processing projects.
+  * 
