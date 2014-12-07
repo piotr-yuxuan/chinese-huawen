@@ -17,22 +17,22 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public static enum V {
-		TRUE, FALSE, MIDDLE
-	}
+	public static final Ternary TRUE = new Ternary(VALUE.TRUE);
+	public static final Ternary FALSE = new Ternary(VALUE.FALSE);
+	public static final Ternary MIDDLE = new Ternary(VALUE.MIDDLE);
 
-	private static enum INTERNAL_VALUES {
+	private static enum VALUE {
 		TRUE("true", 1), FALSE("false", -1), MIDDLE("unknown", 0);
 
 		private final String LITTERAL;
 		public final int NUMERIC;
 
-		private INTERNAL_VALUES(String value, int figure) {
+		private VALUE(String value, int figure) {
 			this.LITTERAL = value;
 			this.NUMERIC = figure;
 		}
 
-		private INTERNAL_VALUES(int figure) {
+		private VALUE(int figure) {
 			switch (figure) {
 			case 1:
 				this.LITTERAL = "true";
@@ -54,11 +54,11 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 			return LITTERAL;
 		}
 
-		public static int toNumeric(INTERNAL_VALUES value) {
+		public static int toNumeric(VALUE value) {
 			return value.NUMERIC;
 		}
 
-		public static INTERNAL_VALUES fromNumeric(int figure) {
+		public static VALUE fromNumeric(int figure) {
 			switch (figure) {
 			case 1:
 				return TRUE;
@@ -71,7 +71,7 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 			}
 		}
 
-		public static int compare(Ternary.INTERNAL_VALUES x, Ternary.INTERNAL_VALUES y) {
+		public static int compare(Ternary.VALUE x, Ternary.VALUE y) {
 			if (x == y) {
 				return 0;
 			} else if (x == FALSE) {
@@ -110,69 +110,97 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 	public static Ternary parseBoolean(String s) {
 		switch (s.toLowerCase()) {
 		case "true":
-			return new Ternary(INTERNAL_VALUES.TRUE);
+			return new Ternary(VALUE.TRUE);
 		case "false":
-			return new Ternary(INTERNAL_VALUES.FALSE);
+			return new Ternary(VALUE.FALSE);
 		default:
 		case "unknown":
-			return new Ternary(INTERNAL_VALUES.MIDDLE);
+			return new Ternary(VALUE.MIDDLE);
 		}
 	}
 
 	public static Ternary valueOf(boolean b) {
-		return (b ? new Ternary(INTERNAL_VALUES.TRUE) : new Ternary(INTERNAL_VALUES.FALSE));
+		return (b ? new Ternary(VALUE.TRUE) : new Ternary(VALUE.FALSE));
 	}
 
 	public static Ternary valueOf(Boolean b) {
-		return (b ? new Ternary(INTERNAL_VALUES.TRUE) : new Ternary(INTERNAL_VALUES.FALSE));
+		return (b ? new Ternary(VALUE.TRUE) : new Ternary(VALUE.FALSE));
 	}
 
 	public static Ternary valueOf(String s) {
 		switch (parseBoolean(s).value) {
 		case FALSE:
-			return new Ternary(INTERNAL_VALUES.FALSE);
+			return new Ternary(VALUE.FALSE);
 		case TRUE:
-			return new Ternary(INTERNAL_VALUES.TRUE);
+			return new Ternary(VALUE.TRUE);
 		default:
 		case MIDDLE:
-			return new Ternary(INTERNAL_VALUES.MIDDLE);
+			return new Ternary(VALUE.MIDDLE);
 		}
+	}
+
+	public static Ternary AND(Boolean a, Ternary b) {
+		return AND(new Ternary(a), b);
+	}
+
+	public static Ternary AND(Ternary a, Boolean b) {
+		return AND(a, new Ternary(b));
+	}
+
+	public static Ternary AND(Boolean a, Boolean b) {
+		return AND(new Ternary(a), new Ternary(b));
 	}
 
 	public static Ternary AND(Ternary a, Ternary b) {
 		switch (operativeLogic) {
 		case Bochvar:
-			if (a.value == INTERNAL_VALUES.MIDDLE || b.value == INTERNAL_VALUES.MIDDLE) {
-				return new Ternary(Ternary.INTERNAL_VALUES.MIDDLE);
-			} else if (a.value == INTERNAL_VALUES.FALSE || b.value == INTERNAL_VALUES.FALSE) {
-				return new Ternary(Ternary.INTERNAL_VALUES.FALSE);
+			if (a.value == VALUE.MIDDLE || b.value == VALUE.MIDDLE) {
+				return new Ternary(Ternary.VALUE.MIDDLE);
+			} else if (a.value == VALUE.FALSE || b.value == VALUE.FALSE) {
+				return new Ternary(Ternary.VALUE.FALSE);
 			} else {
-				return new Ternary(Ternary.INTERNAL_VALUES.TRUE);
+				return new Ternary(Ternary.VALUE.TRUE);
 			}
 		default:
 		case Kleene_Strong:
 		case Łukasiewicz:
 		case Priest:
-			return new Ternary(INTERNAL_VALUES.fromNumeric(Math.min(INTERNAL_VALUES.toNumeric(a.value), INTERNAL_VALUES.toNumeric(b.value))));
+			return new Ternary(VALUE.fromNumeric(Math.min(VALUE.toNumeric(a.value), VALUE.toNumeric(b.value))));
 		}
+	}
+
+	public static Ternary OR(Boolean a, Ternary b) {
+		return OR(new Ternary(a), b);
+	}
+
+	public static Ternary OR(Ternary a, Boolean b) {
+		return OR(a, new Ternary(b));
+	}
+
+	public static Ternary OR(Boolean a, Boolean b) {
+		return OR(new Ternary(a), new Ternary(b));
 	}
 
 	public static Ternary OR(Ternary a, Ternary b) {
 		switch (operativeLogic) {
 		case Bochvar:
-			if (a.value == INTERNAL_VALUES.MIDDLE || b.value == INTERNAL_VALUES.MIDDLE) {
-				return new Ternary(Ternary.INTERNAL_VALUES.MIDDLE);
-			} else if (a.value == INTERNAL_VALUES.TRUE || b.value == INTERNAL_VALUES.TRUE) {
-				return new Ternary(Ternary.INTERNAL_VALUES.TRUE);
+			if (a.value == VALUE.MIDDLE || b.value == VALUE.MIDDLE) {
+				return new Ternary(Ternary.VALUE.MIDDLE);
+			} else if (a.value == VALUE.TRUE || b.value == VALUE.TRUE) {
+				return new Ternary(Ternary.VALUE.TRUE);
 			} else {
-				return new Ternary(Ternary.INTERNAL_VALUES.FALSE);
+				return new Ternary(Ternary.VALUE.FALSE);
 			}
 		default:
 		case Kleene_Strong:
 		case Łukasiewicz:
 		case Priest:
-			return new Ternary(INTERNAL_VALUES.fromNumeric(Math.max(INTERNAL_VALUES.toNumeric(a.value), INTERNAL_VALUES.toNumeric(b.value))));
+			return new Ternary(VALUE.fromNumeric(Math.max(VALUE.toNumeric(a.value), VALUE.toNumeric(b.value))));
 		}
+	}
+
+	public static Ternary NOT(Boolean b) {
+		return NOT(new Ternary(b));
 	}
 
 	public static Ternary NOT(Ternary b) {
@@ -182,7 +210,7 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 		case Łukasiewicz:
 		case Priest:
 		default:
-			return new Ternary(INTERNAL_VALUES.fromNumeric(-1 * INTERNAL_VALUES.toNumeric(b.value)));
+			return new Ternary(VALUE.fromNumeric(-1 * VALUE.toNumeric(b.value)));
 		}
 	}
 
@@ -199,22 +227,22 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 	}
 
 	public static int compare(Ternary a, Ternary b) {
-		return Ternary.INTERNAL_VALUES.compare(a.value, b.value);
+		return Ternary.VALUE.compare(a.value, b.value);
 	}
 
-	private final INTERNAL_VALUES value;
+	private final VALUE value;
 
-	public Ternary(Ternary.V value) {
+	public Ternary(Ternary.VALUE value) {
 		switch (value) {
 		case FALSE:
-			this.value = INTERNAL_VALUES.FALSE;
+			this.value = VALUE.FALSE;
 			break;
 		default:
 		case MIDDLE:
-			this.value = INTERNAL_VALUES.MIDDLE;
+			this.value = VALUE.MIDDLE;
 			break;
 		case TRUE:
-			this.value = INTERNAL_VALUES.TRUE;
+			this.value = VALUE.TRUE;
 			break;
 		}
 	}
@@ -223,16 +251,12 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 		this.value = value.value;
 	}
 
-	private Ternary(INTERNAL_VALUES value) {
-		this.value = value;
-	}
-
 	public Ternary(Boolean value) {
-		this.value = (value) ? INTERNAL_VALUES.TRUE : INTERNAL_VALUES.FALSE;
+		this.value = (value) ? VALUE.TRUE : VALUE.FALSE;
 	}
 
 	public Ternary(boolean value) {
-		this.value = (value) ? INTERNAL_VALUES.TRUE : INTERNAL_VALUES.FALSE;
+		this.value = (value) ? VALUE.TRUE : VALUE.FALSE;
 	}
 
 	public Ternary(String s) {
@@ -248,7 +272,7 @@ public final class Ternary implements java.io.Serializable, Comparable<Ternary> 
 
 	@Override
 	public int compareTo(Ternary o) {
-		return Ternary.INTERNAL_VALUES.compare(this.value, o.value);
+		return Ternary.VALUE.compare(this.value, o.value);
 	}
 
 	@Override
