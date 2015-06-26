@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="page-nav">
+<p><a rel="prev" href="/">Back to cover page ↑</a></p>{% if page.previous %}
+<p><a rel="prev" href="{{ page.previous.url }}">{{ page.previous.title }} ←</a></p>
+{% endif %}
+</div>
+
+<article class="post-content">
+	{{ content }}
+</article>
+
+<div class="page-nav">
+{% if page.next %}
+<p><a rel="next" href="{{ page.next.url }}">{{ page.next.title }} →</a></p>
+{% endif %}
+</div>

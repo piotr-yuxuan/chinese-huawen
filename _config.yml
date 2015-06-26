@@ -1,0 +1,20 @@
+# Site settings
+title: 華文
+email: pde-bois@isep.fr
+description: > # this means to ignore newlines until next value
+  Analysis of the sinogram set with graph and set theories. What's the best way
+  to learn and remember Chinese characters? This is a growing project.
+tagline: What's the most efficient way to learn Chinese?
+github: "http://github.com/"
+github_username:  "piotr-yuxuan"
+repository:  "/chinese-huawen"
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "http://piotr-yuxuan.github.io" # the base hostname & protocol for your site
+permalink: none
+
+# Build settings
+markdown: kramdown
+highlighter: pygments
+
+exclude:
+  - README.md
