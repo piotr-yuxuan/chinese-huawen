@@ -181,7 +181,7 @@
     (* Same as Han but with code and without IDC *)
     <Letter> =  Code | CJK | CJKA | CJKB | CJKC | CJKD | CJKE | CJKRS | KR
                 | CJKSP | CJKS | ECJKLM | CJKCo | CJKCI | CJKCF | CJKCIS
-    Code =      #'&[A-Z0-9-]+;' (* for not-yet-implemented code points*)
+    Code =      #'&[A-Z0-9-]+;' (* for code points*)
     (* As should be defined \\p{Han}. Currently unused *)
     Han =       CJK | CJKA | CJKB | CJKC | CJKD | CJKE | CJKRS | KR | IDC | CJKSP
                 | CJKS | ECJKLM | CJKCo | CJKCI | CJKCF | CJKCIS
