@@ -1,4 +1,5 @@
-;; Here development is incremental so jump to the end to skip incremental changes.
+;; Here development is incremental so jump to the end to skip incremental
+;; changes.
 
 (ns 華文.lexer.parser
   (:require [instaparse.core :as insta]))
@@ -27,7 +28,8 @@
 ;; Lexer
 
 ;; Parser
-;; This is not precise enough because ⿰ can be passed more than two arguments or ⿲ less than three. So we should use conditionals.
+;; This is not precise enough because ⿰ can be passed more than two arguments
+;; or ⿲ less than three. So we should use conditionals.
 (def as-and-bs
   (insta/parser
    "S = F+ (* Parsing tree may have not head *)
@@ -35,9 +37,12 @@
     IDC = #'\\p{InIdeographic_Description_Characters}'
     L = #'\\P{InIdeographic_Description_Characters}' (* letter *)"))
 ;; (as-and-bs "⿰⿱ab⿱cd")
-;; => [:S [:F [:IDC "⿰"] [:F [:IDC "⿱"] [:L "a"] [:L "b"]] [:F [:IDC "⿱"] [:L "c"] [:L "d"]]]]
+;; => [:S [:F [:IDC "⿰"] [:F [:IDC "⿱"] [:L "a"] [:L "b"]] [:F [:IDC "⿱"] \
+;; [:L "c" ] [:L "d"]]]]
 
-;; This is better as it fixes the aforementionned problem, however it's not perfect yet. It's would be better to outpit generic IDC and not inner-scoped IDC2 or IDC3.
+;; This is better as it fixes the aforementionned problem, however it's not
+;; perfect yet. It's would be better to outpit generic IDC and not inner-scoped
+;; IDC2 or IDC3.
 (def as-and-bs
   (insta/parser
    "S = F+ (* Parsing tree may have not head *)
@@ -47,9 +52,11 @@
     IDC = #'\\P{InIdeographic_Description_Characters}'
     L = #'\\P{InIdeographic_Description_Characters}' (* anything else *)"))
 ;; (as-and-bs "⿰⿱ab⿱cd")
-;; => [:S [:F [:IDC2 "⿰"] [:F [:IDC2 "⿱"] [:L "a"] [:L "b"]] [:F [:IDC2 "⿱"] [:L "c"] [:L "d"]]]]
+;; => [:S [:F [:IDC2 "⿰"] [:F [:IDC2 "⿱"] [:L "a"] [:L "b"]] [:F [:IDC2 "⿱"] \
+;; [:L "c"] [:L "d"]]]]
 
-;; The following lines show something like tdd, but the repl prevented me from properly writing the unitary tests. Þ They should be added.
+;; The following lines show something like tdd, but the repl prevented me from \
+;; properly writing the unitary tests. Þ They should be added.
 
 (def grammar
   (insta/parser
@@ -69,7 +76,8 @@
   (insta/parser
    "S = S"))
 
-;; However, this doesn't work on radical thus we need to enlarge the starting rule.
+;; However, this doesn't work on radical thus we need to enlarge the starting
+;; rule.
 (def grammar
   (insta/parser
    "S = Form | (Form Id <(''|Sep)>)+
@@ -147,9 +155,24 @@
    :output-format :hiccup ; or :enlive
    ))
 
-;; And finally we would like to really get a tree structure and not something flattened. Moreover we solve the last problem: Id, which was actually not previously solved :/
-;; Actually the Id problem accepts more than one solution. We choose to change the data structure (IDC vs. :Variant) but remember we must address it properly. Indeed it won't be trivial to deal with nested different variants. Another solution is to keep data homogeneous: the parsed collection returned contains one or 2*i elements. If one then no problem; if 2*i, then 0 mod 2 are variants and 1 mod 2 are variant ids. This data structure is more appealing for a Clojure mindset but from my umble current viewpoint, :Variant will warn very well the user the latter has to deal with the former.
-;; In addition to this, ⿰&CDP-88F0;&CDP-8C4E;	⿰&CDP-8B5E;&CDP-8C4E; is a good counter-example for the flat solution. So basically you just have to count: if the output is counted more than 1, then we'll deal with variants. They sometimes are anonymous.
+;; And finally we would like to really get a tree structure and not something
+;; flattened. Moreover we solve the last problem: Id, which was actually not
+;; previously solved :/
+
+;; Actually the Id problem accepts more than one solution. We choose to change
+;; the data structure (IDC vs. :Variant) but remember we must address it
+;; properly. Indeed it won't be trivial to deal with nested different variants.
+
+;; Another solution is to keep data homogeneous: the parsed collection returned
+;; contains one or 2*i elements. If one then no problem; if 2*i, then 0 mod 2
+;; are variants and 1 mod 2 are variant ids. This data structure is more
+;; appealing for a Clojure mindset but from my umble current viewpoint, :Variant
+;; will warn very well the user the latter has to deal with the former.
+
+;; In addition to this, ⿰&CDP-88F0;&CDP-8C4E;	⿰&CDP-8B5E;&CDP-8C4E; is a good
+;; counter-example for the flat solution. So basically you just have to count:
+;; if the output is counted more than 1, then we'll deal with variants. They
+;; sometimes are anonymous.
 ;; Same explanation for :Code.
 (def grammar
   (insta/parser
@@ -175,7 +198,7 @@
 
     (* Operator arities *)
     <IDC2> =  (Letter|S) (Letter|S)
-    <IDC3> =  (Letter|S) (Letter|S) (Letter|S)
+    <IDC3> =  IDC2 (Letter|S)
 
     (* Operands *)
     (* Same as Han but with code and without IDC *)
