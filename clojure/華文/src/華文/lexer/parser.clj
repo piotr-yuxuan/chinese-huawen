@@ -30,7 +30,7 @@
   (insta/parser
    "S = F+ (* Parsing tree may have not head *)
     F = IDC (L | F)+ (* form *)
-    IDC = #'\\P{InIdeographic_Description_Characters}'
+    IDC = #'\\p{InIdeographic_Description_Characters}'
     L = #'\\P{InIdeographic_Description_Characters}' (* letter *)"))
 ;; (as-and-bs "⿰⿱ab⿱cd")
 ;; => [:S [:F [:IDC "⿰"] [:F [:IDC "⿱"] [:L "a"] [:L "b"]] [:F [:IDC "⿱"] [:L "c"] [:L "d"]]]]
@@ -54,5 +54,9 @@
     F = ((IDC3 (L | F)) | IDC2) (L | F) (L | F) (* form *)
     IDC2 = '⿰' | '⿱' | '⿴' | '⿵' | '⿶' | '⿷' | '⿸' | '⿹' | '⿺' | '⿻'
     IDC3 = '⿲' | '⿳'
-    IDC = #'\\P{InIdeographic_Description_Characters}'
+    IDC = #'\\p{InIdeographic_Description_Characters}'
     L = #'\\P{InIdeographic_Description_Characters}' (* letter *)"))
+;; Here we want to have a map
+(defn parse-ids
+  [str]
+  "lol")
