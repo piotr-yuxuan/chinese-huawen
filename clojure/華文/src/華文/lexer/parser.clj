@@ -10,17 +10,11 @@
   (def file-reader (line-seq (clojure.java.io/reader ids)))
   (println "Not able to find file"))
 
-;; Line-reader is level one. This could be seen as scanner.
-(defn line-reader
-  "Return the i-th line"
-  [i]
-  (nth file-reader i))
-
-;; Presenter or splitter is level 2.
+;; Presenter or splitter is level 1. This could be seen as a scanner.
 (defn line-presenter
-  "Split the i-th line"
+  "Split and return the i-th line"
   [i]
-  (clojure.string/split (line-reader i) #"\t"))
+  (clojure.string/split (nth file-reader i) #"\t"))
 
 ;; The grammar itself is used by level 3
 
