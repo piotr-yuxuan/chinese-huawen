@@ -1,20 +1,48 @@
 (ns 華文.lexer.parser
   (:require [instaparse.core :as insta]))
 
-;; This is the parser file. As I don't know yet how to structure the logic,
-;; let's say the parser has several levels.
+;; This is the parser file. This parser has several levels, described by the
+;; documentation.
 
-;; Level 0: we access physical data.
+;; Level 0
 (def ids "../../data/ids/ids.txt")
 (if (.exists (clojure.java.io/as-file ids))
   (def file-reader (line-seq (clojure.java.io/reader ids)))
   (println "Not able to find file"))
 
-;; Presenter or splitter is level 1. This could be seen as a scanner.
-(defn line-presenter
-  "Split and return the i-th line"
+(defn level-0
   [i]
-  (clojure.string/split (nth file-reader i) #"\t"))
+  (nth file-reader i))
+
+;; Level 1
+(def columns [:codepoint :letter :ids])
+(def separator-regular-expression #"\t")
+(def line-grammar
+  "Formal grammar to parse line."
+  (insta/parser
+   (str "S = S")))
+(defn assoc-one-by-one
+  "Associate each key of k to each value of v and skip if current key is nil."
+  [k v]
+  (loop [final {}
+         [key & keys] k
+         [value & values] v]
+    (if (nil? key)
+      (if (nil? keys)
+        final
+        (recur final keys values))
+      (recur (assoc final key value) keys values))))
+(defn split-line
+  "Return a function which parses the line i-th line, according to the vector
+  format and the regular expression separator."
+  [format separator]
+  #(assoc-one-by-one
+    format
+    (clojure.string/split (level-0 %) separator)))
+
+(defn level-1
+  [i]
+  ((split-line columns separator-regular-expression) i))
 
 ;; The grammar itself is used by level 3
 
@@ -91,8 +119,15 @@
     <CJKCF> =   #'[\ufe30-\ufe4f]'
     <CJKCIS> =  #'[\u2f800-\u2fa1f]'"))
 
-;; This is level three, where you say the line you want to be parsed and its
-;; syntactic tree is returned if possible; return nil otherwise
+;; þ Actually this is not the design I want: I want more grammars and simpler
+;; ones. Then the first grammar parses raw "data-source custom" ids to formal ids. Then the formal ids grammar parse them to tree.
+
+(def ids-grammar
+  "Formal grammar to parse ids into trees."
+   (insta/parser
+   "S = S"))
+
+;; Level 2.
 (defn ids-parser
   "If the line selected contains an ids then it parses it. If not, it ouputs a
   warning message."
@@ -105,4 +140,4 @@
 
 (defn file-crawler
   "Crawl the file"
-  ())
+  [])
