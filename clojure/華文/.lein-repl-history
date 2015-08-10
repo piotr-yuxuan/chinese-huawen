@@ -1,0 +1,6 @@
+\u20000
+#"a"
+##"a"
+###"a"
+(clojure.string/split """abc" "b")
+(clojure.string/split """abc" "b#"b"))
