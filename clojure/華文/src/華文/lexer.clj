@@ -202,3 +202,50 @@
                       "&D;" {:ids "&D;"}
                       "&E;" {:ids "&E;"}
                       "&F;" {:ids "&F;"}}))))
+
+(with-test
+  (defn tree-toggle
+    [direction tree map]
+    (from-ids-to-tree
+     (ids-toggle direction
+                 (from-tree-to-ids tree)
+                 map)))
+    ;; Basic
+  (is (= '("&A;")
+         (tree-toggle :expand '("&A;")
+                     {"&A;" {:ids "&A;"}})))
+  (is (= '("&A;")
+         (tree-toggle :collapse '("&A;")
+                     {"&A;" {:ids "&A;"}})))
+  ;; Non normalised
+  (is (= '([:⿳ "&B;" "&C;" "&D;"])
+         (tree-toggle :expand '("&A;")
+                     {"&A;" {:ids "⿳&B;&C;&D;"}})))
+  (is (= '("&A;")
+         (tree-toggle :collapse '([:⿳ "&B;" "&C;" "&D;"])
+                     {"&A;" {:ids "⿳&B;&C;&D;"}})))
+  ;; Non normalised, missing root
+  (is (= '("&A;")
+         (tree-toggle :expand '("&A;")
+                     {"&B;" {:ids "⿳&C;&D;&E;"}})))
+  (is (= '([:⿳ "&C;" "&D;" "&E;"])
+         (tree-toggle :collapse '([:⿳ "&C;" "&D;" "&E;"])
+                     {"&A;" {:ids "⿳&B;&C;&D;"}})))
+  ;; Normalised
+  (is (= '([:⿳ [:⿰ "&E;" "&F;"] [:⿳ "&D;" "&E;" "&F;"] "&D;"])
+         (tree-toggle :expand '("&A;")
+                     {"&A;" {:ids "⿳&B;&C;&D;"}
+                      "&B;" {:ids "⿰&E;&F;"}
+                      "&C;" {:ids "⿳&D;&E;&F;"}
+                      "&D;" {:ids "&D;"}
+                      "&E;" {:ids "&E;"}
+                      "&F;" {:ids "&F;"}})))
+  (is (= '("&A;")
+         (tree-toggle :collapse
+                      '([:⿳ [:⿰ "&E;" "&F;"] [:⿳ "&D;" "&E;" "&F;"] "&D;"])
+                     {"&A;" {:ids "⿳&B;&C;&D;"}
+                      "&B;" {:ids "⿰&E;&F;"}
+                      "&C;" {:ids "⿳&D;&E;&F;"}
+                      "&D;" {:ids "&D;"}
+                      "&E;" {:ids "&E;"}
+                      "&F;" {:ids "&F;"}}))))
