@@ -2,6 +2,264 @@
   (:require [instaparse.core :as insta])
   (:use clojure.test))
 
+(defn dec-to-hex
+  [number]
+  (clojure.string/upper-case (format "%x" number)))
+
+(defn hex-to-dec
+  [string]
+  (let [conversion-table (zipmap
+                          (concat (map char (range 48 58)) (map char (range 65 91)))
+                          (range))
+        string (clojure.string/upper-case string)]
+    (assert (every? #(< (conversion-table %) 16) string))
+    (loop [num string
+           acc 0]
+      (if (seq num)
+        (recur (drop 1 num) (+ (* 16 acc) (get conversion-table (first num))))
+        acc))))
+
+(defn pow
+  "Mathematical function power. LaTeX: $a^b$ where a is number and b is power."
+  [number power]
+  (reduce * (repeat power number)))
+
+(defn power-extrema
+  "Helper function for range-extrema, see its doc."
+  [power direction]
+  (cond
+   (= direction :up) (dec-to-hex (dec (pow 16 (inc power))))
+   (= direction :down) (dec-to-hex (if (= power 0) 0 (pow 16 power)))))
+
+(with-test
+  (defn range-extrema
+  "Initial is an extrema. Return an extrema in the given direction with the same digit number. Direction can be :up or :down."
+  [initial direction]
+  (power-extrema (dec (count initial)) direction))
+  (is (= (range-extrema "1" :up) "F"))
+  (is (= (range-extrema "1" :down) "0"))
+  (is (= (range-extrema "10" :up) "FF"))
+  (is (= (range-extrema "10" :down) "10"))
+  (is (= (range-extrema "15" :up) "FF"))
+  (is (= (range-extrema "15" :down) "10")))
+
+(with-test
+  (defn range-full
+  "Take as parameter two (decimal) integers and return hexadecimal ranges spanning over a power of 16. Power of 16 are from min-range (included) to max-range (included)."
+  [min-range max-range]
+  (if-not (or (< min-range 0) (< max-range 0))
+    (loop [final []
+           current min-range]
+      (if (> current max-range)
+        final
+        (let [power (pow 10 current)]
+          (recur (conj final [(str power) (range-extrema (str power) :up)])
+                 (inc current)))))))
+  (is (= (range-full 0 0) [["1" "F"]]))
+  (is (= (range-full 2 3) [["100" "FFF"] ["1000" "FFFF"]])))
+
+(with-test
+  (defn equal-length-ranges
+  "Expect two strings of hex. Return sorted vector of ranges."
+  [start end]
+  (cond
+   (< (hex-to-dec end) (hex-to-dec start)) (equal-length-ranges end start)
+   (= (count start) (count end)) [[start end]]
+   (= 1 (- (count end) (count start))) [[start (range-extrema start :up)]
+                                        [(power-extrema (count start) :down) end]]
+   :else (into
+          [[start (range-extrema start :up)]]
+          (conj (range-full (count start) (- (count end) 2))
+           [(range-extrema (str end) :down) end]))))
+  (is (= (equal-length-ranges "11" "11") [["11" "11"]]))
+  (is (= (equal-length-ranges "11" "85") [["11" "85"]]))
+  (is (= (equal-length-ranges "11" "850") [["11" "FF"] ["100" "850"]]))
+  (is (= (equal-length-ranges "11" "8500")
+         [["11" "FF"] ["100" "FFF"] ["1000" "8500"]])))
+
+(with-test
+  (defn mask-from-left
+  "Number is an hexadecimal number put into a string. Extant is the size of the mask from the left. Extant shoudln't be strictly greater than the `number` number of digits."
+  [number extant]
+  (str (subs number 0 (- (count number) extant)) (if-not (= extant 0) (power-extrema (dec extant) :up))))
+  (is (= (mask-from-left "1A23" 0) "1A23"))
+  (is (= (mask-from-left "1A22" 1) "1A2F"))
+  (is (= (mask-from-left "1A22" 2) "1AFF"))
+  (is (= (mask-from-left "1A22" 3) "1FFF"))
+  (is (= (mask-from-left "1A22" 4) "FFFF")))
+
+(with-test
+  (defn split-into-simple-ranges
+  "Expect a range. A range is made of a vector with two extrema. Each extremum is an hexadecimal number in a string. Return a vector of simpler ranges."
+  [range]
+  (loop [final []
+         previous (first range)
+         current 1]
+    (let [masked (mask-from-left (first range) current)]
+      (if (< (hex-to-dec masked) (hex-to-dec (last range)))
+        (recur
+         (conj final [previous masked])
+         (dec-to-hex (inc (hex-to-dec masked)))
+         (inc current))
+        (conj final [previous (last range)])))))
+  (is (= (split-into-simple-ranges ["1234" "1999"])
+         [["1234" "123F"] ["1240" "12FF"] ["1300" "1999"]]))
+  (is (= (split-into-simple-ranges ["1234" "2999"])
+         [["1234" "123F"] ["1240" "12FF"] ["1300" "1FFF"] ["2000" "2999"]])))
+
+(defn fun-longest-matching-prefix
+  "Fun way to perform a reduction although in unpracticable for use. Keep in mind you have to test the result: if the whole string b is contained in a then it outputs the length of the prefix. If not, it outputs the longest prefix."
+  [a b]
+  (reduce #(if (= %2 (get a %1))
+            (inc %1)
+            (reduced (subs a 0 %1))) 0 b))
+
+(with-test
+  (defn matching-prefix-length
+  "Return the length of the longest matching prefix for two strings a and b."
+  [a b]
+  (loop [length 0])
+  (reduce #(if (= %2 (get a %1))
+             (inc %1)
+             (reduced %1)) 0 b))
+  (is (= (matching-prefix-length "" "") 0))
+  (is (= (matching-prefix-length "123" "1234") 3))
+  (is (= (matching-prefix-length "1234" "12345") 4)))
+
+(with-test
+  (defn pattern-from-simple-range
+  "Important: range is a vector containing two strings of same length which represent hexadecimal numbers."
+  [range]
+  (let [left (first range)
+        right (second range)]
+    (cond
+     (> (hex-to-dec left) (hex-to-dec right)) (pattern-from-simple-range (reverse range))
+     (= (hex-to-dec left) (hex-to-dec right)) left
+     :else
+     (let [length (apply matching-prefix-length range)
+           a (get left length)
+           b (get right length)
+           pivot (cond
+                  (re-matches #"[0-9]" (str b)) (str "[" a "-" b "]")
+                  (re-matches #"[a-fA-F]" (str a)) (str "[" (clojure.string/lower-case a) "-" (clojure.string/lower-case b) (clojure.string/upper-case a) "-" (clojure.string/upper-case b) "]")
+                  :else (str "[" a "-9a-" (clojure.string/lower-case b) "A-" (clojure.string/upper-case b) "]"))]
+       (str
+        (subs left 0 length)
+        pivot
+        (let [count (- (count left) length 1)]
+          (cond
+           (= count 1) (str "[0-9a-fA-F]")
+           (> count 1) (str "[0-9a-fA-F]{" count "}"))))))))
+  (is (= (simple-pattern-from-range ["2000" "2000"])
+         "2000"))
+  (is (= (simple-pattern-from-range ["2145" "21FF"])
+         "21[4-9a-fA-F][0-9a-fA-F]"))
+  (is (= (simple-pattern-from-range ["2000" "2FFF"])
+         "2[0-9a-fA-F][0-9a-fA-F]{2}"))
+  (is (= (simple-pattern-from-range ["21456" "2FFFF"])
+         "2[1-9a-fA-F][0-9a-fA-F]{3}")))
+
+(with-test
+  (defn range-pattern-from-hex
+  "Draft for Clojure implementation of the algorithm published here:
+  http://utilitymill.com/utility/Regex_For_Range"
+  [hex-start hex-end]
+  ;; First, break into equal length ranges
+  ;; Second, break into ranges that yield simple regexes
+  ;; Turn each range into a regex
+  ;; Collapse adjacent powers of 10
+  ;; Combining the regexes above yields
+  ;; Next we try to factor out common prefixes using a tree
+  ;; Turning the parse tree into a regex yields
+  ;; We choose the shorter one as our result
+  (let [start (str (hex-to-dec hex-start))
+        end (str (hex-to-dec hex-end))]
+    (#(str "^(" % ")$")
+     (reduce
+      #(str %1 (if-not (= %1 "") "|") %2)
+      ""
+      (map pattern-from-simple-range
+           (reduce
+            #(into %1 (split-into-simple-ranges %2))
+            []
+            (equal-length-ranges hex-start hex-end)))))))
+  (is (= (range-pattern-from-hex "0" "0")
+         "^(0)$"))
+  (is (= (range-pattern-from-hex "1" "A")
+         "^([1-9a-aA-A])$"))
+  (is (= (range-pattern-from-hex "10" "21")
+         "^(1[0-9a-fA-F]|2[0-1])$"))
+  (is (= (range-pattern-from-hex "1200" "129E")
+         "^(120[0-9a-fA-F]|12[1-9][0-9a-fA-F])$")))
+
+;; TODO: generate pattern on the fly
+(def block-range
+  {:CJK {:pattern "^(199(6[89]|[7-9][0-9])|[23][0-9]{4}|40([0-8][0-9]{2}|9[0-5][0-9]))$"
+         :hex-range ["4E00" "9FFF"]
+         :name ""}
+   :CJKA {:pattern "^1(3(3(1[2-9]|[2-9][0-9])|[4-9][0-9]{2})|[4-8][0-9]{3}|9([0-8][0-9]{2}|90[0-3]))$"
+          :hex-range ["3400" "4DBF"]
+          :name ""}
+   :CJKB {:pattern "^1(3(1(0(7[2-9]|[89][0-9])|[1-9][0-9]{2})|[2-9][0-9]{3})|[4-6][0-9]{4}|7([0-2][0-9]{3}|3([0-6][0-9]{2}|7([0-8][0-9]|9[01]))))$"
+          :hex-range ["20000" "2A6DF"]
+          :name ""}
+   :CJKC {:pattern "^17(3(8(2[4-9]|[3-9][0-9])|9[0-9]{2})|[4-6][0-9]{3}|7([0-8][0-9]{2}|9([0-7][0-9]|8[0-3])))$"
+          :hex-range ["2A700" "2B73F"]
+          :name ""}
+   :CJKD {:pattern "^17(79(8[4-9]|9[0-9])|8([01][0-9]{2}|20[0-7]))$"
+          :hex-range ["2B740" "2B81F"]
+          :name ""}
+   :CJKE {:pattern "^1(7(8(2(0[89]|[1-9][0-9])|[3-9][0-9]{2})|9[0-9]{3})|8([0-2][0-9]{3}|3([0-8][0-9]{2}|9([0-7][0-9]|8[0-3]))))$"
+          :hex-range ["2B820" "2CEAF"]
+          :name ""}
+   :CJKRS {:pattern "^1(19(0[4-9]|[1-9][0-9])|20([0-2][0-9]|3[01]))$"
+           :hex-range ["2E80" "2EFF"]
+           :name ""}
+   :KR {:pattern "^12(0(3[2-9]|[4-9][0-9])|1[0-9]{2}|2([0-4][0-9]|5[0-5]))$"
+        :hex-range ["2F00" "2FDF"]
+	:name ""}
+   :IDC {:pattern "^122(7[2-9]|8[0-7])$"
+         :hex-range ["2FF0" "2FFF"]
+         :name ""}
+   :CJKSP {:pattern "^12(2(8[89]|9[0-9])|3([0-4][0-9]|5[01]))$"
+           :hex-range ["3000" "303F"]
+           :name ""}
+   :CJKS {:pattern "^127(3[6-9]|[4-7][0-9]|8[0-3])$"
+          :hex-range ["31C0" "31EF"]
+          :name ""}
+   :ECJKLM {:pattern "^1(2[89][0-9]{2}|30([0-4][0-9]|5[0-5]))$"
+            :hex-range ["3200" "32FF"]
+            :name ""}
+   :CJKCo {:pattern "^13(0(5[6-9]|[6-9][0-9])|[12][0-9]{2}|3(0[0-9]|1[01]))$"
+           :hex-range ["3300" "33FF"]
+           :name ""}
+   :CJKCI {:pattern "^6(3(7(4[4-9]|[5-9][0-9])|[89][0-9]{2})|4([01][0-9]{2}|2([0-4][0-9]|5[0-5])))$"
+           :hex-range ["F900" "FAFF"]
+           :name ""}
+   :CJKCF {:pattern "^65(0(7[2-9]|[89][0-9])|10[0-3])$"
+           :hex-range ["FE30" "FE4F"]
+           :name ""}
+   :CJKCIS {:pattern "^65(0(7[2-9]|[89][0-9])|10[0-3])$"
+            :hex-range ["2F800" "2FA1F"]
+            :name ""}})
+
+(def grammar-test
+  (insta/parser
+   (str
+    ;; entry point, default rule
+    "<S> = " (reduce #(str %1 (if-not (= %1 "") " | ") %2)
+                     ""
+                     (map name (keys block-range-patterns)))
+    ";\n"
+    ;; Unicode Sinograph block rules
+    (reduce #(str %1 (if-not (= %1 "") "\n") "<" (name (first %2)) "> = #'" (second %2) "';")
+            ""
+            block-range-patterns))))
+
+(fn []
+  (map name (keys block-range-patterns)))
+
+
 (def definitions
   (str "
   Sep = '\t' | ' '*
@@ -20,58 +278,14 @@
 
   (* Operands *)
   (* Same as Han but with code and without IDC *)
-  <Letter> =  Code | CJK | CJKA | CJKB | CJKC | CJKD | CJKE | CJKRS | KR
-  | CJKSP | CJKS | ECJKLM | CJKCo | CJKCI | CJKCF | CJKCIS
+  <Letter> = " (str "Code |" (clojure.string/replace han-block "| IDC" "")) "
   Code =      #'&[A-Z0-9-]+;' (* for code points*)
   (* As should be defined \\p{Han}. Currently unused *)
-  Han =       CJK | CJKA | CJKB | CJKC | CJKD | CJKE | CJKRS | KR | IDC
-  | CJKSP | CJKS | ECJKLM | CJKCo | CJKCI | CJKCF | CJKCIS
+  Han = " han-block "
 
   (* Ideographs blocks *)
-  <CJK> = " (:CJK blocks-int-range) ";
-  <CJKA> =" (:CJKA blocks-int-range) ";
-  <CJKB> =    #'[20000-2a6df]';         <CJKC> =    #'[2a700-2b73f]'
-  <CJKD> =    #'[2b740-2B81F]';         <CJKE> =    #'[2b820-2ceaf]'
-  <CJKRS> =   #'[2e80-2eff]';           <KR> =      #'[2f00-2fdf]'
-  IDC =       #'[2ff0-2fff]';           <CJKSP> =   #'[3000-303f]'
-  <CJKS> =    #'[31c0-31ef]';           <ECJKLM> =  #'[3200-32ff]'
-  <CJKCo> =   #'[3300-33ff]';           <CJKCI> =   #'[f900-faff]'
-  <CJKCF> =   #'[fe30-fe4f]';           <CJKCIS> =  #'[2f800-2fa1f]'"))
-
-(def blocks-int-range
-  {:CJK #"\b(199(6[89]|[7-9][0-9])|[23][0-9]{4}|40([0-8][0-9]{2}|9[0-5][0-9]))\b"
-   :CJKA #"\b1(3(3(1[2-9]|[2-9][0-9])|[4-9][0-9]{2})|[4-8][0-9]{3}|9([0-8][0-9]{2}|90[0-3]))\b"
-   :CJKB #"\b1(3(1(0(7[2-9]|[89][0-9])|[1-9][0-9]{2})|[2-9][0-9]{3})|[4-6][0-9]{4}|7([0-2][0-9]{3}|3([0-6][0-9]{2}|7([0-8][0-9]|9[01]))))\b"
-   :CJKC #"\b17(3(8(2[4-9]|[3-9][0-9])|9[0-9]{2})|[4-6][0-9]{3}|7([0-8][0-9]{2}|9([0-7][0-9]|8[0-3])))\b"
-   :CJKD #"\b17(79(8[4-9]|9[0-9])|8([01][0-9]{2}|20[0-7]))\b"
-   :CJKE #"\b1(7(8(2(0[89]|[1-9][0-9])|[3-9][0-9]{2})|9[0-9]{3})|8([0-2][0-9]{3}|3([0-8][0-9]{2}|9([0-7][0-9]|8[0-3]))))\b"
-   :CJKRS #"\b1(19(0[4-9]|[1-9][0-9])|20([0-2][0-9]|3[01]))\b"
-   :KR #"\b12(0(3[2-9]|[4-9][0-9])|1[0-9]{2}|2([0-4][0-9]|5[0-5]))\b"
-   :IDC #"\b122(7[2-9]|8[0-7])\b"
-   :CJKSP #"\b12(2(8[89]|9[0-9])|3([0-4][0-9]|5[01]))\b"
-   :CJKS #"\b127(3[6-9]|[4-7][0-9]|8[0-3])\b"
-   :ECJKLM #"\b1(2[89][0-9]{2}|30([0-4][0-9]|5[0-5]))\b"
-   :CJKCo #"\b13(0(5[6-9]|[6-9][0-9])|[12][0-9]{2}|3(0[0-9]|1[01]))\b"
-   :CJKCI #"\b6(3(7(4[4-9]|[5-9][0-9])|[89][0-9]{2})|4([01][0-9]{2}|2([0-4][0-9]|5[0-5])))\b"
-   :CJKCF #"\b65(0(7[2-9]|[89][0-9])|10[0-3])\b"
-   :CJKCIS #"\b65(0(7[2-9]|[89][0-9])|10[0-3])\b"})
-
-(defn dec-to-hex
-  [number]
-  (clojure.string/upper-case (format "%x" number)))
-
-(defn hex-to-dec
-  [string]
-  (let [conversion-table (zipmap
-                          (concat (map char (range 48 58)) (map char (range 65 91)))
-                          (range))
-        string (clojure.string/upper-case string)]
-    (assert (every? #(< (conversion-table %) 16) string))
-    (loop [num string
-           acc 0]
-      (if (seq num)
-        (recur (drop 1 num) (+ (* 16 acc) (get conversion-table (first num))))
-        acc))))
+"
+  (reduce #(str %1 (if-not (= %1 "") "\n") "<" (name (first %2)) "> = #'" (second %2) "';") "" block-range-patterns)))
 
 (with-test
   (defn get-codepoint-from-token
