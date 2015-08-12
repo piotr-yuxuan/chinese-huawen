@@ -15,6 +15,9 @@
   (* Operator arities *)
   <IDC2> =  (Letter|S) (Letter|S);          <IDC3> =  IDC2 (Letter|S)
 
+  <BeginEscape> = #'&(U\+|CDP\-)'
+  <EndEscape> = ';'
+
   (* Operands *)
   (* Same as Han but with code and without IDC *)
   <Letter> =  Code | CJK | CJKA | CJKB | CJKC | CJKD | CJKE | CJKRS | KR
@@ -34,6 +37,83 @@
   <CJKCo> =   #'[\u3300-\u33ff]';           <CJKCI> =   #'[\uf900-\ufaff]'
   <CJKCF> =   #'[\ufe30-\ufe4f]';           <CJKCIS> =  #'[\u2f800-\u2fa1f]'")
 
+(defn dec-to-hex
+  [number]
+  (clojure.string/upper-case (format "%x" number)))
+
+(defn hex-to-dec
+  [string]
+  (let [conversion-table (zipmap
+                          (concat (map char (range 48 58)) (map char (range 65 91)))
+                          (range))
+        string (clojure.string/upper-case string)]
+    (assert (every? #(< (conversion-table %) 16) string))
+    (loop [num string
+           acc 0]
+      (if (seq num)
+        (recur (drop 1 num) (+ (* 16 acc) (get conversion-table (first num))))
+        acc))))
+
+(with-test
+  (defn get-codepoint-from-token
+  "Expect a string made of one token. Not a character to overcome the Java
+  limitation. The token is lousy defined to match &A; then allow easy test."
+  [char-string]
+  (if (re-matches #"&[A-Z0-9\+\-]+;" char-string)
+    (clojure.string/replace char-string #"[&;]" (fn [i] ""))
+    (str "U+" (clojure.string/upper-case (format "%x" (. char-string codePointAt 0))))))
+  (is (= (get-codepoint-from-token "0") "U+30"))
+  (is (= (get-codepoint-from-token "A") "U+41"))
+  (is (= (get-codepoint-from-token "一") "U+4E00"))
+  (is (= (get-codepoint-from-token "𠆢") "U+201A2"))
+  (is (= (get-codepoint-from-token "&CDP-8B7C;") "CDP-8B7C"))
+  (is (= (get-codepoint-from-token "&U+8B7C;") "U+8B7C"))
+  (is (= (get-codepoint-from-token "&A;") "A")))
+
+(with-test
+  (defn get-escaped-from-token
+    [char-string]
+    (str "&" (get-codepoint-from-token char-string) ";"))
+  (is (= (get-escaped-from-token "0") "&U+30;"))
+  (is (= (get-escaped-from-token "A") "&U+41;"))
+  (is (= (get-escaped-from-token "一") "&U+4E00;"))
+  (is (= (get-escaped-from-token "𠆢") "&U+201A2;")) ;; fucking bitch
+  (is (= (get-escaped-from-token "&CDP-8B7C;") "&CDP-8B7C;"))
+  (is (= (get-escaped-from-token "&U+8B7C;") "&U+8B7C;"))
+  (is (= (get-escaped-from-token "&A;") "&A;")))
+
+(with-test
+  (defn get-token-from-codepoint
+    [codepoint]
+    (if (re-matches #"U\+[A-Z0-9]+" codepoint)
+      (String. (java.lang.Character/toChars (hex-to-dec (clojure.string/replace-first codepoint #"U\+" ""))))
+      (str "&" codepoint ";")))
+  (is (= (get-token-from-codepoint "U+30") "0"))
+  (is (= (get-token-from-codepoint "U+41") "A"))
+  (is (= (get-token-from-codepoint "U+4E00") "一"))
+  (is (= (get-token-from-codepoint "U+201A2") "𠆢"))
+  (is (= (get-token-from-codepoint "CDP-8B7C") "&CDP-8B7C;"))
+  (is (= (get-token-from-codepoint "U+8B7C") "譼"))
+  (is (= (get-token-from-codepoint "A") "&A;")))
+
+(with-test
+  (defn get-token-from-escaped
+    [escaped]
+    (if (re-matches #"&U\+[A-Z0-9]+;" escaped)
+      (String. (java.lang.Character/toChars
+                (hex-to-dec
+                 (reduce #(clojure.string/replace-first %1 %2 "")
+                         escaped
+                         [#"&U\+" #";"]))))
+      escaped))
+  (is (= (get-token-from-escaped "&U+30;") "0"))
+  (is (= (get-token-from-escaped "&U+41;") "A"))
+  (is (= (get-token-from-escaped "&U+4E00;") "一"))
+  (is (= (get-token-from-escaped "&U+201A2;") "𠆢"))
+  (is (= (get-token-from-escaped "&CDP-8B7C;") "&CDP-8B7C;"))
+  (is (= (get-token-from-escaped "&U+8B7C;") "譼"))
+  (is (= (get-token-from-escaped "&A;") "&A;")))
+
 (with-test
   (def from-ids-to-tree
   "Grammar for the Ideographic Description Sequence"
@@ -45,7 +125,7 @@
     "<Code> =   #'&[A-Z0-9-]+;' (* for code points*)")))
   ;; Basic
   (is (= (from-ids-to-tree "兑") '("兑")))
-  (is (= (ids-tree "⿰飠兑") '([:⿰ "飠" "兑"])))
+  (is (= (from-ids-to-tree "⿰飠兑") '([:⿰ "飠" "兑"])))
   ;; Only works for single-rooted expression
   (is (= (class (from-ids-to-tree "飠兑")) instaparse.gll.Failure))
   ;; Nested IDS and codepoints
@@ -107,7 +187,7 @@
 
 (def example-map
   {"䬽" {:codepoint "U+4B3D"
-         :ids "⿰飠兑"}
+         :ids "⿰兑兑"}
    "飠" {:codepoint "U+98E0"
          :ids "⿱𠆢&CDP-8C42;"}
    "兑" {:codepoint "U+5151"
@@ -139,12 +219,7 @@
   will fallback to itself. þ todo: pass the map already translated to next
   iteration and only iterate on the new tokens."
   [direction ids map]
-  (let [final (reduce (fn [current token]
-                        (clojure.string/replace current
-                                                (first token)
-                                                (second token)))
-                      ids
-                      (reduce (fn [mapper token]
+  (let [translation (reduce (fn [mapper token]
                                 (assoc mapper
                                   (case direction
                                     :expand token
@@ -159,11 +234,17 @@
                               {}
                               (case direction
                                 :expand (from-ids-to-token-set ids)
-                                :collapse (keys map)
-                                )))]
-    (if-not (= ids final)
-      (ids-toggle direction final map)
-      final)))
+                                :collapse (keys map)))]
+    (println translation)
+    (let [final (reduce (fn [current token]
+                        (clojure.string/replace current
+                                                (first token)
+                                                (second token)))
+                      ids
+                      translation)]
+      (if-not (= ids final)
+        (ids-toggle direction final map)
+        final))))
   ;; Basic
   (is (= "&A;"
          (ids-toggle :expand "&A;"
@@ -201,7 +282,37 @@
                       "&C;" {:ids "⿳&D;&E;&F;"}
                       "&D;" {:ids "&D;"}
                       "&E;" {:ids "&E;"}
-                      "&F;" {:ids "&F;"}}))))
+                      "&F;" {:ids "&F;"}})))
+  (is (= "⿱口⿰丿乚"
+         (ids-toggle :expand "兄"
+                     {"䬽" {:codepoint "U+4B3D" :ids "⿰飠兑"}
+                      "飠" {:codepoint "U+98E0" :ids "⿱𠆢&CDP-8C42;"}
+                      "兑" {:codepoint "U+5151" :ids "⿱丷兄"}
+                      "𠆢" {:codepoint "U+201A2" :ids "𠆢"}
+                      "&CDP-8C42;" {:codepoint "CDP-8C42" :ids "⿱丶&CDP-8B7C;"}
+                      "丷" {:codepoint "U+4E37" :ids "丷"}
+                      "兄" {:codepoint "U+5144" :ids "⿱口儿"}
+                      "丶" {:codepoint "U+4E36" :ids "丶"}
+                      "&CDP-8B7C;" {:codepoint "CDP-8B7C" :ids "&CDP-8B7C;"}
+                      "口" {:codepoint "U+53E3" :ids "口"}
+                      "儿" {:codepoint "U+513F" :ids "⿰丿乚"}
+                      "丿" {:codepoint "U+4E3F" :ids "丿"}
+                      "乚" {:codepoint "U+4E5A" :ids "乚"}})))
+  (is (= "⿱口⿰丿乚"
+         (ids-toggle :expand "䬽"
+                     {"䬽" {:codepoint "U+4B3D" :ids "⿰飠兑"}
+                      "飠" {:codepoint "U+98E0" :ids "⿱𠆢&CDP-8C42;"}
+                      "兑" {:codepoint "U+5151" :ids "⿱丷兄"}
+                      "𠆢" {:codepoint "U+201A2" :ids "𠆢"}
+                      "&CDP-8C42;" {:codepoint "CDP-8C42" :ids "⿱丶&CDP-8B7C;"}
+                      "丷" {:codepoint "U+4E37" :ids "丷"}
+                      "兄" {:codepoint "U+5144" :ids "⿱口儿"}
+                      "丶" {:codepoint "U+4E36" :ids "丶"}
+                      "&CDP-8B7C;" {:codepoint "CDP-8B7C" :ids "&CDP-8B7C;"}
+                      "口" {:codepoint "U+53E3" :ids "口"}
+                      "儿" {:codepoint "U+513F" :ids "⿰丿乚"}
+                      "丿" {:codepoint "U+4E3F" :ids "丿"}
+                      "乚" {:codepoint "U+4E5A" :ids "乚"}}))))
 
 (with-test
   (defn tree-toggle
@@ -249,3 +360,34 @@
                       "&D;" {:ids "&D;"}
                       "&E;" {:ids "&E;"}
                       "&F;" {:ids "&F;"}}))))
+
+;; Well, for now on we device to address the character issue. It comes from the JVM and the way Clojure directly refers to characters. I believe there must be a way for macros to solve it gracefully but anyway, the example-map variable previously defined is somewhat redundant. So let's define struct華文.
+;; struct華文 is less redundant and handle multiple versions. More over it circumvents the Unicode issue and isolates it in the side-effect display function.
+;; It becomes less easy for the programmer to know which character they manipulate because of the higher abstraction.
+(def struct華文
+  {"䬽" {:version {}
+         :ids "⿰飠兑"}
+   "飠" {:version {}
+         :ids "⿱𠆢&CDP-8C42;"}
+   "兑" {:version {}
+         :ids "⿱丷兄"}
+   "𠆢" {:version {}
+         :ids "𠆢"}
+   "&CDP-8C42;" {:version {}
+                 :ids "⿱丶&CDP-8B7C;"}
+   "丷" {:version {}
+         :ids "丷"}
+   "兄" {:version {}
+         :ids "⿱口儿"}
+   "丶" {:version {}
+         :ids "丶"}
+   "&CDP-8B7C;" {:version {}
+                 :ids "&CDP-8B7C;"}
+   "口" {:version {}
+         :ids "口"}
+   "儿" {:version {}
+         :ids "⿰丿乚"}
+   "丿" {:version {}
+         :ids "丿"}
+   "乚" {:version {}
+         :ids "乚"}})

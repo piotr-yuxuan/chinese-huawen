@@ -4,6 +4,10 @@ pvt
 java/parser/src/main/java/com/piotr2b/chinesehuawen/entities
 java/parser/dependency-reduced-pom.xml
 target/
+*.nrepl-port
+.idea/
+*.#lexer.clj
+*.iml
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
