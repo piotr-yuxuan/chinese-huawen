@@ -1,3 +1,4 @@
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (ns 華文.parser.kawabata
   (:require [instaparse.core :as insta])
   (:use clojure.test))
@@ -16,24 +17,11 @@
     (do (println "Not able to find file")
         (fn [i] nil))))
 
-;; Presenter or splitter is level 1. This could be seen as a scanner.
-(defn line-presenter
-  "Split and return the i-th line"
-  [i]
-  (clojure.string/split (nth file-reader i) #"\t"))
-(deftest line-presenter-test
-  (let [expected "OK";; "U+4E0E\t与\t⿹&CDP-8BBF;一[GTKV]\t⿻&CDP-8BBF;一[J]"
-        nth (fn [a b] (str expected "O"))]
-    (is (= 4 (+ 2 2)))
-    (is (= expected (line-presenter 15)))
-    (is (= 7 (+ 3 4)))))
-
-(with-test
-  (defn line-splitter
-    [string]
-    ))
 (def definitions
-  "    (* Operators *)
+  "
+  Sep = '\t' | ' '*
+
+  (* Operators *)
   ⿰ = <'⿰'> IDC2;             ⿱ = <'⿱'> IDC2;             ⿴ = <'⿴'> IDC2
   ⿵ = <'⿵'> IDC2;             ⿶ = <'⿶'> IDC2;             ⿷ = <'⿷'> IDC2
   ⿸ = <'⿸'> IDC2;             ⿹ = <'⿹'> IDC2;             ⿺ = <'⿺'> IDC2
@@ -62,20 +50,70 @@
   <CJKCF> =   #'[\ufe30-\ufe4f]';           <CJKCIS> =  #'[\u2f800-\u2fa1f]'")
 
 (with-test
-  (def grammar
-  "Formal context-free grammar for the file ids.txt."
+  (def file-grammar
+  "Must return three columns, whatever is in the third one."
   (insta/parser
    (str
-    "<S> =       C <Sep> Letter <Sep> (Letter | (Variant <Sep*>)+ | Form)
-     <C> = #'[A-Z0-9\\-\\+]+'
-     (* <S> =       Letter | (Variant <Sep*>)+ | Form *)
-     Sep =       ('\t' | ' ')+
-     Variant =   Form Id* (* needed because <S> *)
-     <Form> =    ⿰ | ⿱ | ⿴ | ⿵ | ⿶ | ⿷ | ⿸ | ⿹ | ⿺ | ⿻ | ⿲ | ⿳
-     Id =        <'['> #'[A-Z]'+ <']'> (* Assuming one letter per version *)"
+    "<S> = Codepoint  <('\t' | ' ')+> Letter  <('\t' | ' ')+> #'.+'
+     <Codepoint> = #'[A-Z0-9\\-\\+]+'"
     definitions)))
-  (is (= (grammar "U+2E84\t⺄\t⺄") '("U+2E84" "⺄" "⺄")))
-  (is (= (grammar "U+70EB\t烫\t⿱汤火") '("U+70EB" "烫" [:⿱ "汤" "火"]))))
+  (is (= (file-grammar "U+2E86\t⺆\t⺆") '("U+2E86" "⺆" "⺆")))
+  (is (= (file-grammar "U+4EB4	亴\t⿳&CDP-8C4D;土九[GK]\t⿳&CDP-8C4D;&CDP-8BF1;九[T]")
+         '("U+4EB4" "亴" "⿳&CDP-8C4D;土九[GK]\t⿳&CDP-8C4D;&CDP-8BF1;九[T]"))))
+
+{:codepoint :letter :ids}
+
+(with-test
+  (def split-ids-grammar
+  "Must return three columns, whatever is in the third one."
+  (insta/parser
+   (str
+    "<S> = (Version <Sep*>)+
+     Version = Ids Id*
+     <Id>  = <'['> #'[A-Z]'+ <']'> (* Assuming one letter per version *)
+     Sep = '\t' | ' '
+     <Ids> = #'((&[A-Z0-9-]+;)|[\u4e00-\u9fff\u3400-\u4dbf\u20000-\u2a6df\u2a700-\u2b73f\u2b740-\u2B81F\u2b820-\u2ceaf\u2e80-\u2eff\u2f00-\u2fdf\u2ff0-\u2fff\u3000-\u303f\u31c0-\u31ef\u3200-\u32ff\u3300-\u33ff\uf900-\ufaff\ufe30-\ufe4f\u2f800-\u2fa1f])+'")))
+  ;; Without version, should not be altered.
+  (is (= (split-ids-grammar "竹⿰氵") '("竹⿰氵")))
+  ;; With versions, versions should be split apart.
+  (is (= (split-ids-grammar "竹⿰氵[T]\t⿺寸丶[JKG]")
+         '("竹⿰氵[T]" "⿺寸丶[JKG]"))))
+
+(with-test
+  (def step-by-step-grammar
+  "Must return three columns, whatever is in the third one."
+  (insta/parser
+   (str
+    "<S> = IDC2 | IDC3
+     Version = Ids Id*
+     <Id>  = <'['> #'[A-Z]'+ <']'> (* Assuming one letter per version *)
+     Sep = '\t' | ' '
+     <Ids> = #'((&[A-Z0-9-]+;)|[\u4e00-\u9fff\u3400-\u4dbf\u20000-\u2a6df\u2a700-\u2b73f\u2b740-\u2B81F\u2b820-\u2ceaf\u2e80-\u2eff\u2f00-\u2fdf\u2ff0-\u2fff\u3000-\u303f\u31c0-\u31ef\u3200-\u32ff\u3300-\u33ff\uf900-\ufaff\ufe30-\ufe4f\u2f800-\u2fa1f])+'"
+    definitions)))
+  ;; Without version, should not be altered.
+  (is (= (split-ids-grammar "竹⿰氵") '("竹⿰氵")))
+  ;; With versions, versions should be split apart.
+  (is (= (split-ids-grammar "竹⿰氵[T]\t⿺寸丶[JKG]")
+         '("竹⿰氵[T]" "⿺寸丶[JKG]"))))
+
+;; "<S> = (Version <Sep*>)+
+;;     Version = Ids Id*
+;;     Id  = <'['> #'[A-Z]'+ <']'> (* Assuming one letter per version *)
+;;     Sep = '\t' | ' '
+;; Ids = #'((&[A-Z0-9-]+;)|[\u4e00-\u9fff\u3400-\u4dbf\u20000-\u2a6df\u2a700-\u2b73f\u2b740-\u2B81F\u2b820-\u2ceaf\u2e80-\u2eff\u2f00-\u2fdf\u2ff0-\u2fff\u3000-\u303f\u31c0-\u31ef\u3200-\u32ff\u3300-\u33ff\uf900-\ufaff\ufe30-\ufe4f\u2f800-\u2fa1f])+'"
+
+(defn harden-grammar
+  "Stop every upon single grammatical error"
+  [i j grammar]
+  (loop [current i
+         look-up (level-0 path)]
+    (if (< current j)
+      (let [result (grammar (look-up current))]
+        (if (= instaparse.gll.Failure (class result))
+          (do (println (look-up current))
+              current)
+          (recur (inc current)
+                 look-up))))))
 
 (with-test
   (defn assoc-one-by-one
@@ -189,8 +227,3 @@
              (= 3 (count splitted-line)))
       (first (grammar (nth splitted-line 2)))
       (println (str "can't be parsed: " (first splitted-line))))))
-
-(defn file-crawler
-  "Crawl the file"
-  []
-  "lol")
