@@ -8,6 +8,7 @@ target/
 .idea/
 *.#lexer.clj
 *.iml
+.~lock.*#
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
