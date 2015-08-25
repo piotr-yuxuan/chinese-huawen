@@ -245,7 +245,7 @@
     mano/definitions)))
 
 (with-test
-  (defn lexer
+  (defn escaped-lexer
     [ids-string]
     (selected-grammar
      (apply str
@@ -253,13 +253,25 @@
                    %
                    mano/common-rules-set)
                  (mano/tokens-from-string ids-string mano/re-codepoint)))))
-  (is (= (lexer "⿰丿乚") '([:⿰ "&U+4E3F;" "&U+4E5A;"])))
-  (is (= (lexer "⿰𠆢乚") '([:⿰ "&U+201A2;" "&U+4E5A;"])))
-  (is (= (lexer "⿱口⿰丿乚") '([:⿰ "&U+201A2;" "&U+4E5A;"])))
+  (is (= (escaped-lexer "⿰丿乚") '([:⿰ "&U+4E3F;" "&U+4E5A;"])))
+  (is (= (escaped-lexer "⿰𠆢乚") '([:⿰ "&U+201A2;" "&U+4E5A;"])))
+  (is (= (escaped-lexer "⿱口⿰丿乚") '([:⿰ "&U+201A2;" "&U+4E5A;"])))
+  (is (= (escaped-lexer "⿰⿱𠆢⿳丶&CDP-8B7C;𠆢⿱丷⿱口⿰丿乚")
+         '([:⿰ [:⿱ "&U+201A2;" [:⿳ "&U+4E36;" "&CDP-8B7C;" "&U+201A2;"]]
+            [:⿱ "&U+4E37;" [:⿱ "&U+53E3;" [:⿰ "&U+4E3F;" "&U+4E5A;"]]]]))))
+
+;; We consider sinographs and escaped tokens to be equivalent although the later representation is easier to be dealt with. We can easily get dereferenced tree:
+
+(with-test
+  (def lexer
+    #((comp mano/deref-tree escaped-lexer) %))
+  (is (= (lexer "⿰丿乚") '([:⿰ "丿" "乚"])))
+  (is (= (lexer "⿰𠆢乚") '([:⿰ "𠆢" "乚"])))
+  (is (= (lexer "⿱口⿰丿乚") '([:⿱ "口" [:⿰ "丿" "乚"]])))
   (is (= (lexer "⿰⿱𠆢⿳丶&CDP-8B7C;𠆢⿱丷⿱口⿰丿乚")
          '([:⿰ [:⿱ "&U+201A2;" [:⿳ "&U+4E36;" "&CDP-8B7C;" "&U+201A2;"]]
             [:⿱ "&U+4E37;" [:⿱ "&U+53E3;" [:⿰ "&U+4E3F;" "&U+4E5A;"]]]]))))
 
 ;; and finally, we'll be done for this part once we'll have moved ids toggling
 ;; facilities to the escaped standard. By the way, toggling functions are way
-;; two long and very similar not to be merged into a single generic one.
+;; two long and too similar not to be merged into a single generic one.

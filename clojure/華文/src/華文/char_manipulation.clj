@@ -3,7 +3,7 @@
             [華文.range-pattern :as range])
   (:use clojure.test))
 
-(declare definitions)
+(declare definitions ids-to-tree)
 
 (def code-escape
   "&")
@@ -201,6 +201,17 @@
   (is (= (deref-escaped "&A;") "&A;")))
 
 (with-test
+  (def deref-tree
+    #(cond (keyword? %) %
+           (coll? %) ((cond (vector? %) vec
+                            :else identity)
+                      (map deref-tree %))
+           :else (deref-escaped %)))
+  (is (= (deref-tree '([:⿱ "&U+53E3;"
+                        [:⿰ "&U+201A2;" "&U+4E5A;"]]))
+         '([:⿱ "口" [:⿰ "𠆢" "乚"]]))))
+
+(with-test
   (defn escape-tree-set
     [ids-tree]
     (reduce #(into %1 (cond (keyword? %2) (list (name %2))
@@ -284,9 +295,9 @@
              #(contains? (set rules-to-append) (first %))
              range-map))))
   (is (= (print-rules [:A :B]
-                       :kw
-                       {:A {:kw ["U+10" "U+20"]}
-                        :B {:kw ["U+30" "U+40"]}})
+                      :kw
+                      {:A {:kw ["U+10" "U+20"]}
+                       :B {:kw ["U+30" "U+40"]}})
          (str "\n<A> = #\"&(U\\+|CDP\\-)(1[0-9a-fA-F]|20);\";"
               "\n<B> = #\"&(U\\+|CDP\\-)(3[0-9a-fA-F]|40);\";\n"))))
 
@@ -316,11 +327,11 @@
 
 (with-test
   (def ids-to-tree
-    "Grammar for the Ideographic Description Sequence"
-    (insta/parser
-     (str
-      "<S> = Letter | Form"
-      definitions)))
+  "Grammar for the Ideographic Description Sequence"
+  (insta/parser
+   (str
+    "<S> = Letter | Form"
+    definitions)))
   ;; Basic
   (is (= (ids-to-tree "兑") '("兑")))
   (is (= (ids-to-tree "⿰飠兑") '([:⿰ "飠" "兑"])))

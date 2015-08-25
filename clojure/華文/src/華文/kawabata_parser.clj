@@ -61,8 +61,6 @@
   (is (= (file-grammar "U+4EB4	亴\t⿳&CDP-8C4D;土九[GK]\t⿳&CDP-8C4D;&CDP-8BF1;九[T]")
          '("U+4EB4" "亴" "⿳&CDP-8C4D;土九[GK]\t⿳&CDP-8C4D;&CDP-8BF1;九[T]"))))
 
-{:codepoint :letter :ids}
-
 (with-test
   (def split-ids-grammar
   "Must return three columns, whatever is in the third one."

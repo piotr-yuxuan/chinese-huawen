@@ -25,7 +25,7 @@
   [number power]
   (reduce * (repeat power number)))
 
-(defn power-extrema
+(defn- power-extrema
   "Helper function for range-extrema, see its doc."
   [power direction]
   (cond
@@ -33,7 +33,7 @@
    (= direction :down) (dec-to-hex (if (= power 0) 0 (pow 16 power)))))
 
 (with-test
-  (defn range-extrema
+  (defn- range-extrema
   "Initial is an extrema. Return an extrema in the given direction with the same
   digit number. Direction can be :up or :down."
   [initial direction]
@@ -46,7 +46,7 @@
   (is (= (range-extrema "15" :down) "10")))
 
 (with-test
-  (defn range-full
+  (defn- range-full
   "Take as parameter two (decimal) integers and return hexadecimal ranges
   spanning over a power of 16. Power of 16 are from min-range (included) to
   max-range (included)."
@@ -63,7 +63,7 @@
   (is (= (range-full 2 3) [["100" "FFF"] ["1000" "FFFF"]])))
 
 (with-test
-  (defn equal-length-ranges
+  (defn- equal-length-ranges
   "Expect two strings of hex. Return sorted vector of ranges."
   [start end]
   (cond
@@ -83,7 +83,7 @@
          [["11" "FF"] ["100" "FFF"] ["1000" "8500"]])))
 
 (with-test
-  (defn mask-from-left
+  (defn- mask-from-left
   "Number is an hexadecimal number put into a string. Extant is the size of the
   mask from the left. Extant shoudln't be strictly greater than the `number`
   number of digits."
@@ -96,7 +96,7 @@
   (is (= (mask-from-left "1A22" 4) "FFFF")))
 
 (with-test
-  (defn split-into-simple-ranges
+  (defn- split-into-simple-ranges
   "Expect a range. A range is made of a vector with two extrema. Each extremum
   is an hexadecimal number in a string. Return a vector of simpler ranges."
   [range]
@@ -115,7 +115,7 @@
   (is (= (split-into-simple-ranges ["1234" "2999"])
          [["1234" "123F"] ["1240" "12FF"] ["1300" "1FFF"] ["2000" "2999"]])))
 
-(defn fun-longest-matching-prefix
+(defn- fun-longest-matching-prefix
   "Fun way to perform a reduction although in unpracticable for use. Keep in
   mind you have to test the result: if the whole string b is contained in a
   then it outputs the length of the prefix. If not, it outputs the longest
@@ -126,7 +126,7 @@
             (reduced (subs a 0 %1))) 0 b))
 
 (with-test
-  (defn matching-prefix-length
+  (defn- matching-prefix-length
   "Return the length of the longest matching prefix for two strings a and b."
   [a b]
   (loop [length 0])
@@ -138,7 +138,7 @@
   (is (= (matching-prefix-length "1234" "12345") 4)))
 
 (with-test
-  (defn pattern-from-simple-range
+  (defn- pattern-from-simple-range
   "Important: range is a vector containing two strings of same length which
   represent hexadecimal numbers."
   [range]
@@ -188,14 +188,16 @@
   ;; We choose the shorter one as our result
   (let [start (str (hex-to-dec hex-start))
         end (str (hex-to-dec hex-end))]
-    (reduce
-     #(str %1 (if-not (= %1 "") "|") %2)
-     ""
-     (map pattern-from-simple-range
-          (reduce
-           #(into %1 (split-into-simple-ranges %2))
-           []
-           (equal-length-ranges hex-start hex-end))))))
+    (str "("
+         (reduce
+          #(str %1 (if-not (= %1 "") "|") %2)
+          ""
+          (map pattern-from-simple-range
+               (reduce
+                #(into %1 (split-into-simple-ranges %2))
+                []
+                (equal-length-ranges hex-start hex-end))))
+         ")")))
   (is (= (range-pattern-from-hex "0" "0")
          "0"))
   (is (= (range-pattern-from-hex "1" "A")
