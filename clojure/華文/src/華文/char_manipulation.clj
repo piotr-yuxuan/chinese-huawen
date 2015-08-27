@@ -3,7 +3,7 @@
             [華文.range-pattern :as range])
   (:use clojure.test))
 
-(declare definitions ids-to-tree)
+(declare definitions)
 
 (def code-escape
   "&")
@@ -55,8 +55,9 @@
             :name "CJK Compatibility Ideographs Supplement"}})
 
 (with-test
-  (defn block-names
-  "Generate a string of possible forms for a grammar. The default beaviour when an item must be both included and removed is to keep it."
+  (defn- block-names
+  "Generate a string of possible forms for a grammar. The default beaviour when
+  an item must be both included and removed is to keep it."
   [keys add except]
   (reduce #(str %1 (if-not (= "" %1) " | ") (name %2)) ""
           (clojure.set/union
@@ -87,7 +88,9 @@
   [char-string]
   (if (re-matches (re-pattern re-codepoint) char-string)
     (clojure.string/replace char-string #"[&;]" (fn [i] ""))
-    (str "U+" (clojure.string/upper-case (format "%x" (. char-string codePointAt 0))))))
+    (str "U+"
+         (clojure.string/upper-case (format "%x"
+                                            (. char-string codePointAt 0))))))
   (is (= (token-to-codepoint "0") "U+30"))
   (is (= (token-to-codepoint "A") "U+41"))
   (is (= (token-to-codepoint "一") "U+4E00"))
@@ -112,6 +115,12 @@
   (is (= (escape-token "&CDP-8B7C;") "&CDP-8B7C;"))
   (is (= (escape-token "&U+8B7C;") "&U+8B7C;"))
   (is (= (escape-token "&U+A;") "&U+A;")))
+
+(with-test
+  (defn escape-string
+    "Beware this will escape each single character. Consider using a token set."
+    [string]
+    (map #((comp escape-token str) %) string)))
 
 (with-test
   (defn select-regeces
@@ -141,6 +150,19 @@
                          {:A {:kw ["U+10" "U+20"]}
                           :B {:kw ["U+30" "U+40"]}})
          #{#"&(U\+|CDP\-)(1[0-9a-fA-F]|20);"})))
+
+(with-test
+  (defn aggregate-regeces
+  "Not pure. Shall I?
+  Underoptimised"
+  [selected-regeces]
+  (reduce #(str % (if-not (= % "") "|") %2)
+          ""
+          (select-regeces selected-regeces :range block-ranges)))
+  (is (= (aggregate-regeces #{:IDC :CJKB})
+         (str "&(U\\+|CDP\\-)((2000[0-9a-fA-F]|200[1-9a-fA-F][0-9a-fA-F]"
+              "|20[1-9a-fA-F][0-9a-fA-F]{2}|2[1-9a-aA-A][0-9a-fA-F]{3}));"
+              "|&(U\\+|CDP\\-)((2FF[0-9a-fA-F]));"))))
 
 (def common-rules-set
   (select-regeces (disj (set (keys block-ranges)) :IDC)
@@ -201,79 +223,6 @@
   (is (= (deref-escaped "&A;") "&A;")))
 
 (with-test
-  (def deref-tree
-    #(cond (keyword? %) %
-           (coll? %) ((cond (vector? %) vec
-                            :else identity)
-                      (map deref-tree %))
-           :else (deref-escaped %)))
-  (is (= (deref-tree '([:⿱ "&U+53E3;"
-                        [:⿰ "&U+201A2;" "&U+4E5A;"]]))
-         '([:⿱ "口" [:⿰ "𠆢" "乚"]]))))
-
-(with-test
-  (defn escape-tree-set
-    [ids-tree]
-    (reduce #(into %1 (cond (keyword? %2) (list (name %2))
-                            (string? %2) (list %2)
-                            (char? %2) (list (str %2))
-                            (vector? %2) (escape-tree-set (list %2))
-                            :else (list %2)))
-            #{} (#(if (coll? %) % (list %)) (first ids-tree))))
-  (is (= (escape-tree-set '("&CDP-8C42;")) #{"&CDP-8C42;"}))
-  (is (= (escape-tree-set '("兄")) #{"兄"}))
-  (is (= (escape-tree-set '([:⿻ "廿" "丙"])) #{"⿻" "廿" "丙"}))
-  (is (= (escape-tree-set '([:⿳ "廿" [:⿻ "丙" [:⿱ "一" "内"]]
-                             [:⿱ "&CDP-85F0;" "一"]]))
-         #{"⿳" "⿻" "一" "内" "⿱" "廿" "丙" "&CDP-85F0;"})))
-
-(with-test
-  (defn tokens-from-string
-  "Beware positive and the negation of cuntrapositive not to overlap. Arguments are regular expressions."
-  ([string]
-   (tokens-from-string string #"."))
-  ([string positive]
-   (tokens-from-string string positive positive))
-  ([string positive contrapositive]
-   ((insta/parser
-     (str "<S> = (Letter | Else)*"
-          "<Letter> = " (-> (str "^(?!" contrapositive "$).")
-                            re-pattern
-                            print-str)
-          "<Else> = " (-> positive
-                          str
-                          re-pattern
-                          print-str)))
-    string)))
-  (is (= (tokens-from-string
-          "⿳&CDP-8C4D;&CDP-8BF1;九"
-          #"&(U\+|CDP\-)[0-9a-zA-Z]+;")
-         '("⿳" "&CDP-8C4D;" "&CDP-8BF1;" "九"))))
-
-(with-test
-  (defn flatten-tree
-    [field]
-    (reduce #(str %1 (cond (keyword? %2) (name %2)
-                           (string? %2) %2
-                           (vector? %2) (flatten-tree (list %2))
-                           :else (str %2)))
-            "" (first field)))
-  (is (= (flatten-tree '([:⿻ "廿" "丙"])) "⿻廿丙"))
-  (is (= (flatten-tree '("兑")) "兑"))
-  (is (= (flatten-tree '([:⿳ "廿" [:⿻ "丙" [:⿱ "一" "内"]]
-                          [:⿱ "&CDP-85F0;" "一"]]))
-         "⿳廿⿻丙⿱一内⿱&CDP-85F0;一")))
-
-(with-test
-  (def escape-ids-set
-    (comp escape-tree-set ids-to-tree))
-  (is (= (escape-ids-set "&CDP-8C42;") #{"&CDP-8C42;"}))
-  (is (= (escape-ids-set "兑") #{"兑"}))
-  (is (= (escape-ids-set "⿻廿丙") #{"⿻" "廿" "丙"}))
-  (is (= (escape-ids-set "⿳廿⿻丙⿱一内⿱&CDP-85F0;一")
-         #{"⿳" "⿻" "一" "内" "⿱" "廿" "丙" "&CDP-85F0;"})))
-
-(with-test
   (defn print-rules
   "Expect a collection of keywords, a map of maps and a keyword. Inner maps
   must bind the specified keyword to a vector of range. See tests for examples."
@@ -324,31 +273,3 @@
 
   (* Ideographs blocks *)"
   (print-rules (keys block-ranges) :range block-ranges)))
-
-(with-test
-  (def ids-to-tree
-  "Grammar for the Ideographic Description Sequence"
-  (insta/parser
-   (str
-    "<S> = Letter | Form"
-    definitions)))
-  ;; Basic
-  (is (= (ids-to-tree "兑") '("兑")))
-  (is (= (ids-to-tree "⿰飠兑") '([:⿰ "飠" "兑"])))
-  ;; Only works for single-rooted expression
-  (is (= (class (ids-to-tree "飠兑")) instaparse.gll.Failure))
-  ;; Nested IDS and codepoints
-  (is (= (ids-to-tree "⿰⿱一⿵冂丶⿱一⿵冂丶")
-         '([:⿰ [:⿱ "一" [:⿵ "冂" "丶"]] [:⿱ "一" [:⿵ "冂" "丶"]]])))
-  (is (= (ids-to-tree "⿰一⿵冂丶")
-         '([:⿰ "一" [:⿵ "冂" "丶"]])))
-  (is (= (ids-to-tree "⿻廿丙")
-         '([:⿻ "廿" "丙"])))
-  (is (= (ids-to-tree "⿳&CDP-8C4D;&CDP-8BF1;九")
-         '([:⿳ "&CDP-8C4D;" "&CDP-8BF1;" "九"])))
-  (is (= (ids-to-tree "⿳廿⿻丙⿱一内⿱&CDP-85F0;一")
-         '([:⿳ "廿" [:⿻ "丙" [:⿱ "一" "内"]] [:⿱ "&CDP-85F0;" "一"]]))))
-
-(map deref-escaped
-     (map escape-token
-          (tokens-from-string "⿳&CDP-8C4D;𠆢内" #"&(U\+|CDP\-)[0-9a-zA-Z]+;")))

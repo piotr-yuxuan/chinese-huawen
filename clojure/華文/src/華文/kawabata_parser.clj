@@ -1,6 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (ns 華文.parser.kawabata
-  (:require [instaparse.core :as insta])
+  (:require [instaparse.core :as insta]
+            [華文.ids-manipulation :as im]
+            [華文.char-manipulation :as cm])
   (:use clojure.test))
 
 ;; This is the parser file. As I don't know yet how to structure the logic,
@@ -10,12 +12,66 @@
 ;; Example of args
 (def path "../../data/ids/ids.txt")
 
-(defn level-0
-  [path]
-  (if (.exists (clojure.java.io/as-file path))
-    (fn [i] (nth (line-seq (clojure.java.io/reader path)) i))
-    (do (println "Not able to find file")
-        (fn [i] nil))))
+(with-test
+  (defn level-0
+    [path]
+    (if (.exists (clojure.java.io/as-file path))
+      (fn [i] (nth (line-seq (clojure.java.io/reader path)) i))
+      (do (println "Not able to find file")
+          (fn [i] nil))))
+  ;; I acknowledge this test is absolutely not pure. Just take it to give an
+  ;; idea how to use it.
+  (is (= ((level-0 path) 4)
+         "U+2E80\t⺀\t⿱丶丶")))
+
+;; Level 1.
+(with-test
+  (defn version-from-ids
+  "Return nil if no versions are specified, otherwise a list of versions.
+  It can be factorised to a more elegant single regular expression but I'm not
+  that skilled yet :/"
+  [ids-string]
+  (if-let [chunk (re-find #"\[.+\]"
+                          ids-string)]
+    (re-seq #"[a-zA-Z]"
+            chunk)))
+  (is (= (version-from-ids "⿳&CDP-8C4D;土九[GK]") '("G" "K")))
+  (is (= (version-from-ids "⿳&CDP-8C4D;土九") nil)))
+
+(with-test
+  (defn map-ids-to-version
+    [versioned-ids]
+    (reduce #(assoc %
+               (keyword %2)
+               (clojure.string/replace versioned-ids #"\[.+\]" ""))
+            {}
+            (apply list (version-from-ids versioned-ids))))
+  (is (= (map-ids-to-version "⿳&CDP-8C4D;土九[GK]") {:G "⿳&CDP-8C4D;土九", :K "⿳&CDP-8C4D;土九"})))
+
+(with-test
+  (defn level-1
+  "Container is the container to fill, level-0-output it the row returned by the
+  eponymous function"
+  [container level-0-function]
+  (fn [row-number]
+    (let [[codepoint glyph & ids] (clojure.string/split
+                                   (level-0-function row-number)
+                                   #"\t")]
+      (assoc container
+        (cm/escape-token glyph)
+        (if (< 1 (count ids))
+          (reduce #(into % (map-ids-to-version %2))
+                  {nil (first ids)}
+                  ids)
+          {nil (first ids)})))))
+  (is (= ((level-1 {} (level-0 path)) 203)
+         {"&U+4EB4;" {nil "⿳&CDP-8C4D;土九[GK]"
+                      :G "⿳&CDP-8C4D;土九"
+                      :K "⿳&CDP-8C4D;土九"
+                      :T "⿳&CDP-8C4D;&CDP-8BF1;九"}}))
+  (is (= ((level-1 {} (level-0 path)) 250)
+         {"&U+4EE3;" {nil "⿰亻弋"}})))
+
 
 (def definitions
   "
