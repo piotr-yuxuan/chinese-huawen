@@ -1,8 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (ns 華文.lexer
   (:require [instaparse.core :as insta]
-            [華文.char-manipulation :as cm]
-            [華文.ids-manipulation :as im])
+            [華文.parser.kawabata :as k]
+            [華文.ids-manipulation :as i])
   (:use clojure.test))
 
 ;; This is the final datastructure I want. It's realistic but only takes one
@@ -65,3 +65,17 @@
              :V "Vietnam?"
              :X "Unknown?"
              :variants {:z ["&CDP+53E31;"]}}}
+
+;; How to parse Kawabata-san base:
+(def level-0 (k/level-0 "../../data/ids/ids.txt"))
+(def level-1 (k/level-1 {} level-0))
+(defn level-2
+  ([row]
+   (level-2 row nil))
+  ([row version]
+   (i/ids-to-tree (get (first (vals (level-1 row))) version))))
+
+(level-2 203 :T)
+
+;; TODO
+;; Now we first want to check the file has no errors and once it's dont, we want put all rows in a container. The validation function belongs to k namespace whilst the container construction is to be done here.

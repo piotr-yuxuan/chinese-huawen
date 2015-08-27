@@ -61,17 +61,18 @@
         (cm/escape-token glyph)
         (if (< 1 (count ids))
           (reduce #(into % (map-ids-to-version %2))
-                  {nil (first ids)}
+                  {nil (clojure.string/replace (first ids) #"\[.+\]" "")}
                   ids)
           {nil (first ids)})))))
+  ;; With versions
   (is (= ((level-1 {} (level-0 path)) 203)
-         {"&U+4EB4;" {nil "⿳&CDP-8C4D;土九[GK]"
+         {"&U+4EB4;" {nil "⿳&CDP-8C4D;土九"
                       :G "⿳&CDP-8C4D;土九"
                       :K "⿳&CDP-8C4D;土九"
                       :T "⿳&CDP-8C4D;&CDP-8BF1;九"}}))
+  ;; Without versions
   (is (= ((level-1 {} (level-0 path)) 250)
          {"&U+4EE3;" {nil "⿰亻弋"}})))
-
 
 (def definitions
   "
