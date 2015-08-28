@@ -63,7 +63,7 @@
           (reduce #(into % (map-ids-to-version %2))
                   {nil (clojure.string/replace (first ids) #"\[.+\]" "")}
                   ids)
-          {nil (first ids)})))))
+          {nil (clojure.string/replace (first ids) #"\[.+\]" "")})))))
   ;; With versions
   (is (= ((level-1 {} (level-0 path)) 203)
          {"&U+4EB4;" {nil "⿳&CDP-8C4D;土九"
@@ -72,7 +72,9 @@
                       :T "⿳&CDP-8C4D;&CDP-8BF1;九"}}))
   ;; Without versions
   (is (= ((level-1 {} (level-0 path)) 250)
-         {"&U+4EE3;" {nil "⿰亻弋"}})))
+         {"&U+4EE3;" {nil "⿰亻弋"}}))
+  (is (= ((level-1 {} (level-0 path)) 5177)
+         {"&U+6222;" {nil "⿰咠戈"}})))
 
 (def definitions
   "
@@ -270,15 +272,3 @@
     <CJKCI> =   #'[\uf900-\ufaff]'
     <CJKCF> =   #'[\ufe30-\ufe4f]'
     <CJKCIS> =  #'[\u2f800-\u2fa1f]'"))
-
-;; This is level three, where you say the line you want to be parsed and its
-;; syntactic tree is returned if possible; return nil otherwise
-(defn ids-parser
-  "If the line selected contains an ids then it parses it. If not, it ouputs a
-  warning message."
-  [i]
-  (let [splitted-line (line-presenter i)]
-    (if (and (coll? splitted-line)
-             (= 3 (count splitted-line)))
-      (first (grammar (nth splitted-line 2)))
-      (println (str "can't be parsed: " (first splitted-line))))))

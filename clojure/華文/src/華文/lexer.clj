@@ -75,7 +75,78 @@
   ([row version]
    (i/ids-to-tree (get (first (vals (level-1 row))) version))))
 
+;; Level 0 accesses physical data, that's to say the filesystem. This level only
+;; takes a location as single parameter. It gives a way to access each data row.
+(level-0 203)
+
+;; Level 1 presents raw data. It take as single parameter a description of the
+;; source format.
+(level-1 203)
+
+;; Level 2 parses the IDS. Thus is uses the official IDS grammar.
+(level-2 203)
 (level-2 203 :T)
 
 ;; TODO
-;; Now we first want to check the file has no errors and once it's dont, we want put all rows in a container. The validation function belongs to k namespace whilst the container construction is to be done here.
+;; Now we first want to check the file has no errors and once it's dont, we want
+;; put all rows in a container. The validation function belongs to k namespace
+;; whilst the container construction is to be done here.
+(defn harden
+  ([]
+   (harden 20000))
+  ([i]
+   (println "starting from " harden)
+   (loop [current i]
+     (try
+       (level-2 current)
+       (catch Exception e
+         (.printStackTrace e)
+         (println current "\t" (level-0 current))))
+     (recur (inc current)))))
+
+(harden)
+
+;; harden result
+20992 	 ;; -*- coding: utf-8-mcs-er -*-
+27575 	 ;; -*- coding: utf-8 -*-
+27783 	 ;; -*- coding: utf-8-mcs-er -*-
+35976 	 ;; -*- coding: utf-8-mcs-er -*-
+44169 	 ;; -*- coding: utf-8-mcs-er -*-
+52362 	 ;; -*- coding: utf-8-mcs-er -*-
+
+;; Values of i which cause bugs.
+39733 ;; same problem above is no more reported.
+38967
+38732
+36998
+36996
+36781
+36513
+20992 ;; Acceptable for it's not a regular row
+27575 ;; Acceptable for it's not a regular row
+27783 ;; Acceptable for it's not a regular row
+27958 ;; Should not be accepted
+28095 ;; Should not be accepted
+28239 ;; Should not be accepted
+28627 ;; Should not be accepted
+28851 ;; Should not be accepted
+28956 ;; Should not be accepted
+29175
+29447
+30424
+30493
+30523
+30887
+30985
+31113
+32116
+32162
+32298 ;; Malformed IDS
+32489
+33084
+33510
+33925
+34393
+34948
+35976 ;; Acceptable for it's not a regular row
+36470
