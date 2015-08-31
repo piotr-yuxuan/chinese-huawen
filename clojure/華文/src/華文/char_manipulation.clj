@@ -73,14 +73,6 @@
   (is (= (block-names #{:a :b :c} #{:b} #{:c}) "b | a"))
   (is (= (block-names #{:a :b :c} #{:d} #{:e}) "c | b | d | a")))
 
-;; Kept as example.
-(def negative-grammar
-  (insta/parser
-   (let [kernel "&(U\\+|CDP\\-)[0-9a-zA-Z]+;"]
-     (str "<S> = (Letter | Else)*"
-          "Letter = " (print-str (re-pattern (str "^(?!" kernel "$).")))
-          "Else = " (print-str (re-pattern (str #"" kernel "")))))))
-
 (with-test
   (defn token-to-codepoint
   "Expect a string made of one token. Not a character to overcome the Java

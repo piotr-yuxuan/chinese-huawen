@@ -79,14 +79,15 @@
   (is (= (escape-ids-set "⿳廿⿻丙⿱一内⿱&CDP-85F0;一")
          #{"⿳" "⿻" "一" "内" "⿱" "廿" "丙" "&CDP-85F0;"})))
 
-(def escaped-grammar
-  (insta/parser
-   (str
-    "S = IDC CJK CJK"
-    "\nIDC = #'[\u2ff0-\u2fff]'\n"
-    (print-rules #{:CJK} :range block-ranges))))
-
-(escaped-grammar (apply str (map escape-token (tokens-from-string "⿰丿乚" re-codepoint))))
+(with-test
+  (defn ids-token-set
+    [string]
+    (filter #(nil? (re-matches
+                    (re-pattern (aggregate-regeces #{:IDC}))
+                    (escape-token %)))
+            (escape-ids-set string)))
+  (is (= (ids-token-set "⿻廿丙")
+         ("廿" "丙"))))
 
 ;; Now we can escape characters. We're willing to escape all sinographs but no
 ;; IDC, as in the standard definitions for it allows us to get a tree. We can
