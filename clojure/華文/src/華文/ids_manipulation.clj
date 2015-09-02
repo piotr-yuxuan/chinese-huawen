@@ -87,7 +87,7 @@
                     (escape-token %)))
             (escape-ids-set string)))
   (is (= (ids-token-set "⿻廿丙")
-         ("廿" "丙"))))
+         #{"廿" "丙"})))
 
 ;; Now we can escape characters. We're willing to escape all sinographs but no
 ;; IDC, as in the standard definitions for it allows us to get a tree. We can
