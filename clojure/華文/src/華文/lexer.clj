@@ -1,9 +1,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (ns 華文.lexer
   (:require [instaparse.core :as insta]
-            [華文.parser.kawabata :as k]
-            [華文.ids-manipulation :as i]
-            [華文.char-manipulation :as c])
+            [華文.parsers.kawabata :as k]
+            [華文.manipulation.struct :as i]
+            [華文.manipulation.char :as c])
   (:use clojure.test))
 
 ;; Let's define a container less redundant which handle multiple versions and
