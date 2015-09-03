@@ -1,8 +1,9 @@
-(ns 華文.ids-manipulation
+(ns 華文.manipulation.struct
   (:require [instaparse.core :as insta]
-            [華文.range-pattern :as range])
+            [manipulation.regeces :as range])
   (:use clojure.test)
-  (:use 華文.char-manipulation))
+  (:use 華文.manipulation.char)
+  (:require [華文.manipulation.regeces :refe [aggregate]]))
 
 (declare ids-to-tree)
 

@@ -1,8 +1,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(ns 華文.parser.kawabata
+(ns 華文.parsers.chise
   (:require [instaparse.core :as insta]
-            [華文.ids-manipulation :as im]
-            [華文.char-manipulation :as cm])
+            [華文.manipulation.struct :as im]
+            [華文.manipulation.char :as cm])
   (:use clojure.test))
 
 ;; This is the parser file. As I don't know yet how to structure the logic,

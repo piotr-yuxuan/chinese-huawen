@@ -1,29 +1,7 @@
-(ns 華文.range-pattern
-  (:use clojure.test))
-
-(defn dec-to-hex
-  [number]
-  (clojure.string/upper-case (format "%x" number)))
-
-(defn hex-to-dec
-  [string]
-  (let [conversion-table (zipmap (concat (map char (range 48 58))
-                                         (map char (range 65 71)))
-                                 (range))
-        string (clojure.string/upper-case string)]
-    (assert (every? #(< (conversion-table %) 16) string))
-    (loop [num string
-           acc 0]
-      (if (seq num)
-        (recur (drop 1 num)
-               (+ (* 16 acc)
-                  (get conversion-table (first num))))
-        acc))))
-
-(defn pow
-  "Mathematical function power. LaTeX: $a^b$ where a is number and b is power."
-  [number power]
-  (reduce * (repeat power number)))
+(ns 華文.manipulation.regeces
+  (:use clojure.test)
+  (:require [華文.utils :refer [dec-to-hex hex-to-dec pow]])
+  (:require [華文.consts :refer [unicode-blocks]]))
 
 (defn- power-extrema
   "Helper function for range-extrema, see its doc."
@@ -172,7 +150,7 @@
          "2[1-9a-fA-F][0-9a-fA-F]{3}")))
 
 (with-test
-  (defn range-pattern-from-hex
+  (defn to-pattern
   "Draft for Clojure implementation of the algorithm published here:
   http://utilitymill.com/utility/Regex_For_Range.
   However, you add a keyword :word to this function signature if you're willing to
@@ -198,11 +176,54 @@
                 []
                 (equal-length-ranges hex-start hex-end))))
          ")")))
-  (is (= (range-pattern-from-hex "0" "0")
+  (is (= (to-pattern "0" "0")
          "0"))
-  (is (= (range-pattern-from-hex "1" "A")
+  (is (= (to-pattern "1" "A")
          "[1-9a-aA-A]"))
-  (is (= (range-pattern-from-hex "10" "21")
+  (is (= (to-pattern "10" "21")
          "1[0-9a-fA-F]|2[0-1]"))
-  (is (= (range-pattern-from-hex "1200" "129E")
+  (is (= (to-pattern "1200" "129E")
          "120[0-9a-fA-F]|12[1-9][0-9a-fA-F]")))
+
+
+(with-test
+  (defn select-regeces
+  "Expect a collection of keywords, a map of maps and a keyword. Inner maps must bind the specified keyword to a vector of range. See tests for examples."
+  [rules-to-append keyword range-map]
+  (let [rule-range #(apply
+                     to-pattern
+                     (map codepoint-to-hex (get (last %) keyword)))
+        rule-left #(str "<" (name (first %) ">"))]
+    (reduce #(conj %1
+                   (->  (str code-escape
+                             prefix "(" (rule-range %2) ")"
+                             code-end-escape)
+                        re-pattern))
+            #{}
+            (filter
+             #(contains? (set rules-to-append) (first %))
+             range-map))))
+  (is (= (select-regeces [:A :B]
+                         :kw
+                         {:A {:kw ["U+10" "U+20"]}
+                          :B {:kw ["U+30" "U+40"]}})
+         #{#"&(U\+|CDP\-)(3[0-9a-fA-F]|40);"
+           #"&(U\+|CDP\-)(1[0-9a-fA-F]|20);"}))
+  (is (= (select-regeces [:B]
+                         :kw
+                         {:A {:kw ["U+10" "U+20"]}
+                          :B {:kw ["U+30" "U+40"]}})
+         #{#"&(U\+|CDP\-)(1[0-9a-fA-F]|20);"})))
+
+(with-test
+  (defn aggregate-regeces
+  "Not pure. Shall I?
+  Underoptimised"
+  [selected-regeces]
+  (reduce #(str % (if-not (= % "") "|") %2)
+          ""
+          (select-regeces selected-regeces :range unicode-blocks)))
+  (is (= (aggregate-regeces #{:IDC :CJKB})
+         (str "&(U\\+|CDP\\-)((2000[0-9a-fA-F]|200[1-9a-fA-F][0-9a-fA-F]"
+              "|20[1-9a-fA-F][0-9a-fA-F]{2}|2[1-9a-aA-A][0-9a-fA-F]{3}));"
+              "|&(U\\+|CDP\\-)((2FF[0-9a-fA-F]));"))))

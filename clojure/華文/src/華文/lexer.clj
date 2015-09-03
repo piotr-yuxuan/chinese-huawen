@@ -31,11 +31,11 @@
 
 ;; Level 0 accesses physical data, that's to say the filesystem. This level only
 ;; takes a location as single parameter. It gives a way to access each data row.
-(def level-0 (k/level-0 "../../data/ids/ids.txt"))
+(def level-0 (parser/level-0 "../../data/ids/ids.txt"))
 
 ;; Level 1 presents raw data. It take as single parameter a description of the
 ;; source format.
-(def level-1 (k/level-1 {} level-0))
+(def level-1 (parser/level-1 {} level-0))
 
 ;; Level 2 parses the IDS. Thus is uses the official IDS grammar.
 (defn level-2
